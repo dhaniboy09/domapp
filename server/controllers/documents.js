@@ -38,18 +38,15 @@ const DocumentController = {
 		const docId = req.params.id;
 		const userRole = req.decoded.user.roleId;
 		const userId = req.decoded.user.id;
-		Document.findOne({
-			where: {
-				id: docId
-			}
-		})
+		Document.findById(docId)
 			.then((foundDocument) => {
 				if (foundDocument) {
 					if ((foundDocument.access === 'public' || (userRole === foundDocument.userRoleId)) && foundDocument.access !== 'private') {
+						console('Im up');
 						res.status(200).send({
 							foundDocument,
 						});
-					} else if (foundDocument.userId === userId || Auth.verifyAdmin(userRole)) {
+					} else if (foundDocument.userId === userId || Auth.isAdmin(userRole)) {
 						res.status(200).send({
 							foundDocument,
 						});
@@ -101,6 +98,13 @@ const DocumentController = {
 	updateDocument: (req, res) => {
 		const userId = req.decoded.user.id;
 		const userRole = req.decoded.user.roleId;
+		Document.findAll({ where: { title: req.body.title } }).then((existingDocument) => {
+			if (existingDocument) {
+				return res.status(403).json({
+					message: 'Title already exists. Title must be unique.',
+				});
+			}
+		});
 		Document.findById(req.params.id).then((foundDocument) => {
 			if (foundDocument) {
 				if (userRole === 1 || userId === foundDocument.userId) {

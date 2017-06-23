@@ -79,7 +79,7 @@ const UserController = {
 						res.status(400).json({ error: err.message });
 					});
 				} else {
-					res.status(404).json('User already exists!');
+					res.status(403).json('User already exists!');
 				}
 			}).catch((err) => {
 				res.status(401).json({ error: err.message });
@@ -126,6 +126,13 @@ const UserController = {
 		const userId = req.decoded.user.id;
 		const userRole = req.decoded.user.roleId;
 		if (userRole === 1 || userId === Number(req.params.id)) {
+			User.findAll({ where: { email: req.body.email } }).then((existingUser) => {
+				if (existingUser) {
+					return res.status(403).json({
+						message: 'Email already in use.',
+					});
+				}
+			});
 			User.findById(req.params.id).then((user) => {
 				if (!user) {
 					return res.status(404).json({
