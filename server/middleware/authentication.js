@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
 module.exports = {
-
 	isAuthenticated: (req, res, next) => {
 		const token = req.headers['x-access-token'];
 		if (req.url.startsWith('/auth')) return next();

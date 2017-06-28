@@ -26,11 +26,15 @@ export default {
 			},
 			{ test: /(\.css)$/, loaders: ['style-loader', 'css-loader'] },
 			{ test: /(\.scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
-			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader', options: { limit: 25000 } }
+			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
+			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader', options: { limit: 25000 } },
 		]
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
+	},
+	node: {
+		net: 'empty',
+		dns: 'empty'
 	}
 };

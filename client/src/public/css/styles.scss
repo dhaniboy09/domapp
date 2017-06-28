@@ -1,0 +1,331 @@
+body{
+	background: #fbf7f0 url('../images/main-bgx.png') center 12rem repeat-y;
+	background-size: 200%, 100rem;
+  /*font-family: 'Titillium Web', sans-serif;*/
+  /*font-family: 'Jaldi', sans-serif;*/
+  font-family: 'Quando', serif;
+
+}
+.main{
+	display: block;
+}
+.content{
+	max-width: 100rem;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: visible;
+  position: relative;
+  border: 0;
+  z-index: 100;
+  clear: both
+}
+.content h1{
+  margin: 0 auto !important;
+  padding-top: 4rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  width: 80%;
+  font-weight: 700;
+  letter-spacing: -0.2rem;
+  color: #283c46;
+  font-size: 3.5rem;
+}
+.sub-heading{
+  margin: 0 auto !important;
+  padding-bottom: 0.5rem;
+  text-align: center;
+  width: 80%;
+  font-size: 2rem;
+}
+.mid-column{
+	position: relative;
+  margin: 6em 12em 5em -45em;
+  zoom: 1;
+}
+.mid-column:after {
+  content: '.';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.mid-column-1{
+	position: relative;
+  z-index: 100;
+  float: right;
+  width: 1%; /* Was formerly 50%*/
+  padding: 1em 0.5em 0 2em;
+}
+.mid-column-2{
+	position: relative;
+  z-index: 0;
+  float: right;
+  width: 50%;
+  margin-top: 1em;
+}
+.mid-column-2:before{
+	background: url('../images/on-fire.png') top left no-repeat;
+  background-size: 100%;
+  content: '';
+  position: absolute;
+  display: block;
+  width: 54rem;
+  height: 35rem;
+  top: -5em;
+  left: 0;
+  z-index: 0;
+}
+.mid-column-2:after{
+	background: url('../images/on-fire-bg.png') top left no-repeat;
+  background-size: 100% 100%;
+  content: '';
+  position: absolute;
+  display: block;
+  width: 60rem;
+  height: 42rem;
+  top: -5rem;
+  left: 0;
+  z-index: -5;
+}
+#sign-up-form{
+	box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
+  width: 18em; /*Formerly max-width: 15em*/
+  position: relative;
+  overflow: visible;
+  margin: 0rem auto 6rem 36rem;
+  padding: 3rem 1rem 1rem 1rem;
+  background-color: #fff;
+  border-radius: 5px !important;
+}
+.input-def {
+	transition: all 0.2s ease;
+	background-color: #fff;
+	border: 2px solid #bfbfbf;
+	display: block;
+	font-size: 0.9em;
+	margin-bottom: 0.75em;
+	padding: 0.75em 0.6em;
+  padding-left: 0.6em !important;
+  border-radius: 5px !important;
+	margin: 0 auto;
+  margin-bottom: 1rem !important;
+  margin-left: 0.5rem !important;
+	width: 90% !important;
+}
+input:focus{
+	background: rgb(168,246,194) !important;
+	outline: 1px solid rgb(168,246,194) !important;
+}
+.f-center{
+	text-align: center !important;
+}
+.f-bottom{
+	margin-bottom: 1.25em !important;
+}
+.banner{
+	margin-top: -3.9em;
+	margin-left: 1em;
+}
+.banner-label{
+	border-radius: 2em;
+  margin: 0;
+  padding: 0.5em 1em;
+  display: inline-block;
+  line-height: 1;
+  background-color: rgb(133,110,198);
+  color: #fff;
+}
+.button-primary{
+  background-color: #0088c9;
+  color: #fff;
+  border-width: 0 0 3px 0;
+  border-bottom-color: rgba(0,0,0,0.15);
+}
+.button-block{
+  display: block !important;
+  white-space: normal;
+  margin: 1rem auto 0 auto;
+  padding: 1em 1em 0.75em 1em;
+}
+#sign-up-form button{
+  width: 90%;
+}
+nav{
+  background-color: #3CB371;
+}
+.intro{
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+  margin-bottom: 4rem; 
+}
+.features{
+  margin-top: -5rem; 
+}
+.round-1{
+  border: 1px solid #E57373;
+  background-color: #E57373;
+  border-radius: 10rem;
+  padding: 2rem;
+  width: 12rem;
+  height: 12rem;
+  margin: 0 auto;
+}
+.round-2{
+  border: 1px solid #26A69A;
+  background-color: #26A69A;
+  border-radius: 10rem;
+  padding: 2rem;
+  width: 12rem;
+  height: 12rem;
+  margin: 0 auto;
+}
+.round-3{
+  border: 1px solid #90A4AE;
+  background-color: #90A4AE;
+  border-radius: 10rem;
+  padding: 2rem;
+  width: 12rem;
+  height: 12rem;
+  margin: 0 auto;
+}
+.center-icon{
+  margin-top: 1rem;
+}
+.center-icons{
+  margin-left: 5rem;
+  margin-bottom: 5rem; 
+}
+.main-text{
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  font-size:1.5rem;
+}
+.sub-text{
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+}
+i {
+  color: #283c46;
+}
+.page-footer{
+  background-color: #283c46;
+}
+.page-footer .footer-copyright{
+  background-color: rgb(30,45,52);
+}
+.brand-logo{
+  margin-left: 2rem;
+}
+.nav-wrapper ul{
+  padding-right: 2rem;
+}
+
+.sign-in{
+  width: 100%
+}
+.sign-in-form{
+  margin: 0 auto;
+  width: 40%;
+  margin-top: 3rem;
+}
+
+.sign-in-form input:focus{
+  color: rgb(250,185,189);
+}
+.welcome-text{
+  margin: 0 auto;
+  width: 35%;
+  color: #283c46;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
+.sign-in-input{
+  outline: 2px solid rgb(158,158,158);
+  color: #000000;
+}
+.create-doc{
+  display: none;
+  position: fixed;
+  top: 9rem;
+  left: 0;
+  z-index: 2;
+}
+.create-doc-link{
+  transform: rotate(-90deg);
+  transition: all 0.15s ease-in-out;
+  background-color: #856ec6;
+  border-radius: 0.6rem 0.6rem 0.6rem 0.6rem;
+  color: #fff;
+  display: block;
+  font-weight: bold;
+  height: 4rem;
+  line-height: 4.6rem;
+  margin: 2rem 0 0 -1.8rem;
+  text-align: center;
+  width: 5rem;
+  font-size: 1.2rem;
+}
+.create-doc-link:hover{
+	background-color: #765cbf;
+	margin-left: -1.2rem;
+} 
+a{
+	cursor: auto;
+	background: transparent;
+	text-decoration: none;
+}
+.document-panel{
+	position: relative;
+	display: block;
+	top:2rem;
+}
+.break{
+	z-index: 1;
+	position: relative;
+}
+.break:before{
+	content: '';
+  position: absolute;
+  top: 50%;
+  left: 5rem;
+  right: 5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  z-index: 0;
+}
+
+.break>span{
+	display: inline-block;
+  padding: 0 0.5em;
+}
+.document-panel-header{
+	color: #aa9c84;
+  font-weight: normal;
+}
+.sign-up-error{
+  color: red;
+  font-size: 1rem;
+  font-family: 'Titillium Web', sans-serif;
+  float: left;
+  padding-left: 1rem;
+  margin-top: -0.7rem;
+}
+.sign-in-error{
+  text-align: center;
+  background: rgb(252,99,94);
+  padding: 0.2rem;
+  margin-top: 5rem;
+  color: #ffffff;
+  width: 20%;
+  margin: 0 auto;
+}
+
+/* Media Queries */
+@media screen and (min-width: 768px){
+  .create-doc {
+      display: block;
+  }
+}
