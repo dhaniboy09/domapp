@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import SignInForm from './SignInForm';
 import { signin } from '../actions/signInAction';
 
+
 const SignInPage = () => ({
 	render() {
 		const { signin } = this.props;

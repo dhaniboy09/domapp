@@ -2,14 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { allDocuments } from '../actions/allDocuments';
+import { myDocuments } from '../actions/myDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
 /**
  * @class Documents
  * @extends {React.Component}
  */
-class Documents extends React.Component {
+class MyDocuments extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -26,7 +26,7 @@ class Documents extends React.Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		this.props.allDocuments();
+		this.props.myDocuments(this.props.auth.user.user.id);
 	}
 	// componentWillReceiveProps(nextProps) {
 	// 	this.setState({ document: nextProps.documents })
@@ -60,7 +60,7 @@ class Documents extends React.Component {
 				</div>
 				<div className="document-panel">
 					<div className="f-center">
-						<h5 className="document-panel-header break"><span>All Documents</span></h5>
+						<h5 className="document-panel-header break"><span>My Documents</span></h5>
 						<div className="col s12">
 							<div className="row">
 								{ this.props.documents.map((document) => (
@@ -77,17 +77,19 @@ class Documents extends React.Component {
 		);
 	}
 }
-Documents.propTypes = {
+MyDocuments.propTypes = {
 	document: propTypes.object.isRequired,
 	documents: propTypes.object.isRequired,
-	allDocuments: propTypes.func.isRequired
+	myDocuments: propTypes.func.isRequired,
+	auth: propTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
 	return {
 		// document: state.userDocuments.document,
+		auth: state.auth,
 		documents: state.userDocuments.documents
 	};
 }
-export default withRouter(connect(mapStateToProps, { allDocuments })(Documents));
+export default withRouter(connect(mapStateToProps, { myDocuments })(MyDocuments));
 

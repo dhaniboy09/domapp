@@ -26,8 +26,7 @@ class SignUpForm extends React.Component {
 		if (this.isValid()) {
 			this.setState({ errors: {} });
 			this.props.userSignUpRequest(this.state).then(
-				(response) => {
-					localStorage.setItem('token', response.data.token);
+				() => {
 					this.props.history.push('/documents');
 				},
 				(data) => { this.setState({ errors: data.response.data }); }
@@ -118,10 +117,11 @@ class SignUpForm extends React.Component {
 		);
 	}
 }
-export default withRouter(SignUpForm);
-
 SignUpForm.propTypes = {
 	userSignUpRequest: propTypes.func.isRequired,
 	history: propTypes.object
 };
+export default withRouter(SignUpForm);
+
+
 

@@ -25,7 +25,7 @@ class Header extends React.Component {
 			<div className="nav-wrapper">
 				<a href="/documents" className="brand-logo">Domapp</a>
 				<ul id="nav-mobile" className="right hide-on-med-and-down">
-					<li><Link to="/documents">Documents</Link></li>
+					<li><Link to="/mydocuments">My Documents</Link></li>
 					<li><a href="/settings">Settings</a></li>
 					<li><a href="/contact">Contact Us</a></li>
 					<li><Link to="" onClick={this.signout}>Log out</Link> </li>

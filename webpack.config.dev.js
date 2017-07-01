@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 
 export default {
-	devtool: 'eval-source-map',
+	devtool: 'source-map',
 	entry: [
 		'webpack-hot-middleware/client',
 		path.join(__dirname, 'client/index.jsx')
@@ -15,7 +15,7 @@ export default {
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
 	],
 	module: {
 		loaders: [

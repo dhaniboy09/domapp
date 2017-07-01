@@ -10,6 +10,7 @@ class App extends React.Component {
 			<div className="main">
 				<Header />
 				{this.props.children}
+				<div className="clear"></div>
 			</div>
 		);
 	}
