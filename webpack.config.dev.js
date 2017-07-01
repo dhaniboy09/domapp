@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 
 export default {
-	devtool: 'eval-source-map',
+	devtool: 'source-map',
 	entry: [
 		'webpack-hot-middleware/client',
 		path.join(__dirname, 'client/index.jsx')
@@ -15,7 +15,7 @@ export default {
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
 	],
 	module: {
 		loaders: [
@@ -26,11 +26,15 @@ export default {
 			},
 			{ test: /(\.css)$/, loaders: ['style-loader', 'css-loader'] },
 			{ test: /(\.scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
-			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader', options: { limit: 25000 } }
+			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
+			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader', options: { limit: 25000 } },
 		]
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
+	},
+	node: {
+		net: 'empty',
+		dns: 'empty'
 	}
 };

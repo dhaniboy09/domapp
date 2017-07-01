@@ -18,6 +18,7 @@ module.exports = (app) => {
 	app.delete('/api/users/:id', Users.deleteUser);
 	app.post('/auth/users/login', Users.logIn);
 	app.get('/api/search/users/:searchQuery', Users.searchUsers);
+	app.get('/api/users/:id/documents', Users.getUserDocuments);
 
 	// Documents
 	app.post('/api/documents', Documents.createDocument);

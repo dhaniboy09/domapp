@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import validateInput from '../helpers/signUpValidation';
 
 require('dotenv').config();
 const User = require('../models').User;
@@ -18,28 +19,26 @@ const UserController = {
 						bcrypt.compare(req.body.password, user.dataValues.password, (err, match) => {
 							const userData = {
 								id: user.dataValues.id,
-								username: user.dataValues.username,
-								first_name: user.dataValues.first_name,
-								last_name: user.dataValues.last_name,
+								firstName: user.dataValues.firstName,
+								lastName: user.dataValues.lastName,
 								email: user.dataValues.email,
 								roleId: user.dataValues.roleId
 							};
 							const token = jwt.sign(
 								{ user: userData },
 								process.env.SECRET_KEY,
-								{ expiresIn: 24 * 60 * 60 }
+								{ expiresIn: '23h' }
 							);
 							if (match) {
 								res.send(200, {
-									token,
-									user: userData
+									token
 								});
 							} else {
-								res.status(401).json({ error: 'Wrong Email and Password combination' });
+								res.status(401).json({ error: 'Invalid Credentials' });
 							}
 						});
 					} else {
-						res.status(404).json({ error: 'User not found' });
+						res.status(401).json({ error: 'User not found' });
 					}
 				}).catch((err) => {
 					res.status(500).json({ error: err.message });
@@ -49,6 +48,10 @@ const UserController = {
 		}
 	},
 	createUser: (req, res) => {
+		const { errors, isValid } = validateInput(req.body);
+		if (!isValid) {
+			return res.status(400).json(errors);
+		}
 		User.findOne({ where: { email: req.body.email } })
 			.then((user) => {
 				if (!user) {
@@ -61,9 +64,8 @@ const UserController = {
 					}).then((newuser) => {
 						const userData = {
 							id: newuser.dataValues.id,
-							username: newuser.dataValues.username,
-							first_name: newuser.dataValues.first_name,
-							last_name: newuser.dataValues.last_name,
+							firstName: newuser.dataValues.firstName,
+							lastName: newuser.dataValues.lastName,
 							email: newuser.dataValues.email,
 							roleId: newuser.dataValues.roleId
 						};
@@ -72,8 +74,7 @@ const UserController = {
 							process.env.SECRET_KEY,
 							{ expiresIn: '23h' });
 						res.send(200, {
-							token,
-							newuser
+							token
 						});
 					}).catch((err) => {
 						res.status(400).json({ error: err.message });

@@ -1,9 +1,10 @@
 import Auth from '../middleware/authentication';
+import sequelize from '../models/index';
 
 const Document = require('../models').Document;
+const Role = require('../models').Role;
 
-
-const LIMIT = 5;
+const LIMIT = 15;
 const OFFSET = 0;
 
 const DocumentController = {
@@ -42,7 +43,6 @@ const DocumentController = {
 			.then((foundDocument) => {
 				if (foundDocument) {
 					if ((foundDocument.access === 'public' || (userRole === foundDocument.userRoleId)) && foundDocument.access !== 'private') {
-						console('Im up');
 						res.status(200).send({
 							foundDocument,
 						});
@@ -68,53 +68,96 @@ const DocumentController = {
 	getAllDocuments: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
-		Document
-			.findAndCountAll({
-				order: '"createdAt" DESC',
-				limit,
-				offset
-			})
-			.then((documents) => {
-				if (!documents) {
-					res.status(404).send({
-						message: 'Documents Not Found',
+		const userRole = req.decoded.user.roleId;
+		const orderType = 'DESC';
+		Role.findById(userRole)
+			.then((role) => {
+				if (role.roleName === 'admin') {
+					Document
+						.findAndCountAll({
+							limit,
+							offset,
+							order: [['DESC']]
+						})
+						.then((documents) => {
+							if (!documents) {
+								res.status(404).send({
+									message: 'Documents Not Found',
+								});
+							}
+							const pagination = {
+								totalCount: documents.count,
+								pages: Math.ceil(documents.count / limit),
+								currentPage: Math.floor(offset / limit) + 1,
+								pageSize: documents.rows.length,
+							};
+							res.status(200).send({
+								documents: documents.rows,
+								pagination,
+							});
+						})
+						.catch((err) => {
+							res.status(400).send(err);
+						});
+				} else {
+					Document.findAndCountAll({
+						where: {
+							$or: [
+								{
+									access: 'public'
+								},
+								{
+									access: 'role',
+									userRoleId: req.decoded.user.roleId
+								}
+							]
+						}
+					}).then((documents) => {
+						if (!documents) {
+							res.status(404).send({
+								message: 'Documents Not Found',
+							});
+						}
+						const pagination = {
+							totalCount: documents.count,
+							pages: Math.ceil(documents.count / limit),
+							currentPage: Math.floor(offset / limit) + 1,
+							pageSize: documents.rows.length,
+						};
+						res.status(200).send({
+							documents: documents.rows,
+							pagination,
+						});
+					}).catch((err) => {
+						res.status(400).send(err);
 					});
 				}
-				const pagination = limit && offset ? {
-					totalCount: documents.count,
-					pages: Math.ceil(documents.count / limit),
-					currentPage: Math.floor(offset / limit) + 1,
-					pageSize: documents.rows.length,
-				} : null;
-				res.status(200).send({
-					documents: documents.rows,
-					pagination,
-				});
-			})
-			.catch((err) => {
+			}).catch((err) => {
 				res.status(400).send(err);
 			});
 	},
 	updateDocument: (req, res) => {
 		const userId = req.decoded.user.id;
 		const userRole = req.decoded.user.roleId;
-		Document.findAll({ where: { title: req.body.title } }).then((existingDocument) => {
-			if (existingDocument) {
-				return res.status(403).json({
-					message: 'Title already exists. Title must be unique.',
-				});
-			}
-		});
+		Document.find({ where: { title: req.body.title, userId: req.decoded.user.id } })
+			.then((existingDocument) => {
+				if (existingDocument) {
+					return res.status(403).json({
+						message: 'Oops!. You already have a document with this title.',
+					});
+				}
+			});
 		Document.findById(req.params.id).then((foundDocument) => {
 			if (foundDocument) {
 				if (userRole === 1 || userId === foundDocument.userId) {
 					const selector = {
 						where: { id: req.params.id }
 					};
+					const updatedDocument = req.body;
 					Document.update(req.body, selector).then(() => {
-						res.status(200).json({
-							message: 'Document Updated'
-						});
+						res.status(200).send(
+							updatedDocument
+						);
 					}).catch((err) => {
 						res.status(404).json({ error: err.message });
 					});
@@ -145,7 +188,7 @@ const DocumentController = {
 					})
 						.then(() => {
 							return res.status(200).json({
-								message: 'Document Deleted'
+								foundDocument
 							});
 						})
 						.catch((err) => {
@@ -182,7 +225,7 @@ const DocumentController = {
 						},
 					]
 				},
-				order: [['createdAt', 'DESC']],
+				order: [['DESC']],
 				limit,
 				offset
 			})
