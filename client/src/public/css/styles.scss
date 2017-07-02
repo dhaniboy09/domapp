@@ -287,7 +287,7 @@ a{
 	position: relative;
 	display: block;
 	top:2rem;
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
 }
 .break{
@@ -464,7 +464,20 @@ nav{
     color: rgb(219,115,115);
   }
 }
-
+.next{
+  position: relative;
+  float: right;
+  margin: 0 auto;
+  margin-right: -4.5rem;
+  margin-top: -25rem;
+}
+.prev{
+  position: relative;
+  float: left;
+  margin: 0 auto;
+  margin-left: -4.5rem;
+  margin-top: -25rem;
+}
 /*.input-field input[type=search]:focus+label i {
   color: #999999 ;
   font-size: 0.5rem;

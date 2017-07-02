@@ -36,11 +36,11 @@ class DocumentForm extends React.Component {
 	 */
 	updateDocument() {
 		this.props.editDocument(this.state).then(
-			(res) => {
+			() => {
 				console.log('updated');
 			},
 			(err) => {
-				this.setState({ errors: err.response.data, isLoading: false });
+				this.setState({ errors: err.response.data });
 			}
 		);
 	}

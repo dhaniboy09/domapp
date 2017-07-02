@@ -3,7 +3,8 @@ import { CREATE_NEW_DOCUMENT, VIEW_ALL_DOCUMENTS,
 
 const initialState = {
 	documents: [],
-	searchResults: []
+	searchResults: [],
+	pagination: []
 };
 export default (state = initialState, action) => {
 	switch (action.type) {
@@ -12,9 +13,9 @@ export default (state = initialState, action) => {
 		return Object.assign({}, state, { documents: updatedList });
 	}
 	case VIEW_ALL_DOCUMENTS:
-		return Object.assign({}, state, { documents: action.documents });
+		return Object.assign({}, state, { documents: action.documents, pagination: action.pagination });
 	case GET_USER_DOCUMENTS:
-		return Object.assign({}, state, { documents: action.documents });
+		return Object.assign({}, state, { documents: action.documents, pagination: action.pagination });
 	case EDIT_DOCUMENT: {
 		// const updatedList = state.documents.filter(document => action.document.id !== document.id);
 		// return Object.assign({}, state, { documents: updatedList });
@@ -36,8 +37,8 @@ export default (state = initialState, action) => {
 		// Object.assign(state.searchResults, action.documents);
 		// return Object.assign({}, state.searchResults, action.documents);
 		return {
-        searchResults: action.documents
-    };
+			searchResults: action.documents
+		};
 	}
 	default: return state;
 	}
