@@ -50,7 +50,6 @@ class DocumentCard extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		console.log(this.props.document);
 		const emptyDocuments = (
 			<p>You have no new documents</p>
 		);

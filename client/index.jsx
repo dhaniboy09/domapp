@@ -12,6 +12,7 @@ import Home from './src/components/Home';
 import SignInPage from './src/components/SignInPage';
 import Documents from './src/components/Documents';
 import MyDocuments from './src/components/MyDocuments';
+import SearchResults from './src/components/SearchResults';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
 import rootReducer from './src/rootReducer';
 import { setCurrentUser } from './src/actions/signInAction';
@@ -39,6 +40,7 @@ render(
 					<Route exact path="/signin" component={SignInPage} />
 					<Route exact path="/documents" component={Documents} />
 					<Route exact path="/mydocuments" component={MyDocuments} />
+					<Route exact path="/searchresults" component={SearchResults} />
 				</Switch>
 			</App>
 		</Router>
