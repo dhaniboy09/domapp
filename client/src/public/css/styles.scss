@@ -362,8 +362,11 @@ a{
   border-radius: 6px;
   background-color: unset !important; 
 }
+.card .card-content {
+  height: 82%;
+}
 .card .card-action {
-  margin-top: 9rem !important;
+  /*margin-top: 9rem !important;*/
   background-color: rgba(220,220,220,0.3) !important;
 }
 .card .card-content .card-title {
@@ -377,6 +380,95 @@ a{
   text-transform: unset !important;
   color: rgb(229,115,115);
 }
+.nav-wrapper li:hover .sub-menu {
+    z-index:1;
+    opacity:1;
+}
+ 
+.sub-menu {
+    width:15%;
+    padding:1px 0px;
+    position:absolute;
+    top:100%;
+    left:82.6%;
+    z-index:-1;
+    opacity:0;
+    transition:opacity linear 0.15s;
+    box-shadow:0px 2px 3px rgba(0,0,0,0.2);
+    background:#2e2728;
+}
+ 
+.sub-menu li {
+    display:block;
+    font-size:1.3rem !important;
+    margin-bottom: -1.2rem;
+}
+ 
+.sub-menu li a {
+  padding-top: 0.5rem;
+  display: inline-block;
+  margin-right: -0.5rem;
+  margin-top: -15px;
+  margin-bottom: -175rem !important;
+  padding-bottom: -5rem !important;
+}
+ 
+.sub-menu li a:hover, .sub-menu .current-item a {
+    background: unset;
+}
+nav .input-field {
+  height: 100% !important;
+  position: absolute !important;
+  right: 21% !important;
+  top: 0.7rem !important;
+}
+.input-field input[type=search] {
+  height: 60% !important;
+  border-radius: 5px !important;
+  border: 1px solid #999999 !important;
+  padding-left: 5rem !important;
+}
+nav .input-field label i {
+  margin-top: -4.5rem;
+  margin-left: 15rem;
+}
+.input-field input[type=search] ~ .material-icons {
+  top: -1.9rem !important;
+  right: 0.5rem !important;
+  font-size: 0.9rem;
+}
+nav .input-field a {
+  display: unset;
+  width: 5px;
+}
+nav .search-bar a{
+  color: #ffffff !important;
+}
+
+nav .search-bar a:hover{
+  background-color: unset !important;
+}
+.searcher{
+  width: 5px !important;
+  position: absolute;
+  right: 18rem;
+  color: #ffffff !important;
+}
+nav{
+  i{
+    color: #ffffff;
+  }
+}
+.search-bar{
+  i{
+    color: rgb(219,115,115);
+  }
+}
+
+/*.input-field input[type=search]:focus+label i {
+  color: #999999 ;
+  font-size: 0.5rem;
+}*/
 /* Media Queries */
 @media screen and (min-width: 768px){
   .create-doc {

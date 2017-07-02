@@ -1,5 +1,4 @@
 import Auth from '../middleware/authentication';
-import sequelize from '../models/index';
 
 const Document = require('../models').Document;
 const Role = require('../models').Role;
@@ -225,7 +224,7 @@ const DocumentController = {
 						},
 					]
 				},
-				order: [['DESC']],
+				order: [['title', 'ASC']],
 				limit,
 				offset
 			})

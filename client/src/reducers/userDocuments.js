@@ -1,7 +1,9 @@
-import { CREATE_NEW_DOCUMENT, VIEW_ALL_DOCUMENTS, EDIT_DOCUMENT, DELETE_DOCUMENT, GET_USER_DOCUMENTS } from '../actions/actionTypes';
+import { CREATE_NEW_DOCUMENT, VIEW_ALL_DOCUMENTS,
+	EDIT_DOCUMENT, DELETE_DOCUMENT, GET_USER_DOCUMENTS, SEARCH_DOCUMENTS } from '../actions/actionTypes';
 
 const initialState = {
-	documents: []
+	documents: [],
+	searchResults: []
 };
 export default (state = initialState, action) => {
 	switch (action.type) {
@@ -23,10 +25,19 @@ export default (state = initialState, action) => {
 	case DELETE_DOCUMENT: {
 		// const updatedList = state.documents.filter(document => action.document.id !== document.id);
 		// return Object.assign({}, state, { documents: updatedList });
-		const doc = state.documents.filter((document) => {
+		const filteredDocuments = state.documents.filter((document) => {
 			return action.document.id !== document.id;
 		});
-		return Object.assign({}, state, { documents: doc });
+		return Object.assign({}, state, { documents: filteredDocuments });
+	}
+	case SEARCH_DOCUMENTS: {
+		// const updatedList = [action.documents, ...state.searchResults];
+		// return Object.assign({}, state, { searchResults: updatedList });
+		// Object.assign(state.searchResults, action.documents);
+		// return Object.assign({}, state.searchResults, action.documents);
+		return {
+        searchResults: action.documents
+    };
 	}
 	default: return state;
 	}
