@@ -3,35 +3,36 @@ import Auth from '../middleware/authentication';
 const Document = require('../models').Document;
 const Role = require('../models').Role;
 
-const LIMIT = 15;
+const LIMIT = 6;
 const OFFSET = 0;
 
 const DocumentController = {
 	createDocument: (req, res) => {
-		Document.findOne({ where: { title: req.body.title } })
+		Document.find({ where: { title: req.body.title, userId: req.decoded.user.id } })
 			.then((existingDocument) => {
-				if (!existingDocument) {
-					const document = {
-						title: req.body.title,
-						content: req.body.content,
-						userId: req.decoded.user.id,
-						userRoleId: req.decoded.user.roleId,
-						access: req.body.access || 'public'
-					};
-					Document.create(document)
-						.then((createdDocument) => {
-							res.status(201).send({
-								createdDocument
-							});
-						})
-						.catch((err) => {
-							res.status(400).send(err);
-						});
-				} else {
-					res.status(404).json('Document already exists!');
+				if (existingDocument) {
+					return res.status(403).send({
+						message: 'Oops!. You already have a document with this title.',
+					});
 				}
-			}).catch((err) => {
-				res.status(401).json({ error: err.message });
+			});
+		const document = {
+			title: req.body.title,
+			content: req.body.content,
+			userId: req.decoded.user.id,
+			userRoleId: req.decoded.user.roleId,
+			access: req.body.access || 'public'
+		};
+		Document.create(document)
+			.then((createdDocument) => {
+				res.status(201).send({
+					createdDocument
+				});
+			})
+			.catch(() => {
+				res.status(400).send({
+					message: 'Could not create document. Pls try later'
+				});
 			});
 	},
 	getDocument: (req, res) => {
@@ -60,15 +61,17 @@ const DocumentController = {
 					});
 				}
 			})
-			.catch((err) => {
-				res.status(400).send(err);
+			.catch(() => {
+				res.status(400).send({
+					message: 'Bad Request. Please Try Later'
+				});
 			});
 	},
 	getAllDocuments: (req, res) => {
+		console.log(req.query.offset);
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
 		const userRole = req.decoded.user.roleId;
-		const orderType = 'DESC';
 		Role.findById(userRole)
 			.then((role) => {
 				if (role.roleName === 'admin') {
@@ -95,8 +98,10 @@ const DocumentController = {
 								pagination,
 							});
 						})
-						.catch((err) => {
-							res.status(400).send(err);
+						.catch(() => {
+							res.status(400).send({
+								message: 'Bad Request. Please Try Later'
+							});
 						});
 				} else {
 					Document.findAndCountAll({
@@ -110,7 +115,10 @@ const DocumentController = {
 									userRoleId: req.decoded.user.roleId
 								}
 							]
-						}
+						},
+						limit,
+						offset,
+						order: [['title', 'DESC']]
 					}).then((documents) => {
 						if (!documents) {
 							res.status(404).send({
@@ -127,12 +135,16 @@ const DocumentController = {
 							documents: documents.rows,
 							pagination,
 						});
-					}).catch((err) => {
-						res.status(400).send(err);
+					}).catch(() => {
+						res.status(400).send({
+							message: 'Bad Request. Please Try Later'
+						});
 					});
 				}
-			}).catch((err) => {
-				res.status(400).send(err);
+			}).catch(() => {
+				res.status(400).send({
+					message: 'Bad Request. No user Role'
+				});
 			});
 	},
 	updateDocument: (req, res) => {
@@ -171,7 +183,9 @@ const DocumentController = {
 				});
 			}
 		}).catch((err) => {
-			res.status(404).json({ error: err.message });
+			res.status(404).send({
+				message: 'Could not find document to update'
+			});
 		});
 	},
 	deleteDocument: (req, res) => {
@@ -190,8 +204,10 @@ const DocumentController = {
 								foundDocument
 							});
 						})
-						.catch((err) => {
-							res.status(500).json({ error: err.message });
+						.catch(() => {
+							res.status(500).send({
+								message: 'Could not delete. Please Try Later'
+							});
 						});
 				} else {
 					return res.status(404).json({
@@ -241,10 +257,14 @@ const DocumentController = {
 					});
 				})
 				.catch((err) => {
-					res.status(500).json({ error: err.message });
+					res.status(500).send({
+						message: err
+					});
 				});
 		} else {
-			res.status(400).json({ error: 'Item not found' });
+			res.status(400).send({
+				message: 'Item not found'
+			});
 		}
 	}
 };

@@ -7,7 +7,7 @@ const User = require('../models').User;
 const Document = require('../models').Document;
 
 const defaultRole = 2;
-const LIMIT = 10;
+const LIMIT = 6;
 const OFFSET = 0;
 
 const UserController = {
