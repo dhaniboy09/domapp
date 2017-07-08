@@ -3,13 +3,14 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { searchDocuments } from '../actions/searchDocuments';
-import DocumentCard from './DocumentCard';
+import UpdateProfileForm from './UpdateProfileForm';
+import UpdatePasswordForm from './UpdatePasswordForm';
 
 /**
  * @class Documents
  * @extends {React.Component}
  */
-class SearchResults extends React.Component {
+class Settings extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -27,7 +28,7 @@ class SearchResults extends React.Component {
 	/**
 	 * @description Lifecycle Method
 	 * @param  {object} nextProps
-	 * @return {voif}
+	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
 		this.setState({ searchResults: nextProps.searchResults });
@@ -64,34 +65,36 @@ class SearchResults extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		const userSearchResults = this.state.searchResults;
-		console.log(this.props.searchResults, 'this.props');
 		return (
-			<div>
-				<div className="document-panel">
-					<div className="f-center">
-						<h5 className="document-panel-header"><span>Search Results</span></h5>
-						{
-							(this.props.searchResults.length === 0) ? (<h3>Nothing Found</h3>) : (
-								<div className="col s12">
-									<div className="row">
-										{ userSearchResults.map((documents) => (
-											<DocumentCard
-												document={documents}
-												key={document.id}
-											/>
-										)) }
-									</div>
+			<div className="settings-panel f-center">
+				<h5 className="settings-panel-header f-center"><span>Settings</span></h5>
+				<div className="row">
+					<div className="col m6">
+						<div className="col s4 l12 darken-1">
+							<div className="card settings-card">
+								<div className="card-content">
+									<span className="settings-title">Profile Details</span>
+									<UpdateProfileForm />
 								</div>
-							)
-						}
+							</div>
+						</div>
+					</div>
+					<div className="col m6">
+						<div className="col s4 l12 darken-1">
+							<div className="card settings-card">
+								<div className="card-content">
+									<span className="settings-title">Change Password</span>
+									<UpdatePasswordForm />
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		);
 	}
 }
-SearchResults.propTypes = {
+Settings.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
 	searchResults: propTypes.object.isRequired
 };
@@ -106,5 +109,5 @@ function mapStateToProps(state) {
 		searchResults: state.userDocuments.searchResults
 	};
 }
-export default withRouter(connect(mapStateToProps, { searchDocuments })(SearchResults));
+export default withRouter(connect(mapStateToProps, { searchDocuments })(Settings));
 

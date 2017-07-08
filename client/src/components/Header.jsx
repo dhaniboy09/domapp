@@ -17,10 +17,11 @@ class Header extends React.Component {
 		this.props.history.push('/');
 	}
 	render() {
+		console.log(this.props.auth);
 		const { isAuthenticated, user } = this.props.auth;
 		let currentUser = '';
 		if (isAuthenticated === true) {
-			currentUser = user.user.firstName;
+			currentUser = user.firstName;
 		}
 		const userLinks = (
 			<div className="nav-wrapper">

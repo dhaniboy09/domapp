@@ -20,7 +20,8 @@ class DocumentForm extends React.Component {
 			title: '',
 			content: '',
 			access: '',
-			errors: {}
+			errors: {},
+			success: {}
 		};
 		this.onChange = this.onChange.bind(this);
 		this.createDocument = this.createDocument.bind(this);
@@ -39,12 +40,11 @@ class DocumentForm extends React.Component {
 		if (this.isValid()) {
 			this.setState({ errors: {}, isLoading: true });
 			this.props.newDocument(this.state).then(
-				(res) => {
-					console.log('saved');
+				() => {
+					Materialize.toast('Document Created', 4000);
 				},
-				(err) => {
-					console.log(err, 'not saved');
-					this.setState({ errors: err.response.data });
+				() => {
+					this.setState({ errors: 'Document Not Created' });
 				}
 			);
 		}
@@ -74,6 +74,8 @@ class DocumentForm extends React.Component {
 				<div className="form">
 					<div className="f-center">
 						<h5>New Document</h5> <br />
+						<span className="sign-up-error">{errors.title}</span><br />
+						<span className="sign-up-error">{errors.content}</span><br />
 						<label htmlFor="title">Title</label>
 						<input
 							className="browser-defaults"
@@ -84,7 +86,6 @@ class DocumentForm extends React.Component {
 							onChange={this.onChange}
 							placeholder="Title"
 						/>
-						<span className="sign-up-error">{errors.title}</span>
 						<br />
 						<label htmlFor="selectbox">Access</label>
 						<select name="access" onChange={this.onChange}>
@@ -93,7 +94,6 @@ class DocumentForm extends React.Component {
 							<option value="role">Role</option>
 						</select>
 						<br />
-						<span className="sign-up-error">{errors.access}</span>
 						<label htmlFor="content">Content</label>
 						<textarea
 							className="browser-defaults"
@@ -103,9 +103,11 @@ class DocumentForm extends React.Component {
 							onChange={this.onChange}
 							placeholder="Content"
 						/>
-						<span className="sign-up-error">{errors.content}</span>
 						<br />
-						<button className="button-primary button-block" onClick={this.createDocument}>
+						<button
+							className="button-primary button-block modal-close"
+							onClick={this.createDocument}
+						>
 							Create
 						</button>
 					</div>
@@ -118,6 +120,11 @@ DocumentForm.propTypes = {
 	newDocument: propTypes.func.isRequired,
 };
 
+/**
+ * @description Maps State to Props
+ * @param  {object} state
+ * @return {object}
+ */
 function mapStateToProps(state) {
 	return {
 		userDocuments: state.userDocuments

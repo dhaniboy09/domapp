@@ -17,15 +17,14 @@ const UserController = {
 				.then((user) => {
 					if (user) {
 						bcrypt.compare(req.body.password, user.dataValues.password, (err, match) => {
-							const userData = {
-								id: user.dataValues.id,
-								firstName: user.dataValues.firstName,
-								lastName: user.dataValues.lastName,
-								email: user.dataValues.email,
-								roleId: user.dataValues.roleId
-							};
 							const token = jwt.sign(
-								{ user: userData },
+								{
+									id: user.dataValues.id,
+									firstName: user.dataValues.firstName,
+									lastName: user.dataValues.lastName,
+									email: user.dataValues.email,
+									roleId: user.dataValues.roleId
+								},
 								process.env.SECRET_KEY,
 								{ expiresIn: '23h' }
 							);
@@ -62,15 +61,14 @@ const UserController = {
 						password: req.body.password,
 						roleId: req.body.roleId || defaultRole
 					}).then((newuser) => {
-						const userData = {
-							id: newuser.dataValues.id,
-							firstName: newuser.dataValues.firstName,
-							lastName: newuser.dataValues.lastName,
-							email: newuser.dataValues.email,
-							roleId: newuser.dataValues.roleId
-						};
 						const token = jwt.sign(
-							{ user: userData },
+							{
+								id: newuser.dataValues.id,
+								firstName: newuser.dataValues.firstName,
+								lastName: newuser.dataValues.lastName,
+								email: newuser.dataValues.email,
+								roleId: newuser.dataValues.roleId
+							},
 							process.env.SECRET_KEY,
 							{ expiresIn: '23h' });
 						res.send(200, {
@@ -124,38 +122,82 @@ const UserController = {
 			});
 	},
 	updateUser: (req, res) => {
-		const userId = req.decoded.user.id;
-		const userRole = req.decoded.user.roleId;
+		const userId = req.decoded.id;
+		const userRole = req.decoded.roleId;
+		const selector = {
+			where: { id: req.params.id }
+		};
+		User.findById(req.params.id).then((user) => {
+			if (!user) {
+				return res.status(404).json({
+					message: 'User Not Found',
+				});
+			}
+		}).catch((err) => {
+			res.status(404).json({ error: err.message });
+		});
 		if (userRole === 1 || userId === Number(req.params.id)) {
-			User.findAll({ where: { email: req.body.email } }).then((existingUser) => {
-				if (existingUser) {
-					return res.status(403).json({
-						message: 'Email already in use.',
+			if (req.body.email) {
+				if (req.body.email === req.decoded.email) {
+					const updatedUser = req.body;
+					User.update(req.body, selector).then(() => {
+						res.status(200).json(updatedUser);
+					}).catch((err) => {
+						res.status(404).json({ error: err.message });
+					});
+				} else {
+					User.find({ where: { email: req.body.email }
+					}).then((foundEmail) => {
+						if (foundEmail) {
+							return res.status(403).json({
+								message: 'Email already in use'
+							});
+						}
+						User.update(req.body, selector).then((user) => {
+							res.status(200).json(user);
+						}).catch((err) => {
+							res.status(404).json({ error: err.message });
+						});
 					});
 				}
-			});
+			} else {
+				User.update(req.body, selector).then((user) => {
+					res.status(200).json(user);
+				}).catch((err) => {
+					res.status(404).json({ error: err.message });
+				});
+			}
+		}
+	},
+	updatePassword(req, res) {
+		const userId = req.decoded.id;
+		const selector = {
+			where: { id: req.params.id }
+		};
+		if (userId === Number(req.params.id)) {
 			User.findById(req.params.id).then((user) => {
 				if (!user) {
 					return res.status(404).json({
 						message: 'User Not Found',
 					});
 				}
-				const selector = {
-					where: { id: req.params.id }
-				};
-				User.update(req.body, selector).then(() => {
-					res.status(200).json(user);
-				}).catch((err) => {
-					res.status(404).json({ error: err.message });
-				});
+			});
+			console.log(req.body, 'the password');
+			User.update(
+				{ password: req.body.password },
+				{ where: { id: req.params.id } }
+			).then((user) => {
+				console.log('no error got in here');
+				res.status(200).json(user);
 			}).catch((err) => {
+				console.log('error got in here');
 				res.status(404).json({ error: err.message });
 			});
 		}
 	},
 	deleteUser(req, res) {
-		const userId = req.decoded.user.id;
-		const userRole = req.decoded.user.roleId;
+		const userId = req.decoded.id;
+		const userRole = req.decoded.roleId;
 		if (userRole === 1 || userId === Number(req.params.id)) {
 			User.findById(req.params.id).then((user) => {
 				if (!user) {

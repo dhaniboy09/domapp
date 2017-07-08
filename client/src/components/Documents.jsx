@@ -5,6 +5,7 @@ import propTypes from 'prop-types';
 import { allDocuments } from '../actions/allDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
+
 /**
  * @class Documents
  * @extends {React.Component}
@@ -18,7 +19,8 @@ class Documents extends React.Component {
 		super(props);
 		this.state = {
 			offset: 0,
-			limit: 6
+			limit: 6,
+			douments: []
 		};
 		this.openModal = this.openModal.bind(this);
 		this.nextPage = this.nextPage.bind(this);
@@ -42,6 +44,7 @@ class Documents extends React.Component {
 	}
 	/**
 	 * @description Goes to the next page
+	 * @param {void} e
 	 * @return {void}
 	 */
 	nextPage(e) {
@@ -66,6 +69,7 @@ class Documents extends React.Component {
 	 * @return {void}
 	 */
 	render() {
+		// console.log(this.props.documents[0], 'in render');
 		const pages = this.props.pagination.pages;
 		const currentPage = this.props.pagination.currentPage;
 		return (
@@ -80,10 +84,11 @@ class Documents extends React.Component {
 				</div>
 				<div className="document-panel">
 					<div className="f-center">
-						<h5 className="document-panel-header break"><span>All Documents</span></h5>
+						<h5 className="document-panel-header"><span>All Documents</span></h5>
+						{/* <span className="page-count">Page {currentPage} of {pages}</span> */}
 						<div className="col s12">
 							<div className="row">
-								{ this.props.documents.map((document) => (
+								{this.props.documents.map((document) => (
 									<DocumentCard
 										document={document}
 										key={document.id}

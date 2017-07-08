@@ -5,6 +5,7 @@ import propTypes from 'prop-types';
 import { myDocuments } from '../actions/myDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
+import Footer from './Footer';
 /**
  * @class Documents
  * @extends {React.Component}
@@ -19,7 +20,7 @@ class MyDocuments extends React.Component {
 		this.state = {
 			offset: 0,
 			limit: 6,
-			id: this.props.auth.user.user.id
+			id: this.props.auth.user.id
 		};
 		this.nextPage = this.nextPage.bind(this);
 		this.prevPage = this.prevPage.bind(this);
@@ -82,7 +83,7 @@ class MyDocuments extends React.Component {
 				</div>
 				<div className="document-panel">
 					<div className="f-center">
-						<h5 className="document-panel-header break"><span>My Documents</span></h5>
+						<h5 className="document-panel-header"><span>My Documents</span></h5>
 						<div className="col s12">
 							<div className="row">
 								{ this.props.documents.map((document) => (
