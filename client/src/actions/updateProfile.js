@@ -15,7 +15,6 @@ export const setUpdateProfile = (user) => {
 export const updateProfile = (userData) => {
 	return dispatch => {
 		return axios.put(`/api/users/${userData.id}`, userData).then((res) => {
-			console.log(res.data,'the response');
 			dispatch(setUpdateProfile(res.data));
 		}).catch((err) => {
 			console.log(err, 'the error');

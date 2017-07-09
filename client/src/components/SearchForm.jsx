@@ -35,8 +35,7 @@ class SearchForm extends React.Component {
 	 * @return {void}
 	 */
 	handleSearch() {
-		this.props.searchDocuments(this.state.searchText).then((result) => {
-			console.log(result, 'the result');
+		this.props.searchDocuments(this.state.searchText).then(() => {
 			this.props.history.push('/searchresults');
 		});
 	}
@@ -80,7 +79,8 @@ class SearchForm extends React.Component {
 	}
 }
 SearchForm.propTypes = {
-	searchDocuments: propTypes.func.isRequired
+	searchDocuments: propTypes.func.isRequired,
+	history: propTypes.object.isRequired
 };
 /**
  * @description Maps state to props

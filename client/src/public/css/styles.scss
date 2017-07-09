@@ -291,6 +291,14 @@ a{
   margin: 0 auto;
   margin-bottom: 5rem;
 }
+.user-panel{
+  position: relative;
+  display: block;
+  top:2rem;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 5rem;
+}
 .settings-panel {
   position: relative;
   display: block;
@@ -364,6 +372,10 @@ a{
 }
 .document-panel-header{
 	color: #aa9c84;
+  font-weight: normal;
+}
+.user-panel-header{
+  color: #aa9c84;
   font-weight: normal;
 
 }
@@ -598,13 +610,32 @@ button[disabled]{
   background-color: #cccccc;
   color: #666666;
 }
-/*.input-field input[type=search]:focus+label i {
-  color: #999999 ;
-  font-size: 0.5rem;
-}*/
+.user-search {
+  margin-bottom: -2rem;
+  width: 75%; 
+}
+table {
+  overflow: scroll !important;
+}
+th {
+  color: #283c46
+}
+td {
+  color: #666666;
+  font-family: 'Titillium Web', serif !important;
+}
+.scroll {
+  overflow: scroll !important;
+  height: 700px !important;
+}
 /* Media Queries */
 @media screen and (min-width: 768px){
   .create-doc {
       display: block;
+  }
+  .user-search {
+    margin-bottom: -2rem;
+    margin-left: 5rem;
+    width: 75%; 
   }
 }

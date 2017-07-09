@@ -59,8 +59,8 @@ class Documents extends React.Component {
 	 */
 	openModal() {
 		$('.modal').modal({
-			dismissible: true, // Modal can be dismissed by clicking outside of the modal
-			opacity: 0.5, // Opacity of modal background
+			dismissible: true,
+			opacity: 0.5, 
 		});
 		$('#myModal').modal();
 	}

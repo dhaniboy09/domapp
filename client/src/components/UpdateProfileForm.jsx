@@ -33,16 +33,6 @@ class UpdateProfileForm extends React.Component {
 		this.updateProfile = this.updateProfile.bind(this);
 	}
 	/**
-	 * @description Allows user Interact with form fileds
-	 * by setting state of form fields.
-	 * @param  {object} e [description]
-	 * @return {void}
-	 */
-	onChange(e) {
-		this.setState({ disabled: false });
-		this.setState({ [e.target.name]: e.target.value });
-	}
-	/**
 	 * @description Lifcycle Method
 	 * @return {void}
 	 */
@@ -54,6 +44,16 @@ class UpdateProfileForm extends React.Component {
 				email: this.props.users.email
 			});
 		});
+	}
+	/**
+	 * @description Allows user Interact with form fileds
+	 * by setting state of form fields.
+	 * @param  {object} e [description]
+	 * @return {void}
+	 */
+	onChange(e) {
+		this.setState({ disabled: false });
+		this.setState({ [e.target.name]: e.target.value });
 	}
 	/**
 	 * @description Triggers action to sign up users
