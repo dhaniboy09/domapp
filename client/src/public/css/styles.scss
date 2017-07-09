@@ -289,6 +289,24 @@ a{
 	top:2rem;
   width: 80%;
   margin: 0 auto;
+  margin-bottom: 5rem;
+}
+.user-panel{
+  position: relative;
+  display: block;
+  top:2rem;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 5rem;
+}
+.settings-panel {
+  position: relative;
+  display: block;
+  top:2rem;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 5rem;
+  height: auto;
 }
 .break{
 	overflow: hidden;
@@ -312,6 +330,11 @@ a{
 .break>span:after{
   left: 100%;
 }
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /*.break:before{
 	content: '';
   position: absolute;
@@ -321,12 +344,45 @@ a{
   border-bottom: 1px solid rgba(0,0,0,0.1);
   z-index: 0;
 }*/
-
-
+.settings-title {
+  border-radius: 2em;
+  padding: 0.5em 1em;
+  line-height: 1;
+  background-color: #283c46;
+  color: #ffffff !important;
+  text-transform: uppercase;
+}
+.settings-card {
+  min-height: 500px !important;
+  margin: 0 auto;
+}
+.settings-form {
+  width: 58em !important; /*Formerly max-width: 15em*/
+  position: relative;
+  overflow: visible;
+  margin: 0 auto !important; 
+  padding: 3rem 1rem 1rem 1rem;
+}
+.settings-card input{
+  width: 50% !important;
+  margin-bottom: 1rem;
+}
+.s-button {
+  margin-left: 11rem;
+}
 .document-panel-header{
 	color: #aa9c84;
   font-weight: normal;
+}
+.user-panel-header{
+  color: #aa9c84;
+  font-weight: normal;
 
+}
+.settings-panel-header{
+  color: #aa9c84;
+  font-weight: normal;
+  margin-bottom: 2rem;
 }
 .sign-up-error{
   color: red;
@@ -349,6 +405,12 @@ a{
 .clear{
   clear:both;
 }
+.left{
+  float: left;
+}
+.right {
+  float: right;
+}
 #myModal{
   margin-top: 2rem;
   height: 50rem;
@@ -369,12 +431,15 @@ a{
   /*margin-top: 9rem !important;*/
   background-color: rgba(220,220,220,0.3) !important;
 }
-.card .card-content .card-title {
+.card .card-content .card-title a{
   color: #666666 !important;
+  text-transform: uppercase;
+  font-size: 1.3rem;
 }
-.card .card-content p {
-  color: #999999 !important;
+.card .card-content .card-title a:hover{
+  text-decoration: underline !important;
 }
+
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
   font-family: 'Titillium Web', serif !important;
   text-transform: unset !important;
@@ -395,7 +460,7 @@ a{
     opacity:0;
     transition:opacity linear 0.15s;
     box-shadow:0px 2px 3px rgba(0,0,0,0.2);
-    background:#2e2728;
+    background:#999999;
 }
  
 .sub-menu li {
@@ -427,6 +492,7 @@ nav .input-field {
   border-radius: 5px !important;
   border: 1px solid #999999 !important;
   padding-left: 5rem !important;
+  background-color: #ffffff;
 }
 nav .input-field label i {
   margin-top: -4.5rem;
@@ -470,6 +536,10 @@ nav{
   margin: 0 auto;
   margin-right: -4.5rem;
   margin-top: -25rem;
+  cursor: pointer;
+}
+.modalor{
+
 }
 .prev{
   position: relative;
@@ -477,14 +547,95 @@ nav{
   margin: 0 auto;
   margin-left: -4.5rem;
   margin-top: -25rem;
+  cursor: pointer;
 }
-/*.input-field input[type=search]:focus+label i {
-  color: #999999 ;
-  font-size: 0.5rem;
-}*/
+.created {
+  font-family: 'Titillium Web', serif !important;
+  color: #e57373 !important;
+}
+.grey-light{
+  color: #999999 !important;
+}
+.page-count {
+  font-family: 'Titillium Web', serif !important;
+  color: #e57373 !important;
+  float: right;
+  margin-top: 3rem;
+  margin-right: 5rem;
+}
+.footer-heading {
+  color: #666666 !important;
+}
+.footer-text {
+  font-family: 'Titillium Web', serif !important;
+}
+.all-rights {
+  left: 54.75rem !important;
+  position: absolute;
+}
+.container {
+  width: 78% !important;
+}
+.s-form-wrapper {
+  width: 50%;
+}
+.s-form {
+  margin-top: 4rem;
+}
+.s-form label {
+  display: block;
+  float: left;
+  margin-left: 4rem; 
+}
+.s-form {
+  input {
+  border: 1px solid #283c46 !important;
+  height: 2.5rem !important;
+  width: 18rem !important;
+  border-radius: 3px !important;
+  padding-left: 0.5rem !important;
+  font-size: 1rem;
+  font-family: 'Titillium Web', serif !important;
+  display: block;
+  margin-left: 4rem !important;
+  }
+} 
+.s-form input:focus {
+  background-color: #ffffff;
+  border: unset;
+}
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+.user-search {
+  margin-bottom: -2rem;
+  width: 75%; 
+}
+table {
+  overflow: scroll !important;
+}
+th {
+  color: #283c46
+}
+td {
+  color: #666666;
+  font-family: 'Titillium Web', serif !important;
+}
+.scroll {
+  overflow: scroll !important;
+  height: 700px !important;
+}
 /* Media Queries */
 @media screen and (min-width: 768px){
   .create-doc {
       display: block;
+  }
+  .user-search {
+    margin-bottom: -2rem;
+    margin-left: 5rem;
+    width: 75%; 
   }
 }

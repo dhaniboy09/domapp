@@ -13,6 +13,8 @@ import SignInPage from './src/components/SignInPage';
 import Documents from './src/components/Documents';
 import MyDocuments from './src/components/MyDocuments';
 import SearchResults from './src/components/SearchResults';
+import Settings from './src/components/Settings';
+import AllUsers from './src/components/AllUsers';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
 import rootReducer from './src/rootReducer';
 import { setCurrentUser } from './src/actions/signInAction';
@@ -30,17 +32,71 @@ if (localStorage.token) {
 	setAuthorizationToken(localStorage.token);
 	store.dispatch(setCurrentUser(jwt.decode(localStorage.token)));
 }
+/**
+ * @description Checks if user is authenticated
+ * @return {Boolean}
+ */
+function isAuthenticated() {
+	if (localStorage.getItem('token')) {
+		return true;
+	}
+	return false;
+}
 
 render(
 	<Provider store={store}>
 		<Router history={history}>
 			<App>
 				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route exact path="/signin" component={SignInPage} />
-					<Route exact path="/documents" component={Documents} />
-					<Route exact path="/mydocuments" component={MyDocuments} />
-					<Route exact path="/searchresults" component={SearchResults} />
+					<Route
+						exact
+						path="/"
+						render={() => (
+							isAuthenticated() ? (<Documents />) : (<Home />)
+						)}
+					/>
+					<Route
+						exact
+						path="/sign"
+						render={() => (
+							isAuthenticated() ? (<Documents />) : (<SignInPage />)
+						)}
+					/>
+					<Route
+						exact
+						path="/documents"
+						render={() => (
+							isAuthenticated() ? (<Documents />) : (<Home />)
+						)}
+					/>
+					<Route
+						exact
+						path="/mydocuments"
+						render={() => (
+							isAuthenticated() ? (<MyDocuments />) : (<Home />)
+						)}
+					/>
+					<Route
+						exact
+						path="/searchresults"
+						render={() => (
+							isAuthenticated() ? (<SearchResults />) : (<Home />)
+						)}
+					/>
+					<Route
+						exact
+						path="/allusers"
+						render={() => (
+							isAuthenticated() ? (<AllUsers />) : (<Home />)
+						)}
+					/>
+					<Route
+						exact
+						path="/settings"
+						render={() => (
+							isAuthenticated() ? (<Settings />) : (<Home />)
+						)}
+					/>
 				</Switch>
 			</App>
 		</Router>

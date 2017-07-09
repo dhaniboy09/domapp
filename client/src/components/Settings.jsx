@@ -3,12 +3,14 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { searchDocuments } from '../actions/searchDocuments';
+import UpdateProfileForm from './UpdateProfileForm';
+import UpdatePasswordForm from './UpdatePasswordForm';
 
 /**
  * @class Documents
  * @extends {React.Component}
  */
-class SearchForm extends React.Component {
+class Settings extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -16,11 +18,20 @@ class SearchForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchText: ''
+			searchText: '',
+			searchResults: this.props.searchResults
 		};
 		this.openModal = this.openModal.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.onChange = this.onChange.bind(this);
+	}
+	/**
+	 * @description Lifecycle Method
+	 * @param  {object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		this.setState({ searchResults: nextProps.searchResults });
 	}
 	/**
 	 * @param  {object} e
@@ -35,9 +46,7 @@ class SearchForm extends React.Component {
 	 * @return {void}
 	 */
 	handleSearch() {
-		this.props.searchDocuments(this.state.searchText).then(() => {
-			this.props.history.push('/searchresults');
-		});
+		this.props.searchDocuments(this.state);
 	}
 	/**
 	 * @description Modal to Add a Document
@@ -57,30 +66,37 @@ class SearchForm extends React.Component {
 	 */
 	render() {
 		return (
-			<div>
-				<div className="search-bar">
-					<div className="input-field">
-						<input
-							id="search"
-							type="search"
-							name="search"
-							placeholder="Search by title"
-							value={this.state.searchText}
-							onChange={this.onChange}
-						/>
+			<div className="settings-panel f-center">
+				<h5 className="settings-panel-header f-center"><span>Settings</span></h5>
+				<div className="row">
+					<div className="col m6">
+						<div className="col s4 l12 darken-1">
+							<div className="card settings-card">
+								<div className="card-content">
+									<span className="settings-title">Profile Details</span>
+									<UpdateProfileForm />
+								</div>
+							</div>
+						</div>
 					</div>
-					<a role="button" className="searcher" onClick={this.handleSearch}>
-						<i className="material-icons">search</i>
-					</a>
+					<div className="col m6">
+						<div className="col s4 l12 darken-1">
+							<div className="card settings-card">
+								<div className="card-content">
+									<span className="settings-title">Change Password</span>
+									<UpdatePasswordForm />
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-
 			</div>
 		);
 	}
 }
-SearchForm.propTypes = {
+Settings.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	history: propTypes.object.isRequired
+	searchResults: propTypes.object.isRequired
 };
 /**
  * @description Maps state to props
@@ -90,8 +106,8 @@ SearchForm.propTypes = {
 function mapStateToProps(state) {
 	return {
 		// document: state.userDocuments.document,
-		documents: state.userDocuments.documents
+		searchResults: state.userDocuments.searchResults
 	};
 }
-export default withRouter(connect(mapStateToProps, { searchDocuments })(SearchForm));
+export default withRouter(connect(mapStateToProps, { searchDocuments })(Settings));
 

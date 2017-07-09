@@ -1,10 +1,19 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
-import jwtDecode from 'jwt-decode';
 import validateInput from '../../../server/helpers/signUpValidation';
 
+/**
+ * @class SignUpForm
+ * @description Component to render Sign Up Form
+ * @extends {React.Component}
+ */
 class SignUpForm extends React.Component {
+	/**
+	 * @constructor constructor
+	 * @param  {object} props
+	 * @return {void}
+	 */
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -18,9 +27,20 @@ class SignUpForm extends React.Component {
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
+	/**
+	 * @description Allows user Interact with form fileds
+	 * by setting state of form fields.
+	 * @param  {object} e
+	 * @return {void}
+	 */
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
 	}
+	/**
+	 * @description Triggers action to sign up users
+	 * @param  {object} e
+	 * @return {void}
+	 */
 	onSubmit(e) {
 		e.preventDefault();
 		if (this.isValid()) {
@@ -33,6 +53,10 @@ class SignUpForm extends React.Component {
 			);
 		}
 	}
+	/**
+	 * @description Checks that form is valid
+	 * @return {Boolean}
+	 */
 	isValid() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
@@ -40,6 +64,10 @@ class SignUpForm extends React.Component {
 		}
 		return isValid;
 	}
+	/**
+	 * @description Renders content to the screen
+	 * @return {void}
+	 */
 	render() {
 		let errors = {};
 		if (this.state.errors !== null) {
@@ -122,6 +150,4 @@ SignUpForm.propTypes = {
 	history: propTypes.object
 };
 export default withRouter(SignUpForm);
-
-
 

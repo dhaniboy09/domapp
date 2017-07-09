@@ -8,7 +8,7 @@ const OFFSET = 0;
 
 const DocumentController = {
 	createDocument: (req, res) => {
-		Document.find({ where: { title: req.body.title, userId: req.decoded.user.id } })
+		Document.find({ where: { title: req.body.title, userId: req.decoded.id } })
 			.then((existingDocument) => {
 				if (existingDocument) {
 					return res.status(403).send({
@@ -19,8 +19,8 @@ const DocumentController = {
 		const document = {
 			title: req.body.title,
 			content: req.body.content,
-			userId: req.decoded.user.id,
-			userRoleId: req.decoded.user.roleId,
+			userId: req.decoded.id,
+			userRoleId: req.decoded.roleId,
 			access: req.body.access || 'public'
 		};
 		Document.create(document)
@@ -37,8 +37,8 @@ const DocumentController = {
 	},
 	getDocument: (req, res) => {
 		const docId = req.params.id;
-		const userRole = req.decoded.user.roleId;
-		const userId = req.decoded.user.id;
+		const userRole = req.decoded.roleId;
+		const userId = req.decoded.id;
 		Document.findById(docId)
 			.then((foundDocument) => {
 				if (foundDocument) {
@@ -68,10 +68,9 @@ const DocumentController = {
 			});
 	},
 	getAllDocuments: (req, res) => {
-		console.log(req.query.offset);
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
-		const userRole = req.decoded.user.roleId;
+		const userRole = req.decoded.roleId;
 		Role.findById(userRole)
 			.then((role) => {
 				if (role.roleName === 'admin') {
@@ -79,7 +78,7 @@ const DocumentController = {
 						.findAndCountAll({
 							limit,
 							offset,
-							order: [['DESC']]
+							order: [['createdAt', 'DESC']]
 						})
 						.then((documents) => {
 							if (!documents) {
@@ -100,7 +99,7 @@ const DocumentController = {
 						})
 						.catch(() => {
 							res.status(400).send({
-								message: 'Bad Request. Please Try Later'
+								message: 'Bad Request1. Please Try Later'
 							});
 						});
 				} else {
@@ -112,13 +111,13 @@ const DocumentController = {
 								},
 								{
 									access: 'role',
-									userRoleId: req.decoded.user.roleId
+									userRoleId: req.decoded.roleId
 								}
 							]
 						},
 						limit,
 						offset,
-						order: [['title', 'DESC']]
+						order: [['createdAt', 'DESC']]
 					}).then((documents) => {
 						if (!documents) {
 							res.status(404).send({
@@ -137,20 +136,20 @@ const DocumentController = {
 						});
 					}).catch(() => {
 						res.status(400).send({
-							message: 'Bad Request. Please Try Later'
+							message: 'Bad Request2. Please Try Later'
 						});
 					});
 				}
 			}).catch(() => {
 				res.status(400).send({
-					message: 'Bad Request. No user Role'
+					message: 'Bad Request3. No user Role'
 				});
 			});
 	},
 	updateDocument: (req, res) => {
-		const userId = req.decoded.user.id;
-		const userRole = req.decoded.user.roleId;
-		Document.find({ where: { title: req.body.title, userId: req.decoded.user.id } })
+		const userId = req.decoded.id;
+		const userRole = req.decoded.roleId;
+		Document.find({ where: { title: req.body.title, userId: req.decoded.id } })
 			.then((existingDocument) => {
 				if (existingDocument) {
 					return res.status(403).json({
@@ -182,15 +181,15 @@ const DocumentController = {
 					message: 'Document Not Found',
 				});
 			}
-		}).catch((err) => {
+		}).catch(() => {
 			res.status(404).send({
 				message: 'Could not find document to update'
 			});
 		});
 	},
 	deleteDocument: (req, res) => {
-		const userId = req.decoded.user.id;
-		const userRole = req.decoded.user.roleId;
+		const userId = req.decoded.id;
+		const userRole = req.decoded.roleId;
 		Document.findById(req.params.id).then((foundDocument) => {
 			if (foundDocument) {
 				if (userRole === 1 || userId === foundDocument.userId) {

@@ -12,7 +12,8 @@
     "browser": true
   },
   "globals": {
-    "$": true
+    "$": true,
+    "Materialize": true
     },
   "rules": {
     "one-var": 0,

@@ -66,17 +66,16 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		},
 	});
-	const encryptPassword = (user) => {
-		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
-	};
 	User.beforeCreate((user) => {
 		user.email = user.email.toLowerCase();
-		encryptPassword(user);
+		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 	});
-	User.beforeUpdate((user) => {
-		user.email = user.email.toLowerCase();
-		if (user.password) {
-			encryptPassword(user);
+	User.beforeBulkUpdate((user) => {
+		if (user.attributes.email) {
+			user.email = user.email.toLowerCase();
+		}
+		if (user.attributes.password !== null) {
+			user.attributes.password = bcrypt.hashSync(user.attributes.password, bcrypt.genSaltSync(10));
 		}
 	});
 

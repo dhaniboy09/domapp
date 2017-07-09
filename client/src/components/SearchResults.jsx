@@ -24,9 +24,14 @@ class SearchResults extends React.Component {
 		this.handleSearch = this.handleSearch.bind(this);
 		this.onChange = this.onChange.bind(this);
 	}
+	/**
+	 * @description Lifecycle Method
+	 * @param  {object} nextProps
+	 * @return {voif}
+	 */
 	componentWillReceiveProps(nextProps) {
-    this.setState({ searchResults: nextProps.searchResults });
-  }
+		this.setState({ searchResults: nextProps.searchResults });
+	}
 	/**
 	 * @param  {object} e
 	 * @return {void}
@@ -59,26 +64,29 @@ class SearchResults extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		console.log(this.props.searchResults, 'final stop');
 		const userSearchResults = this.state.searchResults;
+		console.log(this.props.searchResults, 'this.props');
 		return (
 			<div>
 				<div className="document-panel">
 					<div className="f-center">
-						<h5 className="document-panel-header break"><span>Search Results</span></h5>
-						<div className="col s12">
-							<div className="row">
-								{ userSearchResults.map((documents) => (
-									<DocumentCard
-										document={documents}
-										key={document.id}
-									/>
-								)) }
-							</div>
-						</div>
+						<h5 className="document-panel-header"><span>Search Results</span></h5>
+						{
+							(this.props.searchResults.length === 0) ? (<h3>Nothing Found</h3>) : (
+								<div className="col s12">
+									<div className="row">
+										{ userSearchResults.map((documents) => (
+											<DocumentCard
+												document={documents}
+												key={document.id}
+											/>
+										)) }
+									</div>
+								</div>
+							)
+						}
 					</div>
 				</div>
-				
 			</div>
 		);
 	}

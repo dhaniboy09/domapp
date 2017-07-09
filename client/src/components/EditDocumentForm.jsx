@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
+import classNames from 'classnames';
+import isEmpty from 'lodash/isEmpty';
 import { editDocument } from '../actions/editDocument';
+import validateInput from '../../../server/helpers/editDocumentValidation';
 
 /**
  * @class SignInForm
@@ -19,7 +22,9 @@ class DocumentForm extends React.Component {
 			title: this.props.document.title,
 			content: this.props.document.content,
 			access: this.props.document.access,
-			id: this.props.document.id
+			id: this.props.document.id,
+			errors: {},
+			isClicked: false
 		};
 		this.onChange = this.onChange.bind(this);
 		this.updateDocument = this.updateDocument.bind(this);
@@ -32,27 +37,55 @@ class DocumentForm extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 	/**
-	 * @return {void}
+	 * @description Checks for form validity
+	 * @return {Boolean}
 	 */
-	updateDocument() {
-		this.props.editDocument(this.state).then(
-			() => {
-				console.log('updated');
-			},
-			(err) => {
-				this.setState({ errors: err.response.data });
-			}
-		);
+	isValid() {
+		const { errors, isValid } = validateInput(this.state);
+		if (!isValid) {
+			this.setState({ errors });
+		}
+		return isValid;
+	}
+	/**
+	 * @return {void}
+	 * @param {object} e
+	 */
+	updateDocument(e) {
+		$('.action_compute').click(function() {
+    if($('#username').val() == ""){
+        $('#show_error').show();
+        return false;
+    }
+	});
+		if (this.isValid()) {
+			this.setState({ isClicked: true });
+			this.setState({ errors: {} });
+			this.props.editDocument(this.state).then(
+				() => {
+					// Materialize.toast('Document Updated', 4000);
+				},
+				(err) => {
+					this.setState({ errors: err.response.data });
+				}
+			);
+		}
 	}
 	/**
 	 * @description Renders content to the screen
 	 * @return {void}
 	 */
 	render() {
+		let errors = {};
+		if (this.state.errors !== null) {
+			errors = this.state.errors;
+		}
 		return (
 			<div>
 				<div className="form">
 					<div className="f-center">
+						<span className="sign-up-error">{errors.title}</span><br />
+						<span className="sign-up-error">{errors.content}</span><br />
 						<label htmlFor="title">Title</label>
 						<input
 							className="browser-defaults"
@@ -81,7 +114,7 @@ class DocumentForm extends React.Component {
 							placeholder="Content"
 						/>
 						<br />
-						<button className="button-primary button-block modal-close" onClick={this.updateDocument}>
+						<button className="button-primary button-block" onClick={this.updateDocument}>
 							Update
 						</button>
 					</div>
@@ -92,6 +125,8 @@ class DocumentForm extends React.Component {
 }
 DocumentForm.propTypes = {
 	editDocument: propTypes.func.isRequired,
+	document: propTypes.object.isRequired,
+	history: propTypes.object
 };
 
 function mapStateToProps(state) {

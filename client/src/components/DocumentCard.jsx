@@ -19,7 +19,7 @@ class DocumentCard extends React.Component {
 		this.deleteDocument = this.deleteDocument.bind(this);
 	}
 	deleteDocument() {
-		this.props.removeDocument(this.props.document.id).then((res) => {
+		this.props.removeDocument(this.props.document.id).then(() => {
 			console.log('removed successfully');
 		}).catch((err) => {
 			console.log(err, 'not removed successfully');
@@ -30,26 +30,30 @@ class DocumentCard extends React.Component {
 	 * @return {void}
 	 */
 	openModal() {
-		$('.modal').modal({
+		$(`.modal.${this.props.document.id}`).modal({
 			dismissible: true, // Modal can be dismissed by clicking outside of the modal
 			opacity: 0.5, // Opacity of modal background
 		});
-		$('#editModal').modal();
+		$(`.modal.${this.props.document.id}`).modal();
 	}
 	/**
 	 * @return {void}
 	 */
 	deleteModal() {
-		$('.modal').modal({
+		$(`.modal.${this.props.document.id}`).modal({
 			dismissible: true, // Modal can be dismissed by clicking outside of the modal
 			opacity: 0.5, // Opacity of modal background
 		});
-		$('#deleteModal').modal();
+		$(`.modal.${this.props.document.id}`).modal();
 	}
 	/**
 	 * @return {void}
 	 */
 	render() {
+		const createdAt = this.props.document.createdAt;
+		let content = this.props.document.content;
+		const createdDate = createdAt.split('T')[0];
+		content = content.length > 167 ? content.substring(0, 167) + '...' : content;
 		const emptyDocuments = (
 			<p>You have no new documents</p>
 		);
@@ -57,27 +61,34 @@ class DocumentCard extends React.Component {
 			<div className="col s4 m4 darken-1">
 				<div className="card">
 					<div className="card-content">
-						<span className="card-title">{ this.props.document.title }</span>
-						<p>{this.props.document.content }</p>
+						<span className="card-title truncate"><a href="#!">{ this.props.document.title }</a></span>
+						<span className="created">{createdDate}</span>
+						<p className="grey-light">{content}</p>
 					</div>
 					<div className="card-action form-card-action">
-						<a href="#editModal" onClick={this.openModal}>Edit</a>
-						<a href="#deleteModal" onClick={this.deleteModal}>Delete</a>
+						{
+							(this.props.auth.user.id === this.props.document.userId) ?
+								(
+									<div>
+										<a href="#editModal" onClick={this.openModal}>Edit</a>
+										<a href="#deleteModal" onClick={this.deleteModal}>Delete</a>
+									</div>
+								) : (<div><i className="fa fa-lock" aria-hidden="true" /></div>)
+						}
 					</div>
 				</div>
 			</div>
 		);
 		return (
-
 			<div>
 				{this.props.document.length === 0 ? emptyDocuments : documentList}
-				<div id="editModal" className="modal">
+				<div id="editModal" className={`modal ${this.props.document.id}`}>
 					<div className="modal-content">
 						<h5>Edit Document</h5>
-						<EditDocumentForm document={this.props.document}/>
+						<EditDocumentForm document={this.props.document} />
 					</div>
 				</div>
-				<div id="deleteModal" className="modal">
+				<div id="deleteModal" className={`modal ${this.props.document.id}`}>
 					<div className="modal-content">
 						<h5>Woah! Are you sure?</h5>
 					</div>
@@ -94,4 +105,19 @@ class DocumentCard extends React.Component {
 		);
 	}
 }
-export default withRouter(connect(null, { removeDocument })(DocumentCard));
+DocumentCard.propTypes = {
+	document: propTypes.object.isRequired,
+	removeDocument: propTypes.func.isRequired,
+	auth: propTypes.object.isRequired
+};
+/**
+ * @description Maps State to Props
+ * @param  {object} state
+ * @return {void}
+ */
+function mapStateToProps(state) {
+	return {
+		auth: state.auth
+	};
+}
+export default connect(mapStateToProps, { removeDocument })(DocumentCard);

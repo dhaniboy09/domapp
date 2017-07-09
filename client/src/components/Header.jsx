@@ -6,21 +6,39 @@ import propTypes from 'prop-types';
 import { signout } from '../actions/signInAction';
 import SearchForm from './SearchForm';
 
+/**
+ * @class Header
+ * @extends {React.Component}
+ */
 class Header extends React.Component {
+	/**
+	 * @param  {object} props
+	 * @return {void}
+	 */
 	constructor(props) {
 		super(props);
 		this.signout = this.signout.bind(this);
 	}
+	/**
+	 * @description Logs user out of the app
+	 * @param  {object} e
+	 * @return {void}
+	 */
 	signout(e) {
 		e.preventDefault();
 		this.props.signout();
 		this.props.history.push('/');
 	}
+	/**
+	 * @description Renders content to the screen
+	 * @return {void}
+	 */
 	render() {
 		const { isAuthenticated, user } = this.props.auth;
-		let currentUser = '';
+		let currentUser, currentUserRole = '';
 		if (isAuthenticated === true) {
-			currentUser = user.user.firstName;
+			currentUser = user.firstName;
+			currentUserRole = user.roleId;
 		}
 		const userLinks = (
 			<div className="nav-wrapper">
@@ -29,11 +47,12 @@ class Header extends React.Component {
 					<SearchForm />
 					<li><a href="/contact">Contact Us</a></li>
 					<li>
-						<a href="/contact">{currentUser} <i className="fa fa-caret-down" aria-hidden="true" />
+						<a href="#!">{currentUser} <i className="fa fa-caret-down" aria-hidden="true" />
 						</a>
 						<ul className="sub-menu">
 							<li><a href="/mydocuments">My Documents</a></li>
 							<li><a href="/settings">Settings</a></li><br />
+							{currentUserRole === 1 ? <li><a href="/allusers">All Users</a></li> : ''}
 							<li><a href="" onClick={this.signout}>Log out</a> </li>
 						</ul>
 					</li>
