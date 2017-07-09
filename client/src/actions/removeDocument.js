@@ -1,21 +1,21 @@
 import axios from 'axios';
 import { DELETE_DOCUMENT } from './actionTypes';
 
-export const setRemoveDocument = (document) => {
+export const setRemoveDocument = (documentId) => {
 	return {
 		type: DELETE_DOCUMENT,
-		document
+		documentId
 	};
 };
 
 /**
- * @param  {object} docData
+ * @param  {object} documentId
  * @return {function} dispatch
  */
 export const removeDocument = (documentId) => {
 	return dispatch => {
 		return axios.delete(`/api/documents/${documentId}`).then((res) => {
-			dispatch(setRemoveDocument(res.data.foundDocument));
+			dispatch(setRemoveDocument(documentId));
 			console.log(res.data, 'deleted document');
 		}).catch((err) => {
 			console.log(JSON.stringify(err), 'the error');

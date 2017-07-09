@@ -1,4 +1,4 @@
-import { UPDATE_PROFILE, FETCH_USER, VIEW_ALL_USERS, DELETE_USER } from '../actions/actionTypes';
+import { UPDATE_PROFILE, FETCH_USER, VIEW_ALL_USERS, DELETE_USER, DEACTIVATE_ACCOUNT } from '../actions/actionTypes';
 
 const initialState = {
 	isAuthenticated: false,
@@ -17,9 +17,11 @@ export default (state = initialState, action = {}) => {
 		const filteredUsers = state.allUsers.filter(user =>
 			user.id !== action.userId);
 		return Object.assign({}, state, { allUsers: filteredUsers });
-		// return state.allUsers.filter(({ id }) => id !== action.userId);
-		// const userId = action.data;
-		// return state.filter(user => user.id !== userId);
+	}
+	case DEACTIVATE_ACCOUNT: {
+		const filteredUsers = state.allUsers.filter(user =>
+			user.id !== action.userId);
+		return Object.assign({}, state, { allUsers: filteredUsers });
 	}
 	default: return state;
 	}

@@ -59,7 +59,7 @@ class AllUsers extends React.Component {
 		confirmAlert({
 			title: 'Confirm Delete',
 			message: 'Are you sure ?',
-			childrenElement: () => <div>Custom UI</div>,
+			// childrenElement: () => <div>Custom UI</div>,
 			confirmLabel: 'Confirm',
 			cancelLabel: 'Cancel',
 			onConfirm: () => {

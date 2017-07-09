@@ -2,6 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { removeDocument } from '../actions/removeDocument';
 import EditDocumentForm from './EditDocumentForm';
 /**
@@ -16,14 +18,7 @@ class DocumentCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.openModal = this.openModal.bind(this);
-		this.deleteDocument = this.deleteDocument.bind(this);
-	}
-	deleteDocument() {
-		this.props.removeDocument(this.props.document.id).then(() => {
-			console.log('removed successfully');
-		}).catch((err) => {
-			console.log(err, 'not removed successfully');
-		});
+		this.handleDocumentDelete = this.handleDocumentDelete.bind(this);
 	}
 	/**
 	 * @description Modal to Edit a Document
@@ -36,15 +31,20 @@ class DocumentCard extends React.Component {
 		});
 		$(`.modal.${this.props.document.id}`).modal();
 	}
-	/**
-	 * @return {void}
-	 */
-	deleteModal() {
-		$(`.modal.${this.props.document.id}`).modal({
-			dismissible: true, // Modal can be dismissed by clicking outside of the modal
-			opacity: 0.5, // Opacity of modal background
+	handleDocumentDelete(documentId) {
+		confirmAlert({
+			title: 'Confirm Delete',
+			message: 'Are you sure ?',
+			// childrenElement: () => <div>Custom UI</div>,
+			confirmLabel: 'Confirm',
+			cancelLabel: 'Cancel',
+			onConfirm: () => {
+				this.props.removeDocument(documentId).then(() => {
+					Materialize.toast('Document Deleted Successfully', 4000);
+				});
+			},
+			onCancel: () => ''
 		});
-		$(`.modal.${this.props.document.id}`).modal();
 	}
 	/**
 	 * @return {void}
@@ -71,7 +71,7 @@ class DocumentCard extends React.Component {
 								(
 									<div>
 										<a href="#editModal" onClick={this.openModal}>Edit</a>
-										<a href="#deleteModal" onClick={this.deleteModal}>Delete</a>
+										<a href="#!" onClick={() => this.handleDocumentDelete(this.props.document.id)}>Delete</a>
 									</div>
 								) : (<div><i className="fa fa-lock" aria-hidden="true" /></div>)
 						}
@@ -86,19 +86,6 @@ class DocumentCard extends React.Component {
 					<div className="modal-content">
 						<h5>Edit Document</h5>
 						<EditDocumentForm document={this.props.document} />
-					</div>
-				</div>
-				<div id="deleteModal" className={`modal ${this.props.document.id}`}>
-					<div className="modal-content">
-						<h5>Woah! Are you sure?</h5>
-					</div>
-					<div className="delete-actions">
-						<button className="button-primary button-block" onClick={this.deleteDocument}>
-							Delete
-						</button>
-						<button className="button-primary button-block modal-close">
-							Cancel
-						</button>
 					</div>
 				</div>
 			</div>

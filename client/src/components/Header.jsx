@@ -64,7 +64,7 @@ class Header extends React.Component {
 				<a href="/" className="brand-logo">Domapp</a>
 				<ul id="nav-mobile" className="right hide-on-med-and-down">
 					<li><Link to="/signin">Sign In</Link></li>
-					<li><a href="#sign-up-form">Sign Up</a></li>
+					<li><a href="/">Sign Up</a></li>
 					<li><a href="/documents">Contact Us</a></li>
 				</ul>
 			</div>

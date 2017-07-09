@@ -5,7 +5,6 @@ import propTypes from 'prop-types';
 import { myDocuments } from '../actions/myDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
-import Footer from './Footer';
 /**
  * @class Documents
  * @extends {React.Component}
