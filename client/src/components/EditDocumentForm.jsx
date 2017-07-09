@@ -80,13 +80,6 @@ class DocumentForm extends React.Component {
 		if (this.state.errors !== null) {
 			errors = this.state.errors;
 		}
-		// console.log(isEmpty(this.state.title), 'hi');
-		// let btnClass = classNames({
-		// 	'button-primary': true,
-		// 	'button-block': true,
-		// 	'modal-close': (isEmpty(this.state.title) === false),
-		// 	'modalor': (isEmpty(this.state.title) === true)
-		// });
 		return (
 			<div>
 				<div className="form">

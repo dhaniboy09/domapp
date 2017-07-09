@@ -10,3 +10,5 @@ export const PAGINATION_VIEW = 'PAGINATION_VIEW';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const FETCH_USER = 'FETCH_USER';
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
+export const VIEW_ALL_USERS = 'VIEW_ALL_USERS';
+export const DELETE_USER = 'DELETE_USER';

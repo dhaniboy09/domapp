@@ -78,7 +78,7 @@ const DocumentController = {
 						.findAndCountAll({
 							limit,
 							offset,
-							order: [['DESC']]
+							order: [['createdAt', 'DESC']]
 						})
 						.then((documents) => {
 							if (!documents) {
@@ -99,7 +99,7 @@ const DocumentController = {
 						})
 						.catch(() => {
 							res.status(400).send({
-								message: 'Bad Request. Please Try Later'
+								message: 'Bad Request1. Please Try Later'
 							});
 						});
 				} else {
@@ -136,13 +136,13 @@ const DocumentController = {
 						});
 					}).catch(() => {
 						res.status(400).send({
-							message: 'Bad Request. Please Try Later'
+							message: 'Bad Request2. Please Try Later'
 						});
 					});
 				}
 			}).catch(() => {
 				res.status(400).send({
-					message: 'Bad Request. No user Role'
+					message: 'Bad Request3. No user Role'
 				});
 			});
 	},

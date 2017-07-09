@@ -94,32 +94,33 @@ const UserController = {
 	getAllUsers: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
-		User
-			.findAndCountAll({
-				order: [['createdAt', 'DESC']],
-				limit,
-				offset
-			})
-			.then((users) => {
-				if (!users) {
-					res.status(404).send({
-						message: 'User Not Found',
+		const userRole = req.decoded.roleId;
+		if (userRole === 1) {
+			User
+				.findAndCountAll({
+					order: [['createdAt', 'DESC']]
+				})
+				.then((users) => {
+					if (!users) {
+						res.status(404).send({
+							message: 'User Not Found',
+						});
+					}
+					const pagination = {
+						totalCount: users.count,
+						pages: Math.ceil(users.count / limit),
+						currentPage: Math.floor(offset / limit) + 1,
+						pageSize: users.rows.length,
+					};
+					res.status(200).send({
+						users: users.rows,
+						pagination,
 					});
-				}
-				const pagination = {
-					totalCount: users.count,
-					pages: Math.ceil(users.count / limit),
-					currentPage: Math.floor(offset / limit) + 1,
-					pageSize: users.rows.length,
-				};
-				res.status(200).send({
-					users: users.rows,
-					pagination,
+				})
+				.catch((err) => {
+					res.status(400).send(err);
 				});
-			})
-			.catch((err) => {
-				res.status(400).send(err);
-			});
+		}
 	},
 	updateUser: (req, res) => {
 		const userId = req.decoded.id;
@@ -171,9 +172,6 @@ const UserController = {
 	},
 	updatePassword(req, res) {
 		const userId = req.decoded.id;
-		const selector = {
-			where: { id: req.params.id }
-		};
 		if (userId === Number(req.params.id)) {
 			User.findById(req.params.id).then((user) => {
 				if (!user) {
@@ -182,15 +180,12 @@ const UserController = {
 					});
 				}
 			});
-			console.log(req.body, 'the password');
 			User.update(
 				{ password: req.body.password },
 				{ where: { id: req.params.id } }
 			).then((user) => {
-				console.log('no error got in here');
 				res.status(200).json(user);
 			}).catch((err) => {
-				console.log('error got in here');
 				res.status(404).json({ error: err.message });
 			});
 		}

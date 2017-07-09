@@ -19,7 +19,7 @@ class DocumentCard extends React.Component {
 		this.deleteDocument = this.deleteDocument.bind(this);
 	}
 	deleteDocument() {
-		this.props.removeDocument(this.props.document.id).then((res) => {
+		this.props.removeDocument(this.props.document.id).then(() => {
 			console.log('removed successfully');
 		}).catch((err) => {
 			console.log(err, 'not removed successfully');

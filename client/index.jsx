@@ -14,6 +14,7 @@ import Documents from './src/components/Documents';
 import MyDocuments from './src/components/MyDocuments';
 import SearchResults from './src/components/SearchResults';
 import Settings from './src/components/Settings';
+import AllUsers from './src/components/AllUsers';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
 import rootReducer from './src/rootReducer';
 import { setCurrentUser } from './src/actions/signInAction';
@@ -54,7 +55,13 @@ render(
 							isAuthenticated() ? (<Documents />) : (<Home />)
 						)}
 					/>
-					<Route exact path="/signin" component={SignInPage} />
+					<Route
+						exact
+						path="/sign"
+						render={() => (
+							isAuthenticated() ? (<Documents />) : (<SignInPage />)
+						)}
+					/>
 					<Route
 						exact
 						path="/documents"
@@ -74,6 +81,13 @@ render(
 						path="/searchresults"
 						render={() => (
 							isAuthenticated() ? (<SearchResults />) : (<Home />)
+						)}
+					/>
+					<Route
+						exact
+						path="/allusers"
+						render={() => (
+							isAuthenticated() ? (<AllUsers />) : (<Home />)
 						)}
 					/>
 					<Route
