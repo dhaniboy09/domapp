@@ -24,13 +24,8 @@ export default (state = initialState, action) => {
 		return Object.assign({}, state, { documents: updatedDocument });
 	}
 	case DELETE_DOCUMENT: {
-		// const filteredDocuments = state.documents.filter((document) => {
-		// 	action.document.id !== document.id;
-		// });
-		// return Object.assign({}, state, { documents: filteredDocuments });
-
-		const filteredDocuments = state.document.filter(document =>
-			document.id !== action.payload);
+		const filteredDocuments = state.documents.filter(document =>
+			document.id !== action.documentId);
 		return Object.assign({}, state, { documents: filteredDocuments });
 	}
 	case SEARCH_DOCUMENTS: {

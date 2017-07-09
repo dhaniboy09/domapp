@@ -57,7 +57,7 @@ render(
 					/>
 					<Route
 						exact
-						path="/sign"
+						path="/signin"
 						render={() => (
 							isAuthenticated() ? (<Documents />) : (<SignInPage />)
 						)}
