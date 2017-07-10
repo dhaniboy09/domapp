@@ -54,9 +54,6 @@ class DocumentCard extends React.Component {
 		let content = this.props.document.content;
 		const createdDate = createdAt.split('T')[0];
 		content = content.length > 167 ? content.substring(0, 167) + '...' : content;
-		const emptyDocuments = (
-			<p>You have no new documents</p>
-		);
 		const documentList = (
 			<div className="col s4 m4 darken-1">
 				<div className="card">
@@ -81,7 +78,7 @@ class DocumentCard extends React.Component {
 		);
 		return (
 			<div>
-				{this.props.document.length === 0 ? emptyDocuments : documentList}
+				{this.props.document.length === 0 ? <div><p>No new docs</p></div> : documentList}
 				<div id="editModal" className={`modal ${this.props.document.id}`}>
 					<div className="modal-content">
 						<h5>Edit Document</h5>

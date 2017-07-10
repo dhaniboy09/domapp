@@ -618,7 +618,7 @@ table {
   overflow: scroll !important;
 }
 th {
-  color: #283c46
+  color: #283c46;
 }
 td {
   color: #666666;
@@ -645,6 +645,10 @@ td {
   white-space: normal;
   margin: 1rem auto 0 auto;
   padding: 1em 1em 0.75em 1em;
+}
+.empty {
+  margin-top: 15%;
+  color: #283c46;
 }
 /* Media Queries */
 @media screen and (min-width: 768px){

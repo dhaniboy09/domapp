@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { signout } from '../actions/signInAction';
 import SearchForm from './SearchForm';
@@ -45,7 +44,6 @@ class Header extends React.Component {
 				<a href="/documents" className="brand-logo">Domapp</a>
 				<ul id="nav-mobile" className="right hide-on-med-and-down">
 					<SearchForm />
-					<li><a href="/contact">Contact Us</a></li>
 					<li>
 						<a href="#!">{currentUser} <i className="fa fa-caret-down" aria-hidden="true" />
 						</a>
@@ -83,7 +81,11 @@ Header.propTypes = {
 	signout: propTypes.func.isRequired,
 	history: propTypes.object
 };
-
+/**
+ * @description Maps State to Props
+ * @param  {object} state
+ * @return {void}
+ */
 function mapStateToProps(state) {
 	return {
 		auth: state.auth

@@ -28,10 +28,14 @@ export default {
 			{ test: /(\.scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
 			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
 			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader', options: { limit: 25000 } },
+			{ test: /materialize-css\/bin\//, loader: 'imports?jQuery=jquery,$=jquery,hammerjs' }
 		]
 	},
 	resolve: {
-		extensions: ['.js', '.jsx']
+		extensions: ['.js', '.jsx'],
+		alias: {
+			jquery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js')
+		}
 	},
 	node: {
 		net: 'empty',

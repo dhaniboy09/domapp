@@ -72,6 +72,11 @@ class Documents extends React.Component {
 		// console.log(this.props.documents[0], 'in render');
 		const pages = this.props.pagination.pages;
 		const currentPage = this.props.pagination.currentPage;
+		const emptyDocuments = (
+			<div className="empty">
+				<h5>No Public/Role documents!</h5>
+			</div>
+		);
 		return (
 			<div className="doc-wrapper">
 				<div className="create-doc">
@@ -88,6 +93,7 @@ class Documents extends React.Component {
 						{/* <span className="page-count">Page {currentPage} of {pages}</span> */}
 						<div className="col s12">
 							<div className="row">
+							{this.props.documents.length === 0 ? emptyDocuments : ''}
 								{this.props.documents.map((document) => (
 									<DocumentCard
 										document={document}
