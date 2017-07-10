@@ -6,10 +6,13 @@
   "scripts": {
     "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server-test": "npm run refill-testdb && NODE_ENV=test mocha --compilers js:babel-core/register server/test/**/*.test.js",
-    "reset-testdb": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test 5sequelize db:migrate",
+    "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "reset-testdb": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "seed-testdb": "NODE_ENV=test sequelize db:seed:all",
-    "refill-testdb": "npm run reset-testdb && npm run seed-testdb"
+    "refill-testdb": "npm run reset-testdb && npm run seed-testdb",
+    "pre-start": "NODE_ENV=production sequelize db:migrate && NODE_ENV=production sequelize db:seed:all",
+    "start": "npm run pre-start && NODE_ENV=production babel-node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +34,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "history": "^4.6.3",
+    "jquery": "^3.2.1",
     "jsonwebtoken": "^7.4.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
@@ -69,6 +73,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.0.2",
     "chai-http": "^3.0.0",
+    "coveralls": "^2.13.1",
     "css-loader": "^0.28.4",
     "eslint": "^4.0.0",
     "eslint-config-airbnb": "^15.0.1",
@@ -78,6 +83,7 @@
     "node-mocks-http": "^1.6.3",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
+    "nyc": "^11.0.3",
     "react-hot-loader": "^1.3.1",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",

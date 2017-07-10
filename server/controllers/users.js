@@ -54,6 +54,9 @@ const UserController = {
 		User.findOne({ where: { email: req.body.email } })
 			.then((user) => {
 				if (!user) {
+					if (req.body.roleId === 1 || req.body.roleId > 2) {
+						return res.status(403).json('Role cannot be directly assigned!');
+					}
 					User.create({
 						firstName: req.body.firstName,
 						lastName: req.body.lastName,
@@ -103,7 +106,7 @@ const UserController = {
 				.then((users) => {
 					if (!users) {
 						res.status(404).send({
-							message: 'User Not Found',
+							message: 'Users Not Found',
 						});
 					}
 					const pagination = {
@@ -120,6 +123,8 @@ const UserController = {
 				.catch((err) => {
 					res.status(400).send(err);
 				});
+		} else {
+			res.status(403).json('Access Denied!');
 		}
 	},
 	updateUser: (req, res) => {
@@ -259,6 +264,12 @@ const UserController = {
 	getUserDocuments: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
+		const userId = req.decoded.id;
+		if (userId !== Number(req.params.id)) {
+			return res.status(401).json({
+				message: 'Wrong Move',
+			});
+		}
 		Document
 			.findAndCountAll({
 				where: {

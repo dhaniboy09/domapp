@@ -35,9 +35,11 @@ class SearchForm extends React.Component {
 	 * @return {void}
 	 */
 	handleSearch() {
-		this.props.searchDocuments(this.state.searchText).then(() => {
-			this.props.history.push('/searchresults');
-		});
+		if (this.state.searchText !== '') {
+			this.props.searchDocuments(this.state.searchText).then(() => {
+				this.props.history.push('/searchresults');
+			});
+		}
 	}
 	/**
 	 * @description Modal to Add a Document

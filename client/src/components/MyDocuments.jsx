@@ -70,6 +70,11 @@ class MyDocuments extends React.Component {
 	render() {
 		const pages = this.props.pagination.pages;
 		const currentPage = this.props.pagination.currentPage;
+		const emptyDocuments = (
+			<div className="empty">
+				<h5>You have no personal documents!</h5>
+			</div>
+		);
 		return (
 			<div className="doc-wrapper">
 				<div className="create-doc">
@@ -85,6 +90,7 @@ class MyDocuments extends React.Component {
 						<h5 className="document-panel-header"><span>My Documents</span></h5>
 						<div className="col s12">
 							<div className="row">
+								{this.props.documents.length === 0 ? emptyDocuments : ''}
 								{ this.props.documents.map((document) => (
 									<DocumentCard
 										document={document}
