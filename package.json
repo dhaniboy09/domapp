@@ -11,8 +11,14 @@
     "reset-testdb": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "seed-testdb": "NODE_ENV=test sequelize db:seed:all",
     "refill-testdb": "npm run reset-testdb && npm run seed-testdb",
-    "pre-start": "NODE_ENV=production sequelize db:migrate && NODE_ENV=production sequelize db:seed:all",
-    "start": "npm run pre-start && NODE_ENV=production babel-node server/server.js"
+    "build-client": "NODE_ENV=production ./node_modules/.bin/webpack --config webpack.config.prod.babel.js", 
+    "build-server": "babel server -d dist/server --copy-files --ignore test.js",
+    "reset-proddb": "NODE_ENV=production ./node_modules/.bin/sequelize db:migrate:undo:all && NODE_ENV=production ./node_modules/.bin/sequelize db:migrate",
+    "pre-start": "npm run reset-proddb && NODE_ENV=production ./node_modules/.bin/sequelize db:seed:all",
+    "clean": "rm -R dist mkdir dist",
+    "build": "npm run clean && npm run build-client && npm run build-server",
+    "postinstall": "npm run pre-start && npm run build",
+    "start": "node dist/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -39,8 +45,10 @@
     "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
     "dotenv": "^4.0.0",
+    "dotenv-webpack": "^1.5.3",
     "express": "^4.15.3",
     "history": "^4.6.3",
+    "html-webpack-plugin": "^2.29.0",
     "jquery": "^3.2.1",
     "jsonwebtoken": "^7.4.1",
     "jwt-decode": "^2.2.0",
