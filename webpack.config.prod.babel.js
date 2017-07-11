@@ -18,7 +18,7 @@ export default {
 		new webpack.NoErrorsPlugin(),
 		new webpack.LoaderOptionsPlugin({
 			debug: true,
-		})
+		}),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new ExtractTextPlugin("public/css/styles.css"),
 		new webpack.HotModuleReplacementPlugin(),
