@@ -15,7 +15,7 @@
     "build-server": "babel server -d dist/server --copy-files --ignore test.js",
     "reset-proddb": "NODE_ENV=production ./node_modules/.bin/sequelize db:migrate:undo:all && NODE_ENV=production ./node_modules/.bin/sequelize db:migrate",
     "pre-start": "npm run reset-proddb && NODE_ENV=production ./node_modules/.bin/sequelize db:seed:all",
-    "clean": "rm -R dist mkdir dist",
+    "clean": "rm -R dist && mkdir dist",
     "build": "npm run clean && npm run build-client && npm run build-server",
     "postinstall": "npm run pre-start && npm run build",
     "start": "node dist/server/server.js"
