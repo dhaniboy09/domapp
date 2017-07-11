@@ -58,7 +58,7 @@
     "lodash": "^4.17.4",
     "materialize-css": "^0.99.0",
     "morgan": "^1.8.2",
-    "node-sass": "^3.4.2",
+    "node-sass": "^3.13.1",
     "pg": "^6.2.4",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.5.10",
