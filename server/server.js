@@ -11,6 +11,14 @@ const authentication = require('./middleware/authentication');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] === 'https') {
+    res.redirect(`http://${req.hostname}${req.url}`);
+  } else {
+    next();
+  }
+});
+
 // Serve routes before the default catch all
 // require('./server/routes')(app);
 // Setup a default catch-all route that sends back a welcome message in JSON format.
