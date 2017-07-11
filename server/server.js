@@ -13,7 +13,7 @@ import webpackMiddleware from 'webpack-dev-middleware';
 
 // Set up the express app
 const app = express();
-const compiler = webpack(webpackConfig);
+// const compiler = webpack(webpackConfig);
 const authentication = require('./middleware/authentication');
 
 // Log requests to the console.
