@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
 
-const express = require('express');
+
 const bodyParser = require('body-parser');
 
 // Set up the express app
