@@ -25,7 +25,7 @@ const DocumentController = {
 		};
 		Document.create(document)
 			.then((createdDocument) => {
-				res.status(201).send({
+				res.status(200).send({
 					createdDocument
 				});
 			})
