@@ -48,8 +48,8 @@ export default {
 			},
 			{ test: /(\.css)$/, loaders: ExtractTextPlugin.extract({ fallback:'style-loader', use:'css-loader' })},
 			{ test: /(\.scss)$/, loaders: ExtractTextPlugin.extract({ fallback:'style-loader', use:'css-loader?sourceMap!sass-loader' })},
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
-			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader', options: { limit: 25000 } },
+			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
+			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'file-loader', options: { limit: 25000 } },
 			{ test: /materialize-css\/bin\//, loader: 'imports?jQuery=jquery,$=jquery,hammerjs' }
 		]
 	},
