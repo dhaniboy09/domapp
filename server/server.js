@@ -5,10 +5,6 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
-
-
-const bodyParser = require('body-parser');
-
 // Set up the express app
 const app = express();
 
