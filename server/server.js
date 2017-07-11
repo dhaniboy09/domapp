@@ -4,31 +4,19 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
-// import webpackHotMiddleware from 'webpack-hot-middleware';
-// import webpackConfig from '../webpack.config.dev.babel';
 
-// const express = require('express');
-// const logger = require('morgan');
-// const bodyParser = require('body-parser');
+
+const express = require('express');
+const bodyParser = require('body-parser');
 
 // Set up the express app
 const app = express();
 
 const authentication = require('./middleware/authentication');
 
-// Log requests to the console.
-// app.use(logger('dev'));
-
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// app.use(webpackMiddleware(compiler, {
-// 	hot: true,
-// 	publicPath: webpackConfig.output.publicPath,
-// 	noInfo: true
-// }));
-// app.use(webpackHotMiddleware(compiler));
 
 // Serve routes before the default catch all
 // require('./server/routes')(app);

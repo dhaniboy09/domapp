@@ -6,6 +6,7 @@ import { newDocument } from '../actions/newDocument';
 import validateInput from '../../../server/helpers/createDocumentValidation';
 
 /**
+ * // const compiler = webpack(webpackConfig);
  * @class SignInForm
  * @extends {React.Component}
  */
