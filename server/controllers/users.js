@@ -130,28 +130,25 @@ const UserController = {
 	updateUser: (req, res) => {
 		const userId = req.decoded.id;
 		const userRole = req.decoded.roleId;
-		const selector = {
-			where: { id: req.params.id }
-		};
 		User.findById(req.params.id).then((user) => {
 			if (!user) {
 				return res.status(404).json({
 					message: 'User Not Found',
 				});
 			}
-		}).catch((err) => {
-			res.status(404).json({ error: err.message });
-		});
-		if (userRole === 1 || userId === Number(req.params.id)) {
-			if (req.body.email) {
-				if (req.body.email === req.decoded.email) {
-					const updatedUser = req.body;
-					User.update(req.body, selector).then(() => {
-						res.status(200).json(updatedUser);
-					}).catch((err) => {
-						res.status(404).json({ error: err.message });
-					});
-				} else {
+			if (userRole === 1 || userId === Number(req.params.id)) {
+				if (req.body.email) {
+					if (req.body.email === req.decoded.email) {
+						return user.update({
+							firstName: req.body.firstName || user.firstName,
+							lastName: req.body.lastName || user.lastName,
+							email: req.body.email || user.email,
+							password: user.password,
+							roleId: req.body.roleId || user.roleId
+						})
+							.then(() => res.status(200).send(user))
+							.catch(error => res.status(400).send(error));
+					}
 					User.find({ where: { email: req.body.email }
 					}).then((foundEmail) => {
 						if (foundEmail) {
@@ -159,21 +156,31 @@ const UserController = {
 								message: 'Email already in use'
 							});
 						}
-						User.update(req.body, selector).then((user) => {
-							res.status(200).json(user);
-						}).catch((err) => {
-							res.status(404).json({ error: err.message });
-						});
+						user.update({
+							firstName: req.body.firstName || user.firstName,
+							lastName: req.body.lastName || user.lastName,
+							email: req.body.email || user.email,
+							password: user.password,
+							roleId: req.body.roleId || user.roleId
+						})
+							.then(() => res.status(200).send(user))
+							.catch(error => res.status(400).send(error));
 					});
+				} else {
+					user.update({
+						firstName: req.body.firstName || user.firstName,
+						lastName: req.body.lastName || user.lastName,
+						email: req.body.email || user.email,
+						password: user.password,
+						roleId: req.body.roleId || user.roleId
+					})
+						.then(() => res.status(200).send(user))
+						.catch(error => res.status(400).send(error));
 				}
-			} else {
-				User.update(req.body, selector).then((user) => {
-					res.status(200).json(user);
-				}).catch((err) => {
-					res.status(404).json({ error: err.message });
-				});
 			}
-		}
+		}).catch((err) => {
+			res.status(404).json({ error: err.message });
+		});
 	},
 	updatePassword(req, res) {
 		const userId = req.decoded.id;
@@ -212,51 +219,59 @@ const UserController = {
 				}
 			})
 				.then((user) => {
-					res.status(200, 'User Deleted').json(user);
+					res.status(204).json(user);
 				})
 				.catch((err) => {
 					res.status(500).json({ error: err.message });
 				});
 		}
+		return res.status(403).json({
+			message: 'Cannot delete user',
+		});
 	},
 	searchUsers: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
+		const userRole = req.decoded.roleId;
 		if (req.params.searchQuery) {
-			User.findAndCountAll({
-				where: {
-					$or: [
-						{
-							firstName: {
-								$iLike: `%${req.params.searchQuery}%`
-							}
-						},
-						{
-							lastName: {
-								$iLike: `%${req.params.searchQuery}%`
-							}
-						},
-					]
-				},
-				order: [['createdAt', 'DESC']],
-				limit,
-				offset
-			})
-				.then((user) => {
-					const pagination = {
-						totalCount: user.count,
-						pages: Math.ceil(user.count / limit),
-						currentPage: Math.floor(offset / limit) + 1,
-						pageSize: user.rows.length,
-					};
-					res.status(200).send({
-						users: user.rows,
-						pagination,
-					});
+			if (userRole === 1) {
+				User.findAndCountAll({
+					where: {
+						$or: [
+							{
+								firstName: {
+									$iLike: `%${req.params.searchQuery}%`
+								}
+							},
+							{
+								lastName: {
+									$iLike: `%${req.params.searchQuery}%`
+								}
+							},
+						]
+					},
+					order: [['createdAt', 'DESC']],
+					limit,
+					offset
 				})
-				.catch((err) => {
-					res.status(500).json({ error: err.message });
-				});
+					.then((user) => {
+						const pagination = {
+							totalCount: user.count,
+							pages: Math.ceil(user.count / limit),
+							currentPage: Math.floor(offset / limit) + 1,
+							pageSize: user.rows.length,
+						};
+						res.status(200).send({
+							users: user.rows,
+							pagination,
+						});
+					})
+					.catch((err) => {
+						res.status(500).json({ error: err.message });
+					});
+			} else {
+				res.status(403).json({ error: 'You do not have access' });
+			}
 		} else {
 			res.status(400).json({ error: 'Search query not found' });
 		}

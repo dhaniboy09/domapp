@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">8.97% </span>
+        <span class="strong">17.95% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/78</span>
+        <span class='fraction'>14/78</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">8.89% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/45</span>
+        <span class='fraction'>4/45</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">14.81% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/27</span>
+        <span class='fraction'>4/27</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">8.97% </span>
+        <span class="strong">17.95% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/78</span>
+        <span class='fraction'>14/78</span>
       </div>
     </div>
   </div>
@@ -323,29 +323,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -592,30 +592,30 @@ const LIMIT = 6;
 const OFFSET = 0;
 &nbsp;
 const DocumentController = {
-	createDocument: <span class="fstat-no" title="function not covered" >(</span>req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >		Document.find({ where: { title: req.body.title, userId: req.decoded.id } })</span>
-			.then(<span class="fstat-no" title="function not covered" >(</span>existingDocument) =&gt; {
-<span class="cstat-no" title="statement not covered" >				if (existingDocument) {</span>
-<span class="cstat-no" title="statement not covered" >					return res.status(403).send({</span>
+	createDocument: (req, res) =&gt; {
+		Document.find({ where: { title: req.body.title, userId: req.decoded.id } })
+			.then((existingDocument) =&gt; {
+				if (existingDocument) {
+					return res.status(403).send({
 						message: 'Oops!. You already have a document with this title.',
 					});
 				}
 			});
-		c</span>onst document = <span class="cstat-no" title="statement not covered" >{
+		const document = {
 			title: req.body.title,
 			content: req.body.content,
 			userId: req.decoded.id,
 			userRoleId: req.decoded.roleId,
 			access: req.body.access || 'public'
 		};
-<span class="cstat-no" title="statement not covered" >		Document.create(document)</span>
-			.then(<span class="fstat-no" title="function not covered" >(</span>createdDocument) =&gt; {
-<span class="cstat-no" title="statement not covered" >				res.status(201).send({</span>
+		Document.create(document)
+			.then((createdDocument) =&gt; {
+				res.status(200).send({
 					createdDocument
 				});
 			})
-			.catch(<span class="fstat-no" title="function not covered" >() =&gt; </span>{
-<span class="cstat-no" title="statement not covered" >				res.status(400).send({</span>
+			.catch(() =&gt; {
+				res.status(400).send({
 					message: 'Could not create document. Pls try later'
 				});
 			});
@@ -859,7 +859,7 @@ module.exports = DocumentController;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jul 10 2017 15:42:59 GMT+0100 (WAT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jul 11 2017 09:28:41 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

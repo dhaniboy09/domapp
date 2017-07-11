@@ -11,7 +11,7 @@ module.exports = {
       },
       {
         title: 'Hayley West',
-        content: 'This is a Hayley West situation that i really cant head',
+        content: 'This is a Hayley West',
         access: 'private',
         userRoleId: 2,
         userId: 2,

@@ -531,22 +531,18 @@ nav{
   }
 }
 .next{
-  position: relative;
-  float: right;
-  margin: 0 auto;
-  margin-right: -4.5rem;
-  margin-top: -25rem;
+  position: fixed;
+  top: 60%;
+  right: 5%;
   cursor: pointer;
 }
 .modalor{
 
 }
 .prev{
-  position: relative;
-  float: left;
-  margin: 0 auto;
-  margin-left: -4.5rem;
-  margin-top: -25rem;
+  position: fixed;
+  top: 60%;
+  left: 5%;
   cursor: pointer;
 }
 .created {
