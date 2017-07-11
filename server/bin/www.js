@@ -1,6 +1,6 @@
 // This will be our application entry. We'll setup our server here.
 import http from 'http';
-import app from '../server/server';
+import app from '../server';
 
 // const http = require('http');
 // const app = require('../app'); // The express app we just created
