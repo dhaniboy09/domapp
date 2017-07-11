@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextplugin from 'extract-text-webpack-plugin';
 
 export default {
 	devtool: 'source-map',
@@ -41,8 +42,8 @@ export default {
 				include: path.join(__dirname, 'client'),
 				loaders: ['babel-loader']
 			},
-			{ test: /(\.css)$/, loaders: ['style-loader', 'css-loader'] },
-			{ test: /(\.scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
+			{ test: /(\.css)$/, loaders: ExtractTextplugin.extract({ fallback:'style-loader', use:'css-loader' })},
+			{ test: /(\.scss)$/, loaders: ExtractTextplugin.extract({ fallback:'style-loader', use:'css-loader?sourceMap!sass-loader' })},
 			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
 			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader', options: { limit: 25000 } },
 			{ test: /materialize-css\/bin\//, loader: 'imports?jQuery=jquery,$=jquery,hammerjs' }
