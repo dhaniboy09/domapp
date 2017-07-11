@@ -18,7 +18,7 @@
     "clean": "rm -R dist && mkdir dist",
     "build": "npm run clean && npm run build-client && npm run build-server",
     "postinstall": "npm run pre-start && npm run build",
-    "start": "node dist/server/server.js"
+    "start": "node dist/server/bin/www.js"
   },
   "repository": {
     "type": "git",
