@@ -4,7 +4,7 @@
   "description": "Document Management App",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/www.js",
+    "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",

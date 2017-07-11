@@ -1,6 +1,6 @@
 // This will be our application entry. We'll setup our server here.
 import http from 'http';
-import app from '../server';
+import server from '../app';
 
 // const http = require('http');
 // const app = require('../app'); // The express app we just created
@@ -8,5 +8,5 @@ import app from '../server';
 const port = parseInt(process.env.PORT, 10) || 8000;
 app.set('port', port);
 
-const server = http.createServer(app);
-server.listen(port);
+const appServer = http.createServer(server);
+appServer.listen(port);
