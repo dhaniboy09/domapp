@@ -4,7 +4,7 @@
   "description": "Document Management App",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
+    "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -12,7 +12,7 @@
     "seed-testdb": "NODE_ENV=test sequelize db:seed:all",
     "refill-testdb": "npm run reset-testdb && npm run seed-testdb",
     "build-client": "NODE_ENV=production ./node_modules/.bin/webpack --config webpack.config.prod.babel.js",
-    "build-server": "babel server -d dist/server --copy-files --ignore test.js",
+    "build-server": "babel ./server/bin/www -d dist/server --copy-files --ignore test.js",
     "reset-proddb": "NODE_ENV=production ./node_modules/.bin/sequelize db:migrate:undo:all && NODE_ENV=production ./node_modules/.bin/sequelize db:migrate",
     "pre-start": "npm run reset-proddb && NODE_ENV=production ./node_modules/.bin/sequelize db:seed:all",
     "clean": "rm -R dist && mkdir dist",

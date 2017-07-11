@@ -1,9 +1,6 @@
 import express from 'express';
-import logger from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
 
 // Set up the express app
 const app = express();
@@ -30,8 +27,6 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.join(__dirname, './index.html'));
 	});
 }
-// app.get('*', (req, res) => res.status(200).send({
-//   res.sendFile(path.join(__dirname, './index.html'));
-// }));
+
 
 module.exports = app;
