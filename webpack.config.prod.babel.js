@@ -17,6 +17,7 @@ export default {
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
+		new ExtractTextPlugin("public/css/styles.css"),
 		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
       inject: true,
