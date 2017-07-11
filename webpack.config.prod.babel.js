@@ -48,7 +48,9 @@ export default {
 			},
 			{ test: /(\.css)$/, loaders: ExtractTextPlugin.extract({ fallback:'style-loader', use:'css-loader' })},
 			{ test: /(\.scss)$/, loaders: ExtractTextPlugin.extract({ fallback:'style-loader', use:'css-loader?sourceMap!sass-loader' })},
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
+			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader',query: {
+          name: 'static/media/[name].[ext]'
+        }},
 			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'file-loader', options: { limit: 25000 } },
 			{ test: /materialize-css\/bin\//, loader: 'imports?jQuery=jquery,$=jquery,hammerjs' }
 		]
