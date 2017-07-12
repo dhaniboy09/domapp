@@ -9,14 +9,11 @@ module.exports = {
     dialect: "postgres"
   },
   test: {
-    username: "Dhani",
-    password: null,
-    database: "domapp-test",
-    host: "127.0.0.1",
-    dialect: "postgres"
+    use_env_variable: 'TEST_DATABASE_URL',
+    dialect: 'postgres'
   },
   production: {
     use_env_variable: 'DATABASE_URL',
-    dialect: "postgres"
+    dialect: 'postgres'
   }
 }

@@ -17,7 +17,7 @@
     "pre-start": "npm run reset-proddb && NODE_ENV=production ./node_modules/.bin/sequelize db:seed:all",
     "clean": "rm -R dist && mkdir dist",
     "build": "npm run clean && npm run build-client && npm run build-server",
-    "postinstall": "npm run pre-start && npm run build",
+    "ci-build": "npm run pre-start && npm run build",
     "start": "node dist/server/bin/www.js"
   },
   "repository": {
