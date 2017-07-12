@@ -1,34 +1,23 @@
 import express from 'express';
-import logger from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from '../webpack.config.dev';
-
-// const express = require('express');
-// const logger = require('morgan');
-// const bodyParser = require('body-parser');
 
 // Set up the express app
 const app = express();
-const compiler = webpack(webpackConfig);
-const authentication = require('./middleware/authentication');
 
-// Log requests to the console.
-app.use(logger('dev'));
+const authentication = require('./middleware/authentication');
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(webpackMiddleware(compiler, {
-	hot: true,
-	publicPath: webpackConfig.output.publicPath,
-	noInfo: true
-}));
-app.use(webpackHotMiddleware(compiler));
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] === 'https') {
+    res.redirect(`http://${req.hostname}${req.url}`);
+  } else {
+    next();
+  }
+});
 
 // Serve routes before the default catch all
 // require('./server/routes')(app);
@@ -36,11 +25,16 @@ app.use(webpackHotMiddleware(compiler));
 app.use('/api', authentication.isAuthenticated);
 require('../server/routes')(app);
 
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, './index.html'));
-});
-// app.get('*', (req, res) => res.status(200).send({
-//   res.sendFile(path.join(__dirname, './index.html'));
-// }));
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('dist'));
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, '../dist/index.html'));
+	});
+} else {
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, './index.html'));
+	});
+}
+
 
 module.exports = app;

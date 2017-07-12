@@ -16,6 +16,7 @@ import MyDocuments from './src/components/MyDocuments';
 import SearchResults from './src/components/SearchResults';
 import Settings from './src/components/Settings';
 import AllUsers from './src/components/AllUsers';
+import DocumentDetails from './src/components/DocumentDetails';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
 import rootReducer from './src/rootReducer';
 import { setCurrentUser } from './src/actions/signInAction';
@@ -79,6 +80,13 @@ render(
 						path="/documents"
 						render={() => (
 							isAuthenticated() ? (<Documents />) : (<Redirect to="/" />)
+						)}
+					/>
+					<Route
+						exact
+						path="/document/:id"
+						render={() => (
+							isAuthenticated() ? (<DocumentDetails />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route

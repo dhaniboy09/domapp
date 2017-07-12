@@ -1,3 +1,8 @@
 .DS_Store
+.env
 node_modules
 config/config.json
+coverage
+.nyc_output
+.Procfile
+dist
