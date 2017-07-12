@@ -100,8 +100,8 @@ class MyDocuments extends React.Component {
 							</div>
 						</div>
 					</div>
-					{ currentPage === pages ? '' : <a onClick={this.nextPage} className="next"><i className="fa fa-chevron-right fa-2x" aria-hidden="true"></i></a> }
-					{ this.props.pagination.currentPage <= 1 ? '' : <a onClick={this.prevPage} className="prev"><i className="fa fa-chevron-left fa-2x" aria-hidden="true"></i></a> }
+					{ currentPage === pages ? '' : <a onClick={this.nextPage} className="next"><i className="fa fa-chevron-right fa-2x" aria-hidden="true" /></a> }
+					{ this.props.pagination.currentPage <= 1 ? '' : <a onClick={this.prevPage} className="prev"><i className="fa fa-chevron-left fa-2x" aria-hidden="true" /></a> }
 				</div>
 			</div>
 		);

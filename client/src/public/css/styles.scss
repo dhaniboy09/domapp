@@ -652,9 +652,8 @@ td {
   margin-top: 2rem; 
 }
 .editor-content {
-  border: 1px solid #999999;
   border-radius: 5px;
-  background: #ffffff;
+  background: rgba(255,255,255,0.5);
   height: 500px;
   color: #999999;
 }
@@ -665,11 +664,16 @@ td {
 }
 .editor-access {
   float: right;
-  
   color: rgb(219,115,115);
   font-family: 'Titillium Web', serif !important;
   font-size: 1rem;
   margin-right: 8rem; 
+}
+.editor-buttons {
+  display: -webkit-flex;
+  display: flex;
+  width: 200px;
+  margin: 0 auto;
 }
 /* Media Queries */
 @media screen and (min-width: 768px){
