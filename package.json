@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/index.js",
     "test": "npm run server-test",
-    "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js",
+    "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "reset-testdb": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "seed-testdb": "NODE_ENV=test sequelize db:seed:all",
@@ -96,6 +96,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "mocha": "^3.4.2",
     "node-mocks-http": "^1.6.3",
     "nodemon": "^1.11.0",
     "nyc": "^11.0.3",
