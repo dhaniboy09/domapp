@@ -64,49 +64,49 @@ render(
 						exact
 						path="/"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Home />)
+							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/signin"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<SignInPage />)
+							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Redirect to="/signin" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/documents"
 						render={() => (
-							isAuthenticated() ? (<Documents />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<Redirect to="/documents" />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/mydocuments"
 						render={() => (
-							isAuthenticated() ? (<MyDocuments />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/searchresults"
 						render={() => (
-							isAuthenticated() ? (<SearchResults />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<Redirect to="/searchresults" />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/allusers"
 						render={() => (
-							(isAuthenticated() && isAdmin()) ? (<AllUsers />) : (<Redirect to="/" />)
+							(isAuthenticated() && isAdmin()) ? (<Redirect to="/allusers" />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/settings"
 						render={() => (
-							isAuthenticated() ? (<Settings />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<Redirect to="/settings" />) : (<Redirect to="/" />)
 						)}
 					/>
 				</Switch>

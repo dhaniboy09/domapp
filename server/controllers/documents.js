@@ -209,7 +209,7 @@ const DocumentController = {
 							});
 						});
 				} else {
-					return res.status(404).json({
+					return res.status(403).json({
 						message: 'Access Denied',
 					});
 				}
@@ -255,9 +255,9 @@ const DocumentController = {
 						pagination,
 					});
 				})
-				.catch((err) => {
+				.catch(() => {
 					res.status(500).send({
-						message: err
+						message: 'Document Not Found'
 					});
 				});
 		} else {
