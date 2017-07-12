@@ -52,18 +52,12 @@ class DocumentForm extends React.Component {
 	 * @param {object} e
 	 */
 	updateDocument(e) {
-		$('.action_compute').click(function() {
-    if($('#username').val() == ""){
-        $('#show_error').show();
-        return false;
-    }
-	});
 		if (this.isValid()) {
 			this.setState({ isClicked: true });
 			this.setState({ errors: {} });
 			this.props.editDocument(this.state).then(
 				() => {
-					// Materialize.toast('Document Updated', 4000);
+					Materialize.toast('Document Updated', 4000);
 				},
 				(err) => {
 					this.setState({ errors: err.response.data });

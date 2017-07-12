@@ -24,6 +24,9 @@ export default function validateInput(data) {
 	if (!Validator.equals(data.password, data.passwordConfirm)) {
 		errors.passwordConfirm = 'Passwords must match';
 	}
+	if (!Validator.isLength(data.password, { min: 6, max: 100 })) {
+		errors.password = 'Password must be minimum of 6 characters';
+	}
 	return {
 		errors,
 		isValid: isEmpty(errors)

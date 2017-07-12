@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
 	});
 	User.beforeBulkUpdate((user) => {
 		if (user.attributes.email) {
-			user.email = user.email.toLowerCase();
+			user.attributes.email = user.attributes.email.toLowerCase();
 		}
 		if (user.attributes.password !== null) {
 			user.attributes.password = bcrypt.hashSync(user.attributes.password, bcrypt.genSaltSync(10));

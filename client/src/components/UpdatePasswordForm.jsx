@@ -3,7 +3,10 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import jwt from 'jwt-decode';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { updatePassword } from '../actions/updatePassword';
+import { deactivateAccount } from '../actions/deactivateAccount';
 import validateInput from '../../../server/helpers/updatePasswordValidation';
 
 /**
@@ -24,10 +27,12 @@ class UpdatePasswordForm extends React.Component {
 			password: '',
 			passwordConfirm: '',
 			id: this.decoded.id,
-			errors: {}
+			errors: {},
+			authenticated: this.props.auth.isAuthenticated
 		};
 		this.onChange = this.onChange.bind(this);
 		this.updatePassword = this.updatePassword.bind(this);
+		this.handleAccountDelete = this.handleAccountDelete.bind(this);
 	}
 	/**
 	 * @description Lifcycle Method
@@ -80,6 +85,23 @@ class UpdatePasswordForm extends React.Component {
 		}
 		return isValid;
 	}
+	handleAccountDelete() {
+		confirmAlert({
+			title: 'Confirm Delete',
+			message: 'Are you sure ?',
+			confirmLabel: 'Confirm',
+			cancelLabel: 'Cancel',
+			onConfirm: () => {
+				this.props.deactivateAccount(this.state.id).then(() => {
+					this.props.auth.isAuthenticated = false;
+					localStorage.removeItem('token');
+					this.props.history.push('/');
+					Materialize.toast('Account Deleted Successfully', 4000);
+				});
+			},
+			onCancel: () => ''
+		});
+	}
 	/**
 	 * @description Renders content to the screen
 	 * @return {void}
@@ -116,19 +138,34 @@ class UpdatePasswordForm extends React.Component {
 					>
 					Update
 					</button>
+					<div className="danger-zone">
+						<p>DANGER ZONE!!!</p>
+						<button onClick={() => this.handleAccountDelete()}>Deactivate Account</button>
+					</div>
 				</div>
 			</div>
 		);
 	}
 }
 UpdatePasswordForm.propTypes = {
-	updatePassword: propTypes.func.isRequired
+	updatePassword: propTypes.func.isRequired,
+	deactivateAccount: propTypes.func.isRequired,
+	auth: propTypes.object.isRequired,
+	history: propTypes.object.isRequired
 };
+/**
+ * @description Maps State to Props
+ * @param  {object} state
+ * @return {void}
+ */
 function mapStateToProps(state) {
 	return {
-		users: state.users
+		users: state.users,
+		auth: state.auth
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { updatePassword })(UpdatePasswordForm));
+export default withRouter(
+	connect(mapStateToProps, { updatePassword, deactivateAccount })(UpdatePasswordForm)
+);
 

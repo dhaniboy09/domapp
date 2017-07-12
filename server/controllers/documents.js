@@ -25,7 +25,7 @@ const DocumentController = {
 		};
 		Document.create(document)
 			.then((createdDocument) => {
-				res.status(201).send({
+				res.status(200).send({
 					createdDocument
 				});
 			})
@@ -160,22 +160,19 @@ const DocumentController = {
 		Document.findById(req.params.id).then((foundDocument) => {
 			if (foundDocument) {
 				if (userRole === 1 || userId === foundDocument.userId) {
-					const selector = {
-						where: { id: req.params.id }
-					};
-					const updatedDocument = req.body;
-					Document.update(req.body, selector).then(() => {
-						res.status(200).send(
-							updatedDocument
-						);
-					}).catch((err) => {
-						res.status(404).json({ error: err.message });
-					});
-				} else {
-					res.status(403).send({
-						message: 'Access Denied'
-					});
+					return foundDocument.update({
+						title: req.body.title || foundDocument.title,
+						content: req.body.content || foundDocument.content,
+						access: req.body.access || foundDocument.access,
+						userRoleId: foundDocument.userRoleId,
+						userId: foundDocument.userId
+					})
+						.then(() => res.status(200).send(foundDocument))
+						.catch(error => res.status(400).send(error));
 				}
+				res.status(403).send({
+					message: 'Access Denied'
+				});
 			} else {
 				return res.status(404).json({
 					message: 'Document Not Found',
@@ -209,7 +206,7 @@ const DocumentController = {
 							});
 						});
 				} else {
-					return res.status(404).json({
+					return res.status(403).json({
 						message: 'Access Denied',
 					});
 				}
@@ -255,9 +252,9 @@ const DocumentController = {
 						pagination,
 					});
 				})
-				.catch((err) => {
+				.catch(() => {
 					res.status(500).send({
-						message: err
+						message: 'Document Not Found'
 					});
 				});
 		} else {

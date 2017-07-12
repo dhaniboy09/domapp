@@ -88,7 +88,6 @@ class UpdateProfileForm extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		
 		let errors = {};
 		if (this.state.errors !== null) {
 			errors = this.state.errors;

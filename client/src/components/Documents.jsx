@@ -47,8 +47,8 @@ class Documents extends React.Component {
 	 * @param {void} e
 	 * @return {void}
 	 */
-	nextPage(e) {
-		let nextOffset = ((this.props.pagination.currentPage + 1) - 1) * this.state.limit;
+	nextPage() {
+		const nextOffset = ((this.props.pagination.currentPage + 1) - 1) * this.state.limit;
 		this.setState({ offset: nextOffset });
 		this.props.allDocuments(this.state);
 	}
@@ -60,7 +60,7 @@ class Documents extends React.Component {
 	openModal() {
 		$('.modal').modal({
 			dismissible: true,
-			opacity: 0.5, 
+			opacity: 0.5,
 		});
 		$('#myModal').modal();
 	}
@@ -72,6 +72,11 @@ class Documents extends React.Component {
 		// console.log(this.props.documents[0], 'in render');
 		const pages = this.props.pagination.pages;
 		const currentPage = this.props.pagination.currentPage;
+		const emptyDocuments = (
+			<div className="empty">
+				<h5>No Public/Role documents!</h5>
+			</div>
+		);
 		return (
 			<div className="doc-wrapper">
 				<div className="create-doc">
@@ -88,7 +93,8 @@ class Documents extends React.Component {
 						{/* <span className="page-count">Page {currentPage} of {pages}</span> */}
 						<div className="col s12">
 							<div className="row">
-								{this.props.documents.map((document) => (
+								{this.props.documents.length === 0 ? emptyDocuments : ''}
+								{this.props.documents.map(document => (
 									<DocumentCard
 										document={document}
 										key={document.id}

@@ -3,10 +3,11 @@ import { render } from 'react-dom';
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Redirect, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'babel-polyfill';
 import thunk from 'redux-thunk';
 import jwt from 'jsonwebtoken';
+import jwtdecode from 'jwt-decode';
 import App from './src/components/App';
 import Home from './src/components/Home';
 import SignInPage from './src/components/SignInPage';
@@ -15,6 +16,7 @@ import MyDocuments from './src/components/MyDocuments';
 import SearchResults from './src/components/SearchResults';
 import Settings from './src/components/Settings';
 import AllUsers from './src/components/AllUsers';
+import DocumentDetails from './src/components/DocumentDetails';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
 import rootReducer from './src/rootReducer';
 import { setCurrentUser } from './src/actions/signInAction';
@@ -42,6 +44,17 @@ function isAuthenticated() {
 	}
 	return false;
 }
+/**
+ * @description Check if user is an Admin
+ * @return {Boolean}
+ */
+function isAdmin() {
+	const decoded = jwtdecode(localStorage.getItem('token'));
+	if (decoded.roleId === 1) {
+		return true;
+	}
+	return false;
+}
 
 render(
 	<Provider store={store}>
@@ -52,49 +65,56 @@ render(
 						exact
 						path="/"
 						render={() => (
-							isAuthenticated() ? (<Documents />) : (<Home />)
+							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Home />)
 						)}
 					/>
 					<Route
 						exact
-						path="/sign"
+						path="/signin"
 						render={() => (
-							isAuthenticated() ? (<Documents />) : (<SignInPage />)
+							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<SignInPage />)
 						)}
 					/>
 					<Route
 						exact
 						path="/documents"
 						render={() => (
-							isAuthenticated() ? (<Documents />) : (<Home />)
+							isAuthenticated() ? (<Documents />) : (<Redirect to="/" />)
+						)}
+					/>
+					<Route
+						exact
+						path="/document/:id"
+						render={() => (
+							isAuthenticated() ? (<DocumentDetails />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/mydocuments"
 						render={() => (
-							isAuthenticated() ? (<MyDocuments />) : (<Home />)
+							isAuthenticated() ? (<MyDocuments />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/searchresults"
 						render={() => (
-							isAuthenticated() ? (<SearchResults />) : (<Home />)
+							isAuthenticated() ? (<SearchResults />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/allusers"
 						render={() => (
-							isAuthenticated() ? (<AllUsers />) : (<Home />)
+							(isAuthenticated() && isAdmin()) ? (<AllUsers />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/settings"
 						render={() => (
-							isAuthenticated() ? (<Settings />) : (<Home />)
+							isAuthenticated() ? (<Settings />) : (<Redirect to="/" />)
 						)}
 					/>
 				</Switch>

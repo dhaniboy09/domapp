@@ -5,7 +5,6 @@ import propTypes from 'prop-types';
 import { myDocuments } from '../actions/myDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
-import Footer from './Footer';
 /**
  * @class Documents
  * @extends {React.Component}
@@ -71,6 +70,11 @@ class MyDocuments extends React.Component {
 	render() {
 		const pages = this.props.pagination.pages;
 		const currentPage = this.props.pagination.currentPage;
+		const emptyDocuments = (
+			<div className="empty">
+				<h5>You have no personal documents!</h5>
+			</div>
+		);
 		return (
 			<div className="doc-wrapper">
 				<div className="create-doc">
@@ -86,6 +90,7 @@ class MyDocuments extends React.Component {
 						<h5 className="document-panel-header"><span>My Documents</span></h5>
 						<div className="col s12">
 							<div className="row">
+								{this.props.documents.length === 0 ? emptyDocuments : ''}
 								{ this.props.documents.map((document) => (
 									<DocumentCard
 										document={document}
@@ -95,8 +100,8 @@ class MyDocuments extends React.Component {
 							</div>
 						</div>
 					</div>
-					{ currentPage === pages ? '' : <a onClick={this.nextPage} className="next"><i className="fa fa-chevron-right fa-2x" aria-hidden="true"></i></a> }
-					{ this.props.pagination.currentPage <= 1 ? '' : <a onClick={this.prevPage} className="prev"><i className="fa fa-chevron-left fa-2x" aria-hidden="true"></i></a> }
+					{ currentPage === pages ? '' : <a onClick={this.nextPage} className="next"><i className="fa fa-chevron-right fa-2x" aria-hidden="true" /></a> }
+					{ this.props.pagination.currentPage <= 1 ? '' : <a onClick={this.prevPage} className="prev"><i className="fa fa-chevron-left fa-2x" aria-hidden="true" /></a> }
 				</div>
 			</div>
 		);
