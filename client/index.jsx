@@ -16,6 +16,7 @@ import MyDocuments from './src/components/MyDocuments';
 import SearchResults from './src/components/SearchResults';
 import Settings from './src/components/Settings';
 import AllUsers from './src/components/AllUsers';
+import DocumentDetails from './src/components/DocumentDetails';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
 import rootReducer from './src/rootReducer';
 import { setCurrentUser } from './src/actions/signInAction';
@@ -64,49 +65,56 @@ render(
 						exact
 						path="/"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Home />)
 						)}
 					/>
 					<Route
 						exact
 						path="/signin"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Redirect to="/signin" />)
+							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<SignInPage />)
 						)}
 					/>
 					<Route
 						exact
 						path="/documents"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/documents" />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<Documents />) : (<Redirect to="/" />)
+						)}
+					/>
+					<Route
+						exact
+						path="/document/:id"
+						render={() => (
+							isAuthenticated() ? (<DocumentDetails />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/mydocuments"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/mydocuments" />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<MyDocuments />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/searchresults"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/searchresults" />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<SearchResults />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/allusers"
 						render={() => (
-							(isAuthenticated() && isAdmin()) ? (<Redirect to="/allusers" />) : (<Redirect to="/" />)
+							(isAuthenticated() && isAdmin()) ? (<AllUsers />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
 						exact
 						path="/settings"
 						render={() => (
-							isAuthenticated() ? (<Redirect to="/settings" />) : (<Redirect to="/" />)
+							isAuthenticated() ? (<Settings />) : (<Redirect to="/" />)
 						)}
 					/>
 				</Switch>

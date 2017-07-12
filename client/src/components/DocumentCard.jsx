@@ -31,6 +31,19 @@ class DocumentCard extends React.Component {
 		});
 		$(`.modal.${this.props.document.id}`).modal();
 	}
+	/**
+	 * @description Opens document details page
+	 * @param  {string} link
+	 * @return {void}
+	 */
+	getDocument(link) {
+		this.props.history.push(link);
+	}
+	/**
+	 * @description handles document deletion
+	 * @param  {integer} documentId
+	 * @return {void}
+	 */
 	handleDocumentDelete(documentId) {
 		confirmAlert({
 			title: 'Confirm Delete',
@@ -58,7 +71,14 @@ class DocumentCard extends React.Component {
 			<div className="col s4 m4 darken-1">
 				<div className="card">
 					<div className="card-content">
-						<span className="card-title truncate"><a href="#!">{ this.props.document.title }</a></span>
+						<span className="card-title truncate">
+							<a
+								onClick={() => this.getDocument(`/document/${this.props.document.id}`)}
+								role="button"
+							>
+								{ this.props.document.title }
+							</a>
+						</span>
 						<span className="created">{createdDate}</span>
 						<p className="grey-light">{content}</p>
 					</div>
@@ -104,4 +124,4 @@ function mapStateToProps(state) {
 		auth: state.auth
 	};
 }
-export default connect(mapStateToProps, { removeDocument })(DocumentCard);
+export default withRouter(connect(mapStateToProps, { removeDocument })(DocumentCard));
