@@ -27,12 +27,13 @@ class SearchResults extends React.Component {
 	/**
 	 * @description Lifecycle Method
 	 * @param  {object} nextProps
-	 * @return {voif}
+	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
 		this.setState({ searchResults: nextProps.searchResults });
 	}
 	/**
+	 * @description Makes form elements interactive
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -40,8 +41,8 @@ class SearchResults extends React.Component {
 		this.setState({ searchText: e.target.value });
 	}
 	/**
-	 * @param {object} e
 	 * @description Triggers search action
+	 * @param {object} e
 	 * @return {void}
 	 */
 	handleSearch() {
@@ -65,7 +66,6 @@ class SearchResults extends React.Component {
 	 */
 	render() {
 		const userSearchResults = this.state.searchResults;
-		console.log(this.props.searchResults, 'this.props');
 		return (
 			<div>
 				<div className="document-panel">
@@ -75,7 +75,7 @@ class SearchResults extends React.Component {
 							(this.props.searchResults.length === 0) ? (<h3>Nothing Found</h3>) : (
 								<div className="col s12">
 									<div className="row">
-										{ userSearchResults.map((documents) => (
+										{ userSearchResults.map(documents => (
 											<DocumentCard
 												document={documents}
 												key={document.id}
