@@ -7,6 +7,7 @@ import jwt from 'jwt-decode';
 import tinyMceConfig from '../utils/tinyMceConfig.json';
 import { documentDetails } from '../actions/documentDetails';
 import { editDocument } from '../actions/editDocument';
+import validateInput from '../../../server/helpers/editDocumentValidation';
 /**
  * @class Documents
  * @extends {React.Component}
@@ -24,7 +25,8 @@ class DocumentDetails extends React.Component {
 			title: '',
 			access: '',
 			content: '',
-			edit: false
+			edit: false,
+			errors: {}
 		};
 		this.openEditor = this.openEditor.bind(this);
 		this.closeEditor = this.closeEditor.bind(this);
@@ -52,6 +54,17 @@ class DocumentDetails extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 	/**
+	 * @description Checks for form validity
+	 * @return {Boolean}
+	 */
+	isValid() {
+		const { errors, isValid } = validateInput(this.state);
+		if (!isValid) {
+			this.setState({ errors });
+		}
+		return isValid;
+	}
+	/**
 	 * @description Activates TinyMCE Editor
 	 * @return {void}
 	 */
@@ -65,54 +78,75 @@ class DocumentDetails extends React.Component {
 	 */
 	closeEditor() {
 		tinymce.remove('#e-content');
-		this.setState({ edit: false });
+		this.setState({
+			edit: false,
+			title: this.props.document.title,
+			content: this.props.document.content,
+			access: this.props.document.access
+		});
 	}
 	/**
 	 * @description Triggers action to update document
 	 * @return {void}
 	 */
 	updateDocument() {
-		const content = tinymce.activeEditor.getContent();
-		const parsedContent = Parser(content);
-		console.log(parsedContent.props.children, 'the content');
-		const newDocument = {
-			id: this.state.id,
-			title: this.state.title,
-			content: parsedContent.props.children,
-			access: this.state.access
-		};
-		this.props.editDocument(newDocument).then(() => {
-			tinymce.remove('#e-content');
-			this.setState({ edit: false });
-			Materialize.toast('Document Updated Successfully', 4000);
-			this.setState({
-				title: this.props.documents.title,
-				content: this.props.documents.content,
-				access: this.props.documents.access
-			});
-		});
+		if (this.isValid()) {
+			this.setState({ errors: {} });
+			const content = tinymce.activeEditor.getContent();
+			const parsedContent = Parser(content);
+			const newDocument = {
+				id: this.state.id,
+				title: this.state.title,
+				content: parsedContent.props.children,
+				access: this.state.access
+			};
+			this.props.editDocument(newDocument).then(() => {
+				tinymce.remove('#e-content');
+				this.setState({ edit: false });
+				Materialize.toast('Document Updated Successfully', 4000);
+				this.setState({
+					title: this.props.documents.title,
+					content: this.props.documents.content,
+					access: this.props.documents.access
+				});
+			},
+			(err) => {
+				this.setState({ errors: err.response.data });
+			}
+			);
+		}
 	}
 	/**
 	 * @description Render content to the screen
 	 * @return {void}
 	 */
 	render() {
+		let errors = {};
+		if (this.state.errors !== null) {
+			errors = this.state.errors;
+		}
 		const userId = this.decoded.id;
 		const documentId = this.props.document.userId;
 		const accessName = ['Public', 'Private', 'Role'];
-		const accessOptions = accessName.map((value, index) => (
-      <option key={index} value={value}> {value} </option>
-    ));
+		const accessOptions = accessName.map(value => (
+			<option key={value} value={value}> {value} </option>
+		));
 		return (
 			<div className="doc-wrapper">
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header"><span>Document Details</span></h5><br /><br />
+						{this.state.edit ? (
+							<div>
+								<span className="edit-doc-error">{errors.title}</span><br />
+								<span className="edit-doc-error">{errors.content}</span><br />
+							</div>
+						) : ''}
 						<div>
 							{ userId === documentId ?
 								(
 									<div className="create-doc">
-										<a className="create-doc-link" onClick={this.openEditor}>Edit</a>
+										<a href="#!" className="create-doc-link" onClick={this.openEditor}>Edit</a>
 									</div>) : ''}
 						</div>
 						<div>
@@ -132,9 +166,7 @@ class DocumentDetails extends React.Component {
 											value={this.state.access}
 											onChange={this.onChange}
 										>
-										{
-										  accessOptions
-										}
+											{ accessOptions }
 										</select>
 									</div>
 								) : (
@@ -154,18 +186,18 @@ class DocumentDetails extends React.Component {
 						</div>
 					</div>
 					{ (this.state.edit === true) ?
-						(	<div className="editor-buttons">
-								<button
-									onClick={this.updateDocument}
-									className="button-primary button-block"
-								>Save</button>
-								<button
-									onClick={this.closeEditor}
-									className="button-primary button-block"
-								>
-									Cancel
-								</button>
-							</div>
+						(<div className="editor-buttons">
+							<button
+								onClick={this.updateDocument}
+								className="button-primary button-block"
+							>Save</button>
+							<button
+								onClick={this.closeEditor}
+								className="button-primary button-block"
+							>
+								Cancel
+							</button>
+						</div>
 						) : ''}
 				</div>
 			</div>
@@ -173,10 +205,25 @@ class DocumentDetails extends React.Component {
 	}
 }
 DocumentDetails.propTypes = {
-	document: propTypes.object.isRequired,
-	documents: propTypes.array.isRequired,
+	document: propTypes.shape({
+		title: propTypes.string.isRequired,
+		content: propTypes.string.isRequired,
+		access: propTypes.string.isRequired,
+		userId: propTypes.number.isRequired
+	}).isRequired,
+	documents: propTypes.shape({
+		title: propTypes.string.isRequired,
+		content: propTypes.string.isRequired,
+		access: propTypes.string.isRequired,
+		userId: propTypes.number.isRequired
+	}).isRequired,
 	documentDetails: propTypes.func.isRequired,
 	editDocument: propTypes.func.isRequired,
+	match: propTypes.shape({
+		params: propTypes.shape({
+			id: propTypes.string
+		})
+	}).isRequired
 };
 /**
  * @description Maps State to Props
@@ -189,5 +236,6 @@ function mapStateToProps(state) {
 		documents: state.userDocuments.documents,
 	};
 }
-export default withRouter(connect(mapStateToProps, { documentDetails, editDocument })(DocumentDetails));
+export default withRouter(connect(mapStateToProps,
+	{ documentDetails, editDocument })(DocumentDetails));
 

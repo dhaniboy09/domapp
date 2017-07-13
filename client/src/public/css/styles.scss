@@ -675,6 +675,35 @@ td {
   width: 200px;
   margin: 0 auto;
 }
+.pagination {
+  li.previous {
+    position: fixed;
+    top: 61%;
+    margin-left: -33rem; 
+  }
+}
+
+ul.pagination {
+  position: absolute;
+  top: 53rem;
+  margin-left: 37rem;
+}
+ul.pagination {
+  li a {
+    cursor: pointer;
+  }
+}
+li.previous.disabled i {
+  color: #999;
+}
+li.next.disabled i {
+  color: #999;
+}
+.edit-doc-error {
+  color: red;
+  font-size: 1rem;
+  font-family: 'Titillium Web', sans-serif;
+}
 /* Media Queries */
 @media screen and (min-width: 768px){
   .create-doc {

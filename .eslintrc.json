@@ -13,7 +13,8 @@
   },
   "globals": {
     "$": true,
-    "Materialize": true
+    "Materialize": true,
+    "tinymce": true
     },
   "rules": {
     "one-var": 0,

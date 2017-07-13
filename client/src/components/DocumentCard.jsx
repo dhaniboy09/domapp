@@ -5,7 +5,6 @@ import propTypes from 'prop-types';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { removeDocument } from '../actions/removeDocument';
-import EditDocumentForm from './EditDocumentForm';
 /**
  * @class Documents
  * @extends {React.Component}
@@ -17,19 +16,7 @@ class DocumentCard extends React.Component {
 	 */
 	constructor(props) {
 		super(props);
-		this.openModal = this.openModal.bind(this);
 		this.handleDocumentDelete = this.handleDocumentDelete.bind(this);
-	}
-	/**
-	 * @description Modal to Edit a Document
-	 * @return {void}
-	 */
-	openModal() {
-		$(`.modal.${this.props.document.id}`).modal({
-			dismissible: true, // Modal can be dismissed by clicking outside of the modal
-			opacity: 0.5, // Opacity of modal background
-		});
-		$(`.modal.${this.props.document.id}`).modal();
 	}
 	/**
 	 * @description Opens document details page
@@ -48,7 +35,6 @@ class DocumentCard extends React.Component {
 		confirmAlert({
 			title: 'Confirm Delete',
 			message: 'Are you sure ?',
-			// childrenElement: () => <div>Custom UI</div>,
 			confirmLabel: 'Confirm',
 			cancelLabel: 'Cancel',
 			onConfirm: () => {
@@ -66,7 +52,7 @@ class DocumentCard extends React.Component {
 		const createdAt = this.props.document.createdAt;
 		let content = this.props.document.content;
 		const createdDate = createdAt.split('T')[0];
-		content = content.length > 167 ? content.substring(0, 167) + '...' : content;
+		content = content.length > 167 ? `content.substring(0, 167) + ${'...'}` : content;
 		const documentList = (
 			<div className="col s4 m4 darken-1">
 				<div className="card">
@@ -74,6 +60,7 @@ class DocumentCard extends React.Component {
 						<span className="card-title truncate">
 							<a
 								onClick={() => this.getDocument(`/document/${this.props.document.id}`)}
+								href="#!"
 								role="button"
 							>
 								{ this.props.document.title }
@@ -87,8 +74,14 @@ class DocumentCard extends React.Component {
 							(this.props.auth.user.id === this.props.document.userId) ?
 								(
 									<div>
-										<a href="#editModal" onClick={this.openModal}>Edit</a>
-										<a href="#!" onClick={() => this.handleDocumentDelete(this.props.document.id)}>Delete</a>
+										<a
+											href="#!"
+											onClick={() => this.getDocument(`/document/${this.props.document.id}`)}
+										>More</a>
+										<a
+											href="#!"
+											onClick={() => this.handleDocumentDelete(this.props.document.id)}
+										>Delete</a>
 									</div>
 								) : (<div><i className="fa fa-lock" aria-hidden="true" /></div>)
 						}
@@ -99,20 +92,30 @@ class DocumentCard extends React.Component {
 		return (
 			<div>
 				{this.props.document.length === 0 ? <div><p>No new docs</p></div> : documentList}
-				<div id="editModal" className={`modal ${this.props.document.id}`}>
-					<div className="modal-content">
-						<h5>Edit Document</h5>
-						<EditDocumentForm document={this.props.document} />
-					</div>
-				</div>
 			</div>
 		);
 	}
 }
 DocumentCard.propTypes = {
-	document: propTypes.object.isRequired,
+	document: propTypes.shape({
+		id: propTypes.number.isRequired,
+		title: propTypes.string.isRequired,
+		content: propTypes.string.isRequired,
+		access: propTypes.string.isRequired,
+		userId: propTypes.number.isRequired,
+		length: propTypes.number.isRequired,
+		createdAt: propTypes.string.isRequired,
+	}).isRequired,
 	removeDocument: propTypes.func.isRequired,
-	auth: propTypes.object.isRequired
+	auth: propTypes.shape({
+		user: propTypes.shape({
+			id: propTypes.number.isRequired,
+			userId: propTypes.number.isRequired
+		})
+	}).isRequired,
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 /**
  * @description Maps State to Props
