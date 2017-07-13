@@ -77,7 +77,12 @@ class Header extends React.Component {
 	}
 }
 Header.propTypes = {
-	auth: propTypes.object.isRequired,
+	auth: propTypes.shape({
+		user: propTypes.shape({
+			firstName: propTypes.string.isRequired,
+			roleId: propTypes.number.isRequired
+		})
+	}).isRequired,
 	signout: propTypes.func.isRequired,
 	history: propTypes.object
 };

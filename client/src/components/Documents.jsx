@@ -39,12 +39,12 @@ class Documents extends React.Component {
 	 * @return {void}
 	 */
 	handlePageChange(page) {
-    const selected = page.selected;
-    const offset = Math.ceil(selected * this.state.limit);
-    this.setState({ offset }, () => {
-      this.props.allDocuments(this.state);
-    });
-  }
+		const selected = page.selected;
+		const offset = Math.ceil(selected * this.state.limit);
+		this.setState({ offset }, () => {
+			this.props.allDocuments(this.state);
+		});
+	}
 	/**
 	 * @description Modal to Add a Document
 	 * @return {void}
@@ -62,10 +62,6 @@ class Documents extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		// console.log(this.props.documents[0], 'in render');
-		const pages = this.props.pagination.pages;
-		const currentPage = this.props.pagination.currentPage;
-		console.log(this.props.pagination.pages);
 		const emptyDocuments = (
 			<div className="empty">
 				<h5>No Public/Role documents!</h5>
@@ -82,19 +78,19 @@ class Documents extends React.Component {
 					</div>
 				</div>
 				<ReactPaginate
-          previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-          nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
-          pageCount={this.props.pagination.pages}
-          initialPage={0}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageChange}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
+					previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+					nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+					breakLabel={<a href="">...</a>}
+					breakClassName={'break-me'}
+					pageCount={this.props.pagination.pages}
+					initialPage={0}
+					marginPagesDisplayed={2}
+					pageRangeDisplayed={5}
+					onPageChange={this.handlePageChange}
+					containerClassName={'pagination'}
+					subContainerClassName={'pages pagination'}
+					activeClassName={'active'}
+				/>
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header"><span>All Documents</span></h5>
@@ -117,15 +113,26 @@ class Documents extends React.Component {
 	}
 }
 Documents.propTypes = {
-	// document: propTypes.object.isRequired,
-	documents: propTypes.object.isRequired,
+	documents: propTypes.shape({
+		title: propTypes.string.isRequired,
+		content: propTypes.string.isRequired,
+		access: propTypes.string.isRequired,
+		userId: propTypes.number.isRequired,
+		map: propTypes.func.isRequired,
+		length: propTypes.number.isRequired
+	}).isRequired,
 	allDocuments: propTypes.func.isRequired,
-	pagination: propTypes.object.isRequired
+	pagination: propTypes.shape({
+		pages: propTypes.number.isRequired
+	}).isRequired,
 };
-
+/**
+ * @description Maps State to Props
+ * @param  {object} state
+ * @return {void}
+ */
 function mapStateToProps(state) {
 	return {
-		// document: state.userDocuments.document,
 		documents: state.userDocuments.documents,
 		pagination: state.userDocuments.pagination
 	};
