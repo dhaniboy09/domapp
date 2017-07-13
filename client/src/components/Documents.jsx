@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
 import { allDocuments } from '../actions/allDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
@@ -23,8 +24,7 @@ class Documents extends React.Component {
 			douments: []
 		};
 		this.openModal = this.openModal.bind(this);
-		this.nextPage = this.nextPage.bind(this);
-		this.prevPage = this.prevPage.bind(this);
+		this.handlePageChange = this.handlePageChange.bind(this);
 	}
 	/**
 	 * @description Lifcycle Method
@@ -34,23 +34,16 @@ class Documents extends React.Component {
 		this.props.allDocuments(this.state);
 	}
 	/**
-	 * @description Goes to the next page
+	 * @description Allows user navigate pages by changing offset
+	 * @param  {object} page 
 	 * @return {void}
 	 */
-	prevPage() {
-		const prevOffset = ((this.props.pagination.currentPage - 1) - 1) * this.state.limit;
-		this.setState({ offset: prevOffset });
-		this.props.allDocuments(this.state);
-	}
-	/**
-	 * @description Goes to the next page
-	 * @param {void} e
-	 * @return {void}
-	 */
-	nextPage() {
-		const nextOffset = ((this.props.pagination.currentPage + 1) - 1) * this.state.limit;
-		this.setState({ offset: nextOffset });
-		this.props.allDocuments(this.state);
+	handlePageChange(page) {
+		const selected = page.selected;
+		const offset = Math.ceil(selected * this.state.limit);
+		this.setState({ offset }, () => {
+			this.props.allDocuments(this.state);
+		});
 	}
 	/**
 	 * @description Modal to Add a Document
@@ -69,9 +62,6 @@ class Documents extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		// console.log(this.props.documents[0], 'in render');
-		const pages = this.props.pagination.pages;
-		const currentPage = this.props.pagination.currentPage;
 		const emptyDocuments = (
 			<div className="empty">
 				<h5>No Public/Role documents!</h5>
@@ -87,6 +77,20 @@ class Documents extends React.Component {
 						</div>
 					</div>
 				</div>
+				<ReactPaginate
+					previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+					nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+					breakLabel={<a href="">...</a>}
+					breakClassName={'break-me'}
+					pageCount={this.props.pagination.pages}
+					initialPage={0}
+					marginPagesDisplayed={2}
+					pageRangeDisplayed={5}
+					onPageChange={this.handlePageChange}
+					containerClassName={'pagination'}
+					subContainerClassName={'pages pagination'}
+					activeClassName={'active'}
+				/>
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header"><span>All Documents</span></h5>
@@ -103,23 +107,32 @@ class Documents extends React.Component {
 							</div>
 						</div>
 					</div>
-					{ currentPage === pages ? '' : <a onClick={this.nextPage} className="next"><i className="fa fa-chevron-right fa-2x" aria-hidden="true"></i></a> }
-					{ this.props.pagination.currentPage <= 1 ? '' : <a onClick={this.prevPage} className="prev"><i className="fa fa-chevron-left fa-2x" aria-hidden="true"></i></a> }
 				</div>
 			</div>
 		);
 	}
 }
 Documents.propTypes = {
-	// document: propTypes.object.isRequired,
-	documents: propTypes.object.isRequired,
+	documents: propTypes.shape({
+		title: propTypes.string.isRequired,
+		content: propTypes.string.isRequired,
+		access: propTypes.string.isRequired,
+		userId: propTypes.number.isRequired,
+		map: propTypes.func.isRequired,
+		length: propTypes.number.isRequired
+	}).isRequired,
 	allDocuments: propTypes.func.isRequired,
-	pagination: propTypes.object.isRequired
+	pagination: propTypes.shape({
+		pages: propTypes.number.isRequired
+	}).isRequired,
 };
-
+/**
+ * @description Maps State to Props
+ * @param  {object} state
+ * @return {void}
+ */
 function mapStateToProps(state) {
 	return {
-		// document: state.userDocuments.document,
 		documents: state.userDocuments.documents,
 		pagination: state.userDocuments.pagination
 	};

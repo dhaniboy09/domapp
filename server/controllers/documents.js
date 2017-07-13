@@ -7,6 +7,12 @@ const LIMIT = 6;
 const OFFSET = 0;
 
 const DocumentController = {
+/**
+ 	* Route: POST: /documents
+ 	* @param  {object} req [request object parameter]
+ 	* @param  {object} res [response object paramter]
+ 	* @return {void}    returns a response object
+ 	*/
 	createDocument: (req, res) => {
 		Document.find({ where: { title: req.body.title, userId: req.decoded.id } })
 			.then((existingDocument) => {
@@ -35,6 +41,12 @@ const DocumentController = {
 				});
 			});
 	},
+	/**
+	 * Handles GET /api/document/:id Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	getDocument: (req, res) => {
 		const docId = req.params.id;
 		const userRole = req.decoded.roleId;
@@ -67,6 +79,12 @@ const DocumentController = {
 				});
 			});
 	},
+	/**
+	 * Handles GET /api/documents/ Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	getAllDocuments: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
@@ -146,6 +164,12 @@ const DocumentController = {
 				});
 			});
 	},
+	/**
+	 * Handles PUT /document/:id Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	updateDocument: (req, res) => {
 		const userId = req.decoded.id;
 		const userRole = req.decoded.roleId;
@@ -160,22 +184,19 @@ const DocumentController = {
 		Document.findById(req.params.id).then((foundDocument) => {
 			if (foundDocument) {
 				if (userRole === 1 || userId === foundDocument.userId) {
-					const selector = {
-						where: { id: req.params.id }
-					};
-					const updatedDocument = req.body;
-					Document.update(req.body, selector).then(() => {
-						res.status(200).send(
-							updatedDocument
-						);
-					}).catch((err) => {
-						res.status(404).json({ error: err.message });
-					});
-				} else {
-					res.status(403).send({
-						message: 'Access Denied'
-					});
+					return foundDocument.update({
+						title: req.body.title || foundDocument.title,
+						content: req.body.content || foundDocument.content,
+						access: req.body.access || foundDocument.access,
+						userRoleId: foundDocument.userRoleId,
+						userId: foundDocument.userId
+					})
+						.then(() => res.status(200).send(foundDocument))
+						.catch(error => res.status(400).send(error));
 				}
+				res.status(403).send({
+					message: 'Access Denied'
+				});
 			} else {
 				return res.status(404).json({
 					message: 'Document Not Found',
@@ -187,6 +208,12 @@ const DocumentController = {
 			});
 		});
 	},
+	/**
+	 * Handles DELETE /document/:id Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	deleteDocument: (req, res) => {
 		const userId = req.decoded.id;
 		const userRole = req.decoded.roleId;
@@ -220,6 +247,12 @@ const DocumentController = {
 			}
 		});
 	},
+	/**
+	 * Handles GET /api/users/:id/documents Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	searchDocument: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
