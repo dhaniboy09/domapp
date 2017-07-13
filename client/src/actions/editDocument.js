@@ -15,11 +15,9 @@ export const setEditDocument = (document) => {
 export const editDocument = (documentData) => {
 	return dispatch => {
 		return axios.put(`/api/documents/${documentData.id}`, documentData).then((res) => {
-			console.log(res.data, 'mydata');
 			dispatch(setEditDocument(res.data));
-			console.log(res.data, 'edited document');
-		}).catch((err) => {
-			console.log(err, 'the error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

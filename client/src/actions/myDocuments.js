@@ -22,8 +22,8 @@ export const myDocuments = (params) => {
 	return dispatch => {
 		return axios.get(`/api/users/${params.id}/documents?offset=${params.offset}`).then((res) => {
 			dispatch(getUserDocuments(res.data.documents, res.data.pagination));
-		}).catch((err) => {
-			console.log(err, 'user documents error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

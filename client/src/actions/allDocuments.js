@@ -23,9 +23,8 @@ export const allDocuments = (params) => {
 	return dispatch => {
 		return axios.get(`/api/documents/?offset=${params.offset}`).then((res) => {
 			dispatch(getAllDocuments(res.data.documents, res.data.pagination));
-			// dispatch(getAllDocuments);
-		}).catch((err) => {
-			console.log(err, 'the error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

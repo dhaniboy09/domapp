@@ -103,7 +103,9 @@ class SignInForm extends React.Component {
 }
 SignInForm.propTypes = {
 	signin: propTypes.func.isRequired,
-	history: propTypes.object
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 
 export default withRouter(SignInForm);

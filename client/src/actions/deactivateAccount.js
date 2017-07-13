@@ -15,8 +15,8 @@ export const deactivateAccount = (userId) => {
 	return dispatch => {
 		return axios.delete(`/api/users/${userId}`).then(() => {
 			dispatch(setDeactivateUser(userId));
-		}).catch((err) => {
-			console.log(JSON.stringify(err), 'the error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

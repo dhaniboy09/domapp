@@ -8,16 +8,15 @@ export const setRemoveUser = (userId) => {
 	};
 };
 /**
- * @param  {object} userData
+ * @param  {object} userId
  * @return {function} dispatch
  */
 export const removeUser = (userId) => {
 	return dispatch => {
-		return axios.delete(`/api/users/${userId}`).then((res) => {
+		return axios.delete(`/api/users/${userId}`).then(() => {
 			dispatch(setRemoveUser(userId));
-			console.log(res.data, 'deleted document');
-		}).catch((err) => {
-			console.log(JSON.stringify(err), 'the error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

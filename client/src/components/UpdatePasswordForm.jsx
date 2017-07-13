@@ -85,6 +85,10 @@ class UpdatePasswordForm extends React.Component {
 		}
 		return isValid;
 	}
+	/**
+	 * @description Handles Document Deletion
+	 * @return {void}
+	 */
 	handleAccountDelete() {
 		confirmAlert({
 			title: 'Confirm Delete',
@@ -150,8 +154,16 @@ class UpdatePasswordForm extends React.Component {
 UpdatePasswordForm.propTypes = {
 	updatePassword: propTypes.func.isRequired,
 	deactivateAccount: propTypes.func.isRequired,
-	auth: propTypes.object.isRequired,
-	history: propTypes.object.isRequired
+	auth: propTypes.shape({
+		isAuthenticated: propTypes.func.isRequired,
+		user: propTypes.shape({
+			firstName: propTypes.string.isRequired,
+			roleId: propTypes.number.isRequired
+		})
+	}).isRequired,
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 /**
  * @description Maps State to Props

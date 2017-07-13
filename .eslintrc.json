@@ -29,6 +29,9 @@
     "comma-dangle": 0,
     "curly": ["error", "multi-line"],
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+    "arrow-body-style": "off",
+    "arrow-parens": "off",
+    "arrow-spacing": "off",
     "valid-jsdoc": ["error", {
       "requireReturn": false,
       "requireReturnType": true,
