@@ -93,7 +93,7 @@ class SearchResults extends React.Component {
 }
 SearchResults.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	searchResults: propTypes.object.isRequired
+	searchResults: propTypes.shape({}).isRequired
 };
 /**
  * @description Maps state to props
@@ -102,7 +102,6 @@ SearchResults.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		// document: state.userDocuments.document,
 		searchResults: state.userDocuments.searchResults
 	};
 }

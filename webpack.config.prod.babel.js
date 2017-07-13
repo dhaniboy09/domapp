@@ -20,24 +20,24 @@ export default {
 			debug: true,
 		}),
 		new webpack.optimize.OccurrenceOrderPlugin(),
-		new ExtractTextPlugin("public/css/styles.css"),
+		new ExtractTextPlugin('public/css/styles.css'),
 		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
-      inject: true,
-      template: path.join(__dirname, 'server/index.html'),
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
-      }
-    }),
+			inject: true,
+			template: path.join(__dirname, 'server/index.html'),
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				removeRedundantAttributes: true,
+				useShortDoctype: true,
+				removeEmptyAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				keepClosingSlash: true,
+				minifyJS: true,
+				minifyCSS: true,
+				minifyURLs: true
+			}
+		}),
 	],
 	module: {
 		loaders: [
@@ -46,11 +46,13 @@ export default {
 				include: path.join(__dirname, 'client'),
 				loaders: ['babel-loader']
 			},
-			{ test: /(\.css)$/, loaders: ExtractTextPlugin.extract({ fallback:'style-loader', use:'css-loader' })},
-			{ test: /(\.scss)$/, loaders: ExtractTextPlugin.extract({ fallback:'style-loader', use:'css-loader?sourceMap!sass-loader' })},
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader',query: {
-          name: 'static/media/[name].[ext]'
-        }},
+			{ test: /(\.css)$/, loaders: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }) },
+			{ test: /(\.scss)$/, loaders: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?sourceMap!sass-loader' }) },
+			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+				loader: 'file-loader',
+				query: {
+					name: 'static/media/[name].[ext]'
+				} },
 			{ test: /\.(jpg|png|svg|jpeg)$/, loader: 'file-loader', options: { limit: 25000 } },
 			{ test: /materialize-css\/bin\//, loader: 'imports?jQuery=jquery,$=jquery,hammerjs' }
 		]

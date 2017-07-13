@@ -19,10 +19,9 @@ export const searchUserDocuments = (documents) => {
 export const searchDocuments = (searchQuery) => {
 	return dispatch => {
 		return axios.get(`/api/search/documents/${searchQuery}`).then((res) => {
-			console.log(res, 'from the action');
 			dispatch(searchUserDocuments(res.data.documents));
-		}).catch((err) => {
-			console.log(err, 'user documents error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

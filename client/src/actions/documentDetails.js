@@ -21,8 +21,8 @@ export const documentDetails = (documentId) => {
 	return dispatch => {
 		return axios.get(`/api/documents/${documentId}`).then((res) => {
 			dispatch(getSingleDocuments(res.data.foundDocument));
-		}).catch((err) => {
-			console.log(err, 'the error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

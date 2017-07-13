@@ -24,7 +24,7 @@ export const allUsers = (params) => {
 		return axios.get('/api/users').then((res) => {
 			dispatch(getAllUsers(res.data.users, res.data.pagination));
 		}).catch((err) => {
-			console.log(err, 'the error');
+			return Promise.reject();
 		});
 	};
 };

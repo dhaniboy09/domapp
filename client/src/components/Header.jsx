@@ -84,7 +84,9 @@ Header.propTypes = {
 		})
 	}).isRequired,
 	signout: propTypes.func.isRequired,
-	history: propTypes.object
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 /**
  * @description Maps State to Props
