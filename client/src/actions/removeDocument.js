@@ -16,9 +16,8 @@ export const removeDocument = (documentId) => {
 	return dispatch => {
 		return axios.delete(`/api/documents/${documentId}`).then((res) => {
 			dispatch(setRemoveDocument(documentId));
-			console.log(res.data, 'deleted document');
-		}).catch((err) => {
-			console.log(JSON.stringify(err), 'the error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

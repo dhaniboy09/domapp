@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/andela-dhaniabelega/domapp.svg?branch=staging)[![codecov](https://codecov.io/gh/andela-dhaniabelega/domapp/branch/master/graph/badge.svg)](https://codecov.io/gh/andela-dhaniabelega/domapp)
+![Build Status](https://travis-ci.org/andela-dhaniabelega/domapp.svg?branch=staging)[![codecov](https://codecov.io/gh/andela-dhaniabelega/domapp/branch/staging/graph/badge.svg)](https://codecov.io/gh/andela-dhaniabelega/domapp)
 # domapp
 Document Management App
 Domapp is a free, web-based, open source document management system (DMS) written in Javascript designed to comply with world standard for document management. It features web based access, fine grained control of access to files as well as users. Please have a look around and if you have any questions, contact us!
@@ -13,7 +13,7 @@ The following steps are required to install the app:
 ## Usage
 To use the app, sign up. No email verification is required.
 
-##Functionalities
+## Functionalities
 1. Document Management: Create, Read, Update and Delete Documents
 2. Granular Access: Assign Roles to Documents and Users
 3. User Management: Manage User roles and user accounts

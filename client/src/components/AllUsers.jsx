@@ -131,6 +131,7 @@ class AllUsers extends React.Component {
 AllUsers.propTypes = {
 	allUsers: propTypes.func.isRequired,
 	removeUser: propTypes.func.isRequired,
+	users: propTypes.shape({}).isRequired,
 };
 /**
  * @description Maps State to Props

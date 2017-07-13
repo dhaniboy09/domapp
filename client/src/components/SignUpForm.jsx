@@ -147,7 +147,9 @@ class SignUpForm extends React.Component {
 }
 SignUpForm.propTypes = {
 	userSignUpRequest: propTypes.func.isRequired,
-	history: propTypes.object
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 export default withRouter(SignUpForm);
 

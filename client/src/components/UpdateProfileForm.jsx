@@ -66,7 +66,6 @@ class UpdateProfileForm extends React.Component {
 			this.setState({ errors: {} });
 			this.props.updateProfile(this.state).then(
 				() => {
-					
 				},
 				(data) => { this.setState({ errors: data.response.data }); }
 			);
@@ -136,8 +135,11 @@ class UpdateProfileForm extends React.Component {
 }
 UpdateProfileForm.propTypes = {
 	updateProfile: propTypes.func.isRequired,
-	history: propTypes.object.isRequired,
-	users: propTypes.object.isRequired,
+	users: propTypes.shape({
+		firstName: propTypes.string.isRequired,
+		lastName: propTypes.string.isRequired,
+		email: propTypes.string.isRequired
+	}).isRequired,
 	fetchUser: propTypes.func.isRequired
 };
 
@@ -152,5 +154,6 @@ function mapStateToProps(state) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { updateProfile, fetchUser })(UpdateProfileForm));
+export default withRouter(connect(mapStateToProps,
+	{ updateProfile, fetchUser })(UpdateProfileForm));
 

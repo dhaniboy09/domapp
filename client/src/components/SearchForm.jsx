@@ -71,7 +71,7 @@ class SearchForm extends React.Component {
 							onChange={this.onChange}
 						/>
 					</div>
-					<a role="button" className="searcher" onClick={this.handleSearch}>
+					<a href="#!" role="button" className="searcher" onClick={this.handleSearch}>
 						<i className="material-icons">search</i>
 					</a>
 				</div>
@@ -82,7 +82,9 @@ class SearchForm extends React.Component {
 }
 SearchForm.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	history: propTypes.object.isRequired
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 /**
  * @description Maps state to props
@@ -91,7 +93,6 @@ SearchForm.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		// document: state.userDocuments.document,
 		documents: state.userDocuments.documents
 	};
 }
