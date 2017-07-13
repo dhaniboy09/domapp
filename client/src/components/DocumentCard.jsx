@@ -5,6 +5,7 @@ import propTypes from 'prop-types';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { removeDocument } from '../actions/removeDocument';
+
 /**
  * @class Documents
  * @extends {React.Component}
@@ -52,7 +53,7 @@ class DocumentCard extends React.Component {
 		const createdAt = this.props.document.createdAt;
 		let content = this.props.document.content;
 		const createdDate = createdAt.split('T')[0];
-		content = content.length > 167 ? `content.substring(0, 167) + ${'...'}` : content;
+		content = content.length > 167 ? content.substring(0, 167) + '...' : content;
 		const documentList = (
 			<div className="col s4 m4 darken-1">
 				<div className="card">
