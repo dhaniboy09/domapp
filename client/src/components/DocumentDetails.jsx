@@ -57,7 +57,7 @@ class DocumentDetails extends React.Component {
 	 * @description Checks for form validity
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
@@ -90,7 +90,7 @@ class DocumentDetails extends React.Component {
 	 * @return {void}
 	 */
 	updateDocument() {
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			const content = tinymce.activeEditor.getContent();
 			const parsedContent = Parser(content);

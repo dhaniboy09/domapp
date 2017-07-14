@@ -40,7 +40,7 @@ class DocumentCard extends React.Component {
 			cancelLabel: 'Cancel',
 			onConfirm: () => {
 				this.props.removeDocument(documentId).then(() => {
-					Materialize.toast('Document Deleted Successfully', 4000);
+					Materialize.toast('Document Deleted Successfully', 12000);
 				});
 			},
 			onCancel: () => ''
@@ -81,6 +81,7 @@ class DocumentCard extends React.Component {
 										>More</a>
 										<a
 											href="#!"
+											id="btn-deletedocument"
 											onClick={() => this.handleDocumentDelete(this.props.document.id)}
 										>Delete</a>
 									</div>

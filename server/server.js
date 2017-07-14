@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+require('dotenv').config();
 // Set up the express app
 const app = express();
 

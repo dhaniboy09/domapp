@@ -705,6 +705,13 @@ li.next.disabled i {
   font-size: 1rem;
   font-family: 'Titillium Web', sans-serif;
 }
+.sub-menu {
+  li {
+    a:hover{
+      color: rgb(229,115,115);
+    }
+  }
+}
 /* Media Queries */
 @media screen and (min-width: 768px){
   .create-doc {

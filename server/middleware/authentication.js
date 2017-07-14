@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-require('dotenv').config();
 
 module.exports = {
 	isAuthenticated: (req, res, next) => {

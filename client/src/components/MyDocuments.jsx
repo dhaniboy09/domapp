@@ -95,13 +95,14 @@ class MyDocuments extends React.Component {
 						<h5 className="document-panel-header"><span>My Documents</span></h5>
 						<div className="col s12">
 							<div className="row">
-								{this.props.documents.length === 0 ? emptyDocuments : ''}
-								{ this.props.documents.map(document => (
-									<DocumentCard
-										document={document}
-										key={document.id}
-									/>
-								)) }
+								{this.props.documents.length === 0 ? emptyDocuments : (
+									this.props.documents.map(document => (
+										<DocumentCard
+											document={document}
+											key={document.id}
+										/>
+									))
+								)}
 							</div>
 						</div>
 					</div>
@@ -126,7 +127,8 @@ MyDocuments.propTypes = {
 	auth: propTypes.shape({
 		user: propTypes.shape({
 			firstName: propTypes.string.isRequired,
-			roleId: propTypes.number.isRequired
+			roleId: propTypes.number.isRequired,
+			id: propTypes.number.isRequired
 		})
 	}).isRequired,
 };

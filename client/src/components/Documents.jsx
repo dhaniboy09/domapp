@@ -70,7 +70,12 @@ class Documents extends React.Component {
 		return (
 			<div className="doc-wrapper">
 				<div className="create-doc">
-					<a className="create-doc-link" onClick={this.openModal} href="#myModal">New</a>
+					<a
+						className="create-doc-link"
+						onClick={this.openModal}
+						id="btn-newModal"
+						href="#myModal"
+					> New </a>
 					<div id="myModal" className="modal">
 						<div className="modal-content">
 							<DocumentForm />
@@ -92,18 +97,20 @@ class Documents extends React.Component {
 					activeClassName={'active'}
 				/>
 				<div className="document-panel">
-					<div className="f-center">
-						<h5 className="document-panel-header"><span>All Documents</span></h5>
-						{/* <span className="page-count">Page {currentPage} of {pages}</span> */}
+					<div className="f-center" id="allDocuments-header">
+						<h5 className="document-panel-header">
+							<span id="sheader">All Documents</span>
+						</h5>
 						<div className="col s12">
 							<div className="row">
-								{this.props.documents.length === 0 ? emptyDocuments : ''}
-								{this.props.documents.map(document => (
-									<DocumentCard
-										document={document}
-										key={document.id}
-									/>
-								)) }
+								{this.props.documents.length === 0 ? emptyDocuments : (
+									this.props.documents.map(document => (
+										<DocumentCard
+											document={document}
+											key={document.id}
+										/>
+									))
+								)}
 							</div>
 						</div>
 					</div>

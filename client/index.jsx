@@ -2,12 +2,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
 import { Redirect, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import 'babel-polyfill';
-import thunk from 'redux-thunk';
 import jwt from 'jsonwebtoken';
-import jwtdecode from 'jwt-decode';
+import { isAuthenticated, isAdmin } from './src/utils/verify';
+import configureStore from './src/utils/configureStore';
 import App from './src/components/App';
 import Home from './src/components/Home';
 import SignInPage from './src/components/SignInPage';
@@ -18,42 +16,15 @@ import Settings from './src/components/Settings';
 import AllUsers from './src/components/AllUsers';
 import DocumentDetails from './src/components/DocumentDetails';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
-import rootReducer from './src/rootReducer';
 import { setCurrentUser } from './src/actions/signInAction';
 import './src/public/css/styles.scss';
 
 const history = createBrowserHistory();
-const store = createStore(
-	rootReducer,
-	compose(
-		applyMiddleware(thunk),
-		window.devToolsExtension ? window.devToolsExtension() : f => f
-	)
-);
+const store = configureStore();
+
 if (localStorage.token) {
 	setAuthorizationToken(localStorage.token);
 	store.dispatch(setCurrentUser(jwt.decode(localStorage.token)));
-}
-/**
- * @description Checks if user is authenticated
- * @return {Boolean}
- */
-function isAuthenticated() {
-	if (localStorage.getItem('token')) {
-		return true;
-	}
-	return false;
-}
-/**
- * @description Check if user is an Admin
- * @return {Boolean}
- */
-function isAdmin() {
-	const decoded = jwtdecode(localStorage.getItem('token'));
-	if (decoded.roleId === 1) {
-		return true;
-	}
-	return false;
 }
 
 render(

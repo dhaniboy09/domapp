@@ -34,7 +34,8 @@ class SearchForm extends React.Component {
 	 * @description Triggers search action
 	 * @return {void}
 	 */
-	handleSearch() {
+	handleSearch(e) {
+		e.preventDefault();
 		if (this.state.searchText !== '') {
 			this.props.searchDocuments(this.state.searchText).then(() => {
 				this.props.history.push('/searchresults');
@@ -60,21 +61,21 @@ class SearchForm extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="search-bar">
+				<form className="search-bar">
 					<div className="input-field">
 						<input
 							id="search"
-							type="search"
+							type="text"
 							name="search"
 							placeholder="Search by title"
 							value={this.state.searchText}
 							onChange={this.onChange}
 						/>
 					</div>
-					<a href="#!" role="button" className="searcher" onClick={this.handleSearch}>
+					<a role="button" className="searcher" onClick={this.handleSearch}>
 						<i className="material-icons">search</i>
 					</a>
-				</div>
+				</form>
 
 			</div>
 		);

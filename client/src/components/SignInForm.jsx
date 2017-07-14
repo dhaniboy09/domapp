@@ -38,7 +38,7 @@ class SignInForm extends React.Component {
 	 */
 	onSubmit(e) {
 		e.preventDefault();
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {}, isLoading: true });
 			this.props.signin(this.state).then(
 				() => {
@@ -54,7 +54,7 @@ class SignInForm extends React.Component {
 	 * @description Checks validity
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
@@ -94,7 +94,7 @@ class SignInForm extends React.Component {
 						/>
 						<span className="sign-up-error">{errors.password}</span>
 						<br />
-						<button className="button-primary button-block" disabled={isLoading}>Sign In</button>
+						<button className="button-primary button-block" id="button-signin" disabled={isLoading}>Sign In</button>
 					</form>
 				</div>
 			</div>
