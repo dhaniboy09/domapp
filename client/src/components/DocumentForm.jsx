@@ -38,7 +38,7 @@ class DocumentForm extends React.Component {
 	 * @return {void}
 	 */
 	createDocument() {
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {}, isLoading: true });
 			this.props.newDocument(this.state).then(
 				() => {
@@ -54,7 +54,7 @@ class DocumentForm extends React.Component {
 	 * @description Checks for form validity
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
@@ -107,6 +107,7 @@ class DocumentForm extends React.Component {
 						<br />
 						<button
 							className="button-primary button-block modal-close"
+							id="btn-createdocument"
 							onClick={this.createDocument}
 						>
 							Create

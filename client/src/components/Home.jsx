@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import SignUpForm from './SignUpForm';
 import Footer from './Footer';
-import isvalidToken from '../utils/verifyToken';
 import { userSignUpRequest } from '../actions/signUpActions';
 
-class Home extends React.Component {
+const Home = () => ({
 	render() {
-		const { userSignUpRequest } = this.props;
 		return (
 			<div className="main">
 				<div className="content">
@@ -18,10 +16,9 @@ class Home extends React.Component {
 						way to manage your documents then Doomap is your choice.
 					</p>
 					<div className="mid-column">
-						<div className="mid-column-2">
-						</div>
+						<div className="mid-column-2" />
 						<div className="mid-column-1">
-							<SignUpForm userSignUpRequest={userSignUpRequest} />
+							<SignUpForm userSignUpRequest={this.props.userSignUpRequest} />
 						</div>
 					</div>
 					<div className="features">
@@ -63,7 +60,7 @@ class Home extends React.Component {
 			</div>
 		);
 	}
-}
+});
 Home.propTypes = {
 	userSignUpRequest: propTypes.func.isRequired
 };

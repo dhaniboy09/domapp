@@ -60,7 +60,7 @@ class UpdatePasswordForm extends React.Component {
 	 */
 	updatePassword(e) {
 		e.preventDefault();
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			this.props.updatePassword(this.state).then(
 				() => {
@@ -78,7 +78,7 @@ class UpdatePasswordForm extends React.Component {
 	 * @description Checks that form is valid
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });

@@ -43,13 +43,13 @@ class SignUpForm extends React.Component {
 	 */
 	onSubmit(e) {
 		e.preventDefault();
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			this.props.userSignUpRequest(this.state).then(
 				() => {
 					this.props.history.push('/documents');
 				},
-				(data) => { this.setState({ errors: data.response.data }); }
+				(err) => { this.setState({ errors: err.response.data }); }
 			);
 		}
 	}
@@ -57,7 +57,7 @@ class SignUpForm extends React.Component {
 	 * @description Checks that form is valid
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
@@ -79,7 +79,7 @@ class SignUpForm extends React.Component {
 				<div id="sign-up-form">
 					<p className="f-center f-bottom banner">
 						<span className="banner-label">
-							<strong>Move on to Domapp</strong>
+							<strong id="sign-up-banner">Move on to Domapp</strong>
 						</span>
 					</p>
 					<form onSubmit={this.onSubmit} className="f-center">
@@ -138,7 +138,7 @@ class SignUpForm extends React.Component {
 						/>
 						<span className="sign-up-error">{errors.passwordConfirm}</span>
 						<br />
-						<button className="button-primary button-block">Sign Up</button>
+						<button className="button-primary button-block" id="btn-signup">Sign Up</button>
 					</form>
 				</div>
 			</div>

@@ -62,7 +62,7 @@ class UpdateProfileForm extends React.Component {
 	 */
 	updateProfile(e) {
 		e.preventDefault();
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			this.props.updateProfile(this.state).then(
 				() => {
@@ -75,7 +75,7 @@ class UpdateProfileForm extends React.Component {
 	 * @description Checks that form is valid
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
