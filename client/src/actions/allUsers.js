@@ -21,9 +21,9 @@ export const getAllUsers = (users, pagination) => {
  */
 export const allUsers = (params) => {
 	return dispatch => {
-		return axios.get('/api/users').then((res) => {
+		return axios.get(`/api/v1/users?offset=${params.offset}&limit=${params.limit}`).then((res) => {
 			dispatch(getAllUsers(res.data.users, res.data.pagination));
-		}).catch((err) => {
+		}).catch(() => {
 			return Promise.reject();
 		});
 	};

@@ -11,7 +11,7 @@ import DocumentCard from './DocumentCard';
  * @class Documents
  * @extends {React.Component}
  */
-class Documents extends React.Component {
+export class Documents extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -32,6 +32,14 @@ class Documents extends React.Component {
 	 */
 	componentDidMount() {
 		this.props.allDocuments(this.state);
+	}
+	/**
+	 * @description Lifecycle Method
+	 * @param  {object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		this.setState({ documents: nextProps.documents });
 	}
 	/**
 	 * @description Allows user navigate pages by changing offset
@@ -78,24 +86,26 @@ class Documents extends React.Component {
 					> New </a>
 					<div id="myModal" className="modal">
 						<div className="modal-content">
-							<DocumentForm />
+							<DocumentForm limit={this.state.limit} offset={this.state.offset} />
 						</div>
 					</div>
 				</div>
-				<ReactPaginate
-					previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-					nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
-					breakLabel={<a href="">...</a>}
-					breakClassName={'break-me'}
-					pageCount={this.props.pagination.pages}
-					initialPage={0}
-					marginPagesDisplayed={2}
-					pageRangeDisplayed={5}
-					onPageChange={this.handlePageChange}
-					containerClassName={'pagination'}
-					subContainerClassName={'pages pagination'}
-					activeClassName={'active'}
-				/>
+				{this.props.documents.length === 0 ? '' : (
+					<ReactPaginate
+						previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+						nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+						breakLabel={<a href="">...</a>}
+						breakClassName={'break-me'}
+						pageCount={this.props.pagination.pages}
+						initialPage={0}
+						marginPagesDisplayed={2}
+						pageRangeDisplayed={5}
+						onPageChange={this.handlePageChange}
+						containerClassName={'pagination'}
+						subContainerClassName={'pages pagination'}
+						activeClassName={'active'}
+					/>
+				)}
 				<div className="document-panel">
 					<div className="f-center" id="allDocuments-header">
 						<h5 className="document-panel-header">
@@ -103,10 +113,12 @@ class Documents extends React.Component {
 						</h5>
 						<div className="col s12">
 							<div className="row">
-								{this.props.documents.length === 0 ? emptyDocuments : (
+								{(this.state.documents) && (this.state.documents.length === 0) ? emptyDocuments : (
 									this.props.documents.map(document => (
 										<DocumentCard
 											document={document}
+											limit={this.state.limit}
+											offset={this.state.offset}
 											key={document.id}
 										/>
 									))

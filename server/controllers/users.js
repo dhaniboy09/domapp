@@ -125,6 +125,8 @@ const UserController = {
 		if (userRole === 1) {
 			User
 				.findAndCountAll({
+					limit,
+					offset,
 					order: [['createdAt', 'DESC']]
 				})
 				.then((users) => {
@@ -159,14 +161,13 @@ const UserController = {
 	 */
 	updateUser: (req, res) => {
 		const userId = req.decoded.id;
-		const userRole = req.decoded.roleId;
 		User.findById(req.params.id).then((user) => {
 			if (!user) {
 				return res.status(404).json({
 					message: 'User Not Found',
 				});
 			}
-			if (userRole === 1 || userId === Number(req.params.id)) {
+			if (userId === Number(req.params.id)) {
 				if (req.body.email) {
 					if (req.body.email === req.decoded.email) {
 						return user.update({
@@ -254,16 +255,19 @@ const UserController = {
 					id: req.params.id
 				}
 			})
-				.then((user) => {
-					res.status(204).json(user);
+				.then(() => {
+					res.status(204).json({
+						message: 'Account Deleted'
+					});
 				})
 				.catch((err) => {
 					res.status(500).json({ error: err.message });
 				});
+		} else {
+			return res.status(403).json({
+				message: 'Cannot delete user',
+			});
 		}
-		return res.status(403).json({
-			message: 'Cannot delete user',
-		});
 	},
 	/**
 	 * Handles GET /api/search/users/:searchQuery Route
@@ -275,19 +279,19 @@ const UserController = {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
 		const userRole = req.decoded.roleId;
-		if (req.params.searchQuery) {
+		if (req.query.query) {
 			if (userRole === 1) {
 				User.findAndCountAll({
 					where: {
 						$or: [
 							{
 								firstName: {
-									$iLike: `%${req.params.searchQuery}%`
+									$iLike: `%${req.query.query}%`
 								}
 							},
 							{
 								lastName: {
-									$iLike: `%${req.params.searchQuery}%`
+									$iLike: `%${req.query.query}%`
 								}
 							},
 						]

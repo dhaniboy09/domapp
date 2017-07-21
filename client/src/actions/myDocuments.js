@@ -6,7 +6,7 @@ import { GET_USER_DOCUMENTS } from './actionTypes';
  * @param  {object} pagination
  * @return {object}
  */
-export const getUserDocuments = (documents, pagination) => {
+export const UserDocuments = (documents, pagination) => {
 	return {
 		type: GET_USER_DOCUMENTS,
 		documents,
@@ -20,8 +20,8 @@ export const getUserDocuments = (documents, pagination) => {
  */
 export const myDocuments = (params) => {
 	return dispatch => {
-		return axios.get(`/api/users/${params.id}/documents?offset=${params.offset}`).then((res) => {
-			dispatch(getUserDocuments(res.data.documents, res.data.pagination));
+		return axios.get(`/api/v1/users/${params.id}/documents?offset=${params.offset}`).then((res) => {
+			dispatch(UserDocuments(res.data.documents, res.data.pagination));
 		}).catch(() => {
 			return Promise.reject();
 		});

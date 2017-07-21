@@ -18,10 +18,9 @@ export const setUpdatePassword = (password) => {
  */
 export const updatePassword = (userData) => {
 	return dispatch => {
-		return axios.put(`/api/users/profile/${userData.id}`, userData).then((res) => {
+		return axios.put(`/api/v1/users/password/${userData.id}`, userData).then((res) => {
 			dispatch(setUpdatePassword(res.data));
-		}).catch(() => {
-			return Promise.reject();
+			return Promise.resolve(res);
 		});
 	};
 };

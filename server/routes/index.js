@@ -8,24 +8,24 @@ module.exports = (app) => {
 	}));
 
 	// Roles
-	app.post('/api/roles', Roles.createRole);
+	app.post('/api/v1/roles', Roles.createRole);
 
 	// Users
-	app.post('/auth/users', Users.createUser);
-	app.get('/api/users/:id', Users.getUser);
-	app.get('/api/users/', Users.getAllUsers);
-	app.put('/api/users/:id', Users.updateUser);
-	app.put('/api/users/profile/:id', Users.updatePassword);
-	app.delete('/api/users/:id', Users.deleteUser);
-	app.post('/auth/users/login', Users.logIn);
-	app.get('/api/search/users/:searchQuery', Users.searchUsers);
-	app.get('/api/users/:id/documents', Users.getUserDocuments);
+	app.post('/auth/v1/users', Users.createUser);
+	app.get('/api/v1/users/:id', Users.getUser);
+	app.get('/api/v1/users/', Users.getAllUsers);
+	app.put('/api/v1/users/:id', Users.updateUser);
+	app.put('/api/v1/users/password/:id', Users.updatePassword);
+	app.delete('/api/v1/users/:id', Users.deleteUser);
+	app.post('/auth/v1/users/login', Users.logIn);
+	app.get('/api/v1/search/users', Users.searchUsers);
+	app.get('/api/v1/users/:id/documents', Users.getUserDocuments);
 
 	// Documents
-	app.post('/api/documents', Documents.createDocument);
-	app.get('/api/documents', Documents.getAllDocuments);
-	app.get('/api/documents/:id', Documents.getDocument);
-	app.put('/api/documents/:id', Documents.updateDocument);
-	app.delete('/api/documents/:id', Documents.deleteDocument);
-	app.get('/api/search/documents/:searchQuery', Documents.searchDocument);
+	app.post('/api/v1/documents', Documents.createDocument);
+	app.get('/api/v1/documents', Documents.getAllDocuments);
+	app.get('/api/v1/documents/:id', Documents.getDocument);
+	app.put('/api/v1/documents/:id', Documents.updateDocument);
+	app.delete('/api/v1/documents/:id', Documents.deleteDocument);
+	app.get('/api/v1/search/documents', Documents.searchDocument);
 };

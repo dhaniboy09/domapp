@@ -13,7 +13,7 @@ export const setRemoveUser = (userId) => {
  */
 export const removeUser = (userId) => {
 	return dispatch => {
-		return axios.delete(`/api/users/${userId}`).then(() => {
+		return axios.delete(`/api/v1/users/${userId}`).then(() => {
 			dispatch(setRemoveUser(userId));
 		}).catch(() => {
 			return Promise.reject();

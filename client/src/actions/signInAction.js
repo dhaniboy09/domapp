@@ -21,7 +21,7 @@ export function setCurrentUser(user) {
  */
 export function signin(data) {
 	return dispatch => {
-		return axios.post('auth/users/login', data).then((res) => {
+		return axios.post('auth/v1/users/login', data).then((res) => {
 			const token = res.data.token;
 			localStorage.setItem('token', token);
 			setAuthorizationToken(token);

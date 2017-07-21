@@ -21,10 +21,12 @@ export const getAllDocuments = (documents, pagination) => {
  */
 export const allDocuments = (params) => {
 	return dispatch => {
-		return axios.get(`/api/documents/?offset=${params.offset}`).then((res) => {
+		return axios.get(`/api/v1/documents/?offset=${params.offset}`).then((res) => {
 			dispatch(getAllDocuments(res.data.documents, res.data.pagination));
-		}).catch(() => {
-			return Promise.reject();
+		}).catch((err) => {
+			console.log(err, 'action error');
+			// return Promise.reject();
+			// .reply(200, { res: { data: { documents: documentList, pagination: paginationObject } } });
 		});
 	};
 };
