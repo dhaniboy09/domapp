@@ -2,21 +2,26 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import Parser from 'html-react-parser';
 import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import { removeDocument } from '../actions/removeDocument';
+import { allDocuments } from '../actions/allDocuments';
 
 /**
  * @class Documents
  * @extends {React.Component}
  */
-class DocumentCard extends React.Component {
+export class DocumentCard extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
 	 */
 	constructor(props) {
 		super(props);
+		this.state = {
+			limit: this.props.limit,
+			offset: this.props.offset,
+		};
 		this.handleDocumentDelete = this.handleDocumentDelete.bind(this);
 	}
 	/**
@@ -40,7 +45,8 @@ class DocumentCard extends React.Component {
 			cancelLabel: 'Cancel',
 			onConfirm: () => {
 				this.props.removeDocument(documentId).then(() => {
-					Materialize.toast('Document Deleted Successfully', 12000);
+					this.props.allDocuments(this.state);
+					Materialize.toast('Document Deleted Successfully', 4000);
 				});
 			},
 			onCancel: () => ''
@@ -51,7 +57,7 @@ class DocumentCard extends React.Component {
 	 */
 	render() {
 		const createdAt = this.props.document.createdAt;
-		let content = this.props.document.content;
+		let content = Parser(this.props.document.content);
 		const createdDate = createdAt.split('T')[0];
 		content = content.length > 167 ? content.substring(0, 167) + '...' : content;
 		const documentList = (
@@ -99,20 +105,23 @@ class DocumentCard extends React.Component {
 	}
 }
 DocumentCard.propTypes = {
+	allDocuments: propTypes.func.isRequired,
+	limit: propTypes.number.isRequired,
+	offset: propTypes.number.isRequired,
 	document: propTypes.shape({
 		id: propTypes.number.isRequired,
 		title: propTypes.string.isRequired,
 		content: propTypes.string.isRequired,
 		access: propTypes.string.isRequired,
 		userId: propTypes.number.isRequired,
-		length: propTypes.number.isRequired,
+		length: propTypes.number,
 		createdAt: propTypes.string.isRequired,
 	}).isRequired,
 	removeDocument: propTypes.func.isRequired,
 	auth: propTypes.shape({
 		user: propTypes.shape({
 			id: propTypes.number.isRequired,
-			userId: propTypes.number.isRequired
+			userId: propTypes.number,
 		})
 	}).isRequired,
 	history: propTypes.shape({
@@ -129,4 +138,4 @@ function mapStateToProps(state) {
 		auth: state.auth
 	};
 }
-export default withRouter(connect(mapStateToProps, { removeDocument })(DocumentCard));
+export default withRouter(connect(mapStateToProps, { removeDocument, allDocuments })(DocumentCard));

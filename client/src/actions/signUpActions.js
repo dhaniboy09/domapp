@@ -21,7 +21,7 @@ export function createUser(user) {
  */
 export function userSignUpRequest(userData) {
 	return dispatch => {
-		return axios.post('/auth/users', userData).then((res) => {
+		return axios.post('/auth/v1/users', userData).then((res) => {
 			const token = res.data.token;
 			localStorage.setItem('token', token);
 			setAuthorizationToken(token);

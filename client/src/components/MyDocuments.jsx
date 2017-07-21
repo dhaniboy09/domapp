@@ -20,7 +20,8 @@ class MyDocuments extends React.Component {
 		this.state = {
 			offset: 0,
 			limit: 6,
-			id: this.props.auth.user.id
+			id: this.props.auth.user.id,
+			documents: []
 		};
 		this.openModal = this.openModal.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
@@ -31,6 +32,14 @@ class MyDocuments extends React.Component {
 	 */
 	componentDidMount() {
 		this.props.myDocuments(this.state);
+	}
+	/**
+	 * @description Lifecycle Method
+	 * @param  {object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		this.setState({ documents: nextProps.documents });
 	}
 	/**
 	 * @description Allows user navigate pages by changing offset
@@ -72,32 +81,36 @@ class MyDocuments extends React.Component {
 					<a className="create-doc-link" onClick={this.openModal} href="#myModal">New</a>
 					<div id="myModal" className="modal">
 						<div className="modal-content">
-							<DocumentForm />
+							<DocumentForm limit={this.state.limit} offset={this.state.offset} />
 						</div>
 					</div>
 				</div>
-				<ReactPaginate
-					previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-					nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
-					breakLabel={<a href="">...</a>}
-					breakClassName={'break-me'}
-					pageCount={this.props.pagination.pages}
-					initialPage={0}
-					marginPagesDisplayed={2}
-					pageRangeDisplayed={5}
-					onPageChange={this.handlePageChange}
-					containerClassName={'pagination'}
-					subContainerClassName={'pages pagination'}
-					activeClassName={'active'}
-				/>
+				{this.props.documents.length === 0 ? '' : (
+					<ReactPaginate
+						previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+						nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+						breakLabel={<a href="">...</a>}
+						breakClassName={'break-me'}
+						pageCount={this.props.pagination.pages}
+						initialPage={0}
+						marginPagesDisplayed={2}
+						pageRangeDisplayed={5}
+						onPageChange={this.handlePageChange}
+						containerClassName={'pagination'}
+						subContainerClassName={'pages pagination'}
+						activeClassName={'active'}
+					/>
+				)}
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header"><span>My Documents</span></h5>
 						<div className="col s12">
 							<div className="row">
-								{this.props.documents.length === 0 ? emptyDocuments : (
+								{(this.state.documents) && (this.state.documents.length === 0) ? emptyDocuments : (
 									this.props.documents.map(document => (
 										<DocumentCard
+											limit={this.state.limit}
+											offset={this.state.offset}
 											document={document}
 											key={document.id}
 										/>

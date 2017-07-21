@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { searchDocuments } from '../actions/searchDocuments';
 
+$('body').on('keypress', 'input', function(args) {
+    if (args.keyCode === 13) {
+        $('#save_post').click();
+        return false;
+    }
+});
 /**
  * @class Documents
  * @extends {React.Component}
@@ -16,7 +22,8 @@ class SearchForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchText: ''
+			searchQuery: '',
+			offset: 0
 		};
 		this.openModal = this.openModal.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
@@ -27,7 +34,7 @@ class SearchForm extends React.Component {
 	 * @return {void}
 	 */
 	onChange(e) {
-		this.setState({ searchText: e.target.value });
+		this.setState({ searchQuery: e.target.value });
 	}
 	/**
 	 * @param {object} e
@@ -36,8 +43,8 @@ class SearchForm extends React.Component {
 	 */
 	handleSearch(e) {
 		e.preventDefault();
-		if (this.state.searchText !== '') {
-			this.props.searchDocuments(this.state.searchText).then(() => {
+		if (this.state.searchQuery !== '') {
+			this.props.searchDocuments(this.state).then(() => {
 				this.props.history.push('/searchresults');
 			});
 		}
@@ -66,13 +73,12 @@ class SearchForm extends React.Component {
 						<input
 							id="search"
 							type="text"
-							name="search"
 							placeholder="Search by title"
-							value={this.state.searchText}
+							value={this.state.searchQuery}
 							onChange={this.onChange}
 						/>
 					</div>
-					<a role="button" className="searcher" onClick={this.handleSearch}>
+					<a role="button" id="save" className="searcher" onClick={this.handleSearch}>
 						<i className="material-icons">search</i>
 					</a>
 				</form>

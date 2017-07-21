@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { signout } from '../actions/signInAction';
-import SearchForm from './SearchForm';
 
 /**
  * @class Header
@@ -43,17 +42,22 @@ class Header extends React.Component {
 			<div className="nav-wrapper">
 				<a href="/documents" className="brand-logo">Domapp</a>
 				<ul id="nav-mobile" className="right hide-on-med-and-down">
-					<SearchForm />
-					<li>
-						<a href="#!">{currentUser} <i className="fa fa-caret-down" aria-hidden="true" />
-						</a>
-						<ul className="sub-menu">
-							<li><a href="/mydocuments">My Documents</a></li>
-							<li><a href="/settings">Settings</a></li><br />
-							{currentUserRole === 1 ? <li><a href="/allusers">All Users</a></li> : ''}
-							<li><a href="" onClick={this.signout}>Log out</a> </li>
-						</ul>
-					</li>
+					<a className="dropdown-button" data-activates="dropdown1">
+						{currentUser && currentUser} <i className="fa fa-caret-down" aria-hidden="true" />
+					</a>
+					<ul id="dropdown1" className="dropdown-content">
+						<li><a href="/mydocuments">My Documents</a></li>
+						<li className="divider" />
+						<li><a href="/documents">All Documents</a></li>
+						<li className="divider" />
+						<li><a href="/search">Search</a></li>
+						<li className="divider" />
+						<li><a href="/settings">Settings</a></li><br />
+						<li className="divider" />
+						{currentUserRole === 1 ? <li><a href="/allusers">All Users</a></li> : ''}
+						<li className="divider" />
+						<li><a href="" onClick={this.signout}>Log out</a> </li>
+					</ul>
 				</ul>
 			</div>
 		);

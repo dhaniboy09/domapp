@@ -69,9 +69,9 @@ class UpdatePasswordForm extends React.Component {
 						passwordConfirm: ''
 					});
 					Materialize.toast('Password Successfully Updated', 4000);
-				},
-				(data) => { this.setState({ errors: data.response.data }); }
-			);
+				}).catch((err) => {
+				Materialize.toast(err.response.data.message, 4000);
+			});
 		}
 	}
 	/**
@@ -118,6 +118,10 @@ class UpdatePasswordForm extends React.Component {
 		return (
 			<div>
 				<div className="s-form">
+					<div className="password-update-error">
+						<span className="sign-up-error">{errors.password}</span><br />
+						<span className="sign-up-error">{errors.passwordConfirm}</span><br />
+					</div>
 					<label htmlFor="password">New password</label>
 					<input
 						id="password"
@@ -126,7 +130,6 @@ class UpdatePasswordForm extends React.Component {
 						onChange={this.onChange}
 						name="password"
 					/>
-					<span className="sign-up-error">{errors.password}</span>
 					<label htmlFor="passwordConfirm">Confirm password</label>
 					<input
 						id="passwordConfirm"
@@ -135,7 +138,6 @@ class UpdatePasswordForm extends React.Component {
 						onChange={this.onChange}
 						name="passwordConfirm"
 					/>
-					<span className="sign-up-error">{errors.passwordConfirm}</span>
 					<button
 						className="button-primary button-block s-button"
 						onClick={this.updatePassword}

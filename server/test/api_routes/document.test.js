@@ -15,7 +15,7 @@ describe('Documents:-', () => {
 	});
 	before((done) => {
 		chai.request(server)
-			.post('/auth/users/login')
+			.post('/auth/v1/users/login')
 			.send(mockData.User)
 			.end((err, res) => {
 				userToken = res.body.token;
@@ -24,14 +24,14 @@ describe('Documents:-', () => {
 	});
 	before((done) => {
 		chai.request(server)
-			.post('/auth/users/login')
+			.post('/auth/v1/users/login')
 			.send(mockData.Admin)
 			.end((err, res) => {
 				adminToken = res.body.token;
 				done();
 			});
 	});
-	describe('POST /api/documents', () => {
+	describe('POST /api/v1/documents', () => {
 		it('should allow authenticated user create a new document', (done) => {
 			const newDocument = {
 				title: 'Test Document',
@@ -40,7 +40,7 @@ describe('Documents:-', () => {
 				userId: 2,
 			};
 			chai.request(server)
-				.post('/api/documents')
+				.post('/api/v1/documents')
 				.send(newDocument)
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
@@ -61,7 +61,7 @@ describe('Documents:-', () => {
 				userId: 2,
 			};
 			chai.request(server)
-				.post('/api/documents')
+				.post('/api/v1/documents')
 				.send(newDocument)
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
@@ -77,7 +77,7 @@ describe('Documents:-', () => {
 				userId: 2,
 			};
 			chai.request(server)
-				.post('/api/documents')
+				.post('/api/v1/documents')
 				.send(newDocument)
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
@@ -95,7 +95,7 @@ describe('Documents:-', () => {
 				userId: 2,
 			};
 			chai.request(server)
-				.post('/api/documents')
+				.post('/api/v1/documents')
 				.send(newDocument)
 				.end((err, res) => {
 					expect(res.status).to.equal(401);
@@ -105,10 +105,10 @@ describe('Documents:-', () => {
 				});
 		});
 	});
-	describe('POST /api/documents/:id', () => {
+	describe('POST /api/v1/documents/:id', () => {
 		it('should allow user retrieve a single document', (done) => {
 			chai.request(server)
-				.get('/api/documents/2')
+				.get('/api/v1/documents/2')
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
@@ -123,7 +123,7 @@ describe('Documents:-', () => {
 		});
 		it('should fail to retrieve a non-existing document', (done) => {
 			chai.request(server)
-				.get('/api/documents/60')
+				.get('/api/v1/documents/60')
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(404);
@@ -133,10 +133,10 @@ describe('Documents:-', () => {
 				});
 		});
 	});
-	describe('GET /api/documents', () => {
+	describe('GET /api/v1/documents', () => {
 		it('should allow authenticated user retrieve all public/role documents', (done) => {
 			chai.request(server)
-				.get('/api/documents')
+				.get('/api/v1/documents')
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
@@ -146,7 +146,7 @@ describe('Documents:-', () => {
 		});
 		it('should allow admin user retrieve all documents', (done) => {
 			chai.request(server)
-				.get('/api/documents')
+				.get('/api/v1/documents')
 				.set({ 'x-access-token': adminToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
@@ -156,7 +156,7 @@ describe('Documents:-', () => {
 		});
 		it('should not allow a non-authenticated user retrieve documents', (done) => {
 			chai.request(server)
-				.get('/api/documents')
+				.get('/api/v1/documents')
 				.end((err, res) => {
 					expect(res.status).to.equal(401);
 					expect(res.body).to.be.a('object');
@@ -167,7 +167,7 @@ describe('Documents:-', () => {
 		it('Should get all documents with correct limit as a query', (done) => {
 			const limit = 1;
 			chai.request(server)
-				.get(`/api/documents?limit=${limit}`)
+				.get(`/api/v1/documents?limit=${limit}`)
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
@@ -178,7 +178,7 @@ describe('Documents:-', () => {
 		it('Should get all documents with correct offset as a query', (done) => {
 			const offset = 0;
 			chai.request(server)
-				.get(`/api/documents?limit=${offset}`)
+				.get(`/api/v1/documents?limit=${offset}`)
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
@@ -187,11 +187,11 @@ describe('Documents:-', () => {
 				});
 		});
 	});
-	describe('PUT /api/documents/:id', () => {
+	describe('PUT /api/v1/documents/:id', () => {
 		it('should update a user document', (done) => {
 			const id = 2;
 			chai.request(server)
-        .put(`/api/documents/${id}`)
+        .put(`/api/v1/documents/${id}`)
         .set({ 'x-access-token': userToken })
         .send({ title: 'Hallo' })
         .end((err, res) => {
@@ -203,7 +203,7 @@ describe('Documents:-', () => {
 		it('should allow admin update documents', (done) => {
 			const id = 2;
 			chai.request(server)
-        .put(`/api/documents/${id}`)
+        .put(`/api/v1/documents/${id}`)
         .set({ 'x-access-token': adminToken })
         .send({ title: 'Hallo' })
         .end((err, res) => {
@@ -213,10 +213,10 @@ describe('Documents:-', () => {
         });
 		});
 	});
-	describe('GET /api/documents/:searchQuery', () => {
+	describe('GET /api/v1/documents/:searchQuery', () => {
 		it('should allow user search by title ', (done) => {
 			chai.request(server)
-				.get('/api/search/documents/john')
+				.get('/api/v1/search/documents/john')
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
@@ -232,11 +232,11 @@ describe('Documents:-', () => {
 				});
 		});
 	});
-	describe('DELETE /api/documents/:id', () => {
+	describe('DELETE /api/v1/documents/:id', () => {
 		it('Should fail to delete the document given the user is not the owner', (done) => {
       const id = 1;
       chai.request(server)
-        .delete(`/api/documents/${id}`)
+        .delete(`/api/v1/documents/${id}`)
         .set({ 'x-access-token': userToken })
         .end((err, res) => {
           expect(res.status).to.equal(403);
@@ -248,7 +248,7 @@ describe('Documents:-', () => {
     it('Should fail to delete a non-existing document', (done) => {
       const id = 500;
       chai.request(server)
-        .delete(`/api/documents/${id}`)
+        .delete(`/api/v1/documents/${id}`)
         .set({ 'x-access-token': userToken })
         .end((err, res) => {
           expect(res.status).to.equal(404);

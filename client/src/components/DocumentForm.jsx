@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
+import TinyMCE from 'react-tinymce';
 import { newDocument } from '../actions/newDocument';
+import { allDocuments } from '../actions/allDocuments';
 import validateInput from '../../../server/helpers/createDocumentValidation';
 
 /**
@@ -10,7 +12,7 @@ import validateInput from '../../../server/helpers/createDocumentValidation';
  * @class SignInForm
  * @extends {React.Component}
  */
-class DocumentForm extends React.Component {
+export class DocumentForm extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -21,11 +23,22 @@ class DocumentForm extends React.Component {
 			title: '',
 			content: '',
 			access: '',
-			errors: {},
+			errors: '',
+			limit: this.props.limit,
+			offset: this.props.offset,
 			success: {}
 		};
 		this.onChange = this.onChange.bind(this);
 		this.createDocument = this.createDocument.bind(this);
+		this.onEditorChange = this.onEditorChange.bind(this);
+	}
+	/**
+	 * @description Gets content from TinyMCE ediotr
+	 * @param  {object} e
+	 * @return {void}
+	 */
+	onEditorChange(e) {
+		this.setState({ content: e.target.getContent() });
 	}
 	/**
 	 * @param  {object} e
@@ -39,15 +52,17 @@ class DocumentForm extends React.Component {
 	 */
 	createDocument() {
 		if (this.validateForm()) {
-			this.setState({ errors: {}, isLoading: true });
-			this.props.newDocument(this.state).then(
-				() => {
-					Materialize.toast('Document Created', 4000);
-				},
-				() => {
-					this.setState({ errors: 'Document Not Created' });
-				}
-			);
+			this.setState({
+				errors: {},
+				title: '',
+				content: '',
+				access: '' });
+			this.props.newDocument(this.state).then(() => {
+				this.props.allDocuments(this.state);
+				Materialize.toast('Document Created', 4000);
+			}).catch((err) => {
+				Materialize.toast(err.response.data.message, 4000);
+			});
 		}
 	}
 	/**
@@ -95,15 +110,16 @@ class DocumentForm extends React.Component {
 							<option value="role">Role</option>
 						</select>
 						<br />
-						<label htmlFor="content">Content</label>
-						<textarea
-							className="browser-defaults"
-							name="content"
-							id="content"
-							value={this.state.content}
-							onChange={this.onChange}
-							placeholder="Content"
-						/>
+						<div>
+							<TinyMCE
+								config={{
+									plugins: 'link image code',
+									toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+								}}
+								content={this.state.content}
+								onChange={this.onEditorChange}
+							/>
+						</div>
 						<br />
 						<button
 							className="button-primary button-block modal-close"
@@ -120,6 +136,7 @@ class DocumentForm extends React.Component {
 }
 DocumentForm.propTypes = {
 	newDocument: propTypes.func.isRequired,
+	allDocuments: propTypes.func.isRequired
 };
 
 /**
@@ -129,8 +146,8 @@ DocumentForm.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		userDocuments: state.userDocuments
+		userDocuments: state.userDocuments,
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { newDocument })(DocumentForm));
+export default withRouter(connect(mapStateToProps, { newDocument, allDocuments })(DocumentForm));

@@ -19,10 +19,9 @@ export const setUpdateProfile = (user) => {
  */
 export const updateProfile = (userData) => {
 	return dispatch => {
-		return axios.put(`/api/users/${userData.id}`, userData).then((res) => {
+		return axios.put(`/api/v1/users/${userData.id}`, userData).then((res) => {
 			dispatch(setUpdateProfile(res.data));
-		}).catch(() => {
-			return Promise.reject();
+			return Promise.resolve(res);
 		});
 	};
 };

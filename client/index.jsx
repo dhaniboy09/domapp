@@ -4,12 +4,14 @@ import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Redirect, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { isAuthenticated, isAdmin } from './src/utils/verify';
 import configureStore from './src/utils/configureStore';
 import App from './src/components/App';
 import Home from './src/components/Home';
 import SignInPage from './src/components/SignInPage';
 import Documents from './src/components/Documents';
+import Search from './src/components/Search';
 import MyDocuments from './src/components/MyDocuments';
 import SearchResults from './src/components/SearchResults';
 import Settings from './src/components/Settings';
@@ -18,6 +20,7 @@ import DocumentDetails from './src/components/DocumentDetails';
 import setAuthorizationToken from './src/utils/setAuthorizationToken';
 import { setCurrentUser } from './src/actions/signInAction';
 import './src/public/css/styles.scss';
+
 
 const history = createBrowserHistory();
 const store = configureStore();
@@ -65,6 +68,13 @@ render(
 						path="/mydocuments"
 						render={() => (
 							isAuthenticated() ? (<MyDocuments />) : (<Redirect to="/" />)
+						)}
+					/>
+					<Route
+						exact
+						path="/search"
+						render={() => (
+							isAuthenticated() ? (<Search />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route
