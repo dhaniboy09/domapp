@@ -9,16 +9,15 @@ export const setUserFetch = (user) => {
 };
 
 /**
- * @param  {object} userData
+ * @param  {object} id
  * @return {function} dispatch
  */
 export const fetchUser = (id) => {
 	return dispatch => {
-		return axios.get(`/api/users/${id}`).then((res) => {
-			console.log(res.data,'the response');
+		return axios.get(`/api/v1/users/${id}`).then((res) => {
 			dispatch(setUserFetch(res.data));
-		}).catch((err) => {
-			console.log(err, 'the error');
+		}).catch(() => {
+			return Promise.reject();
 		});
 	};
 };

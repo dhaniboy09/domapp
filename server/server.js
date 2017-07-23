@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+require('dotenv').config();
 // Set up the express app
 const app = express();
 
@@ -12,11 +13,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] === 'https') {
-    res.redirect(`http://${req.hostname}${req.url}`);
-  } else {
-    next();
-  }
+	if (req.headers['x-forwarded-proto'] === 'https') {
+		res.redirect(`http://${req.hostname}${req.url}`);
+	} else {
+		next();
+	}
 });
 
 // Serve routes before the default catch all

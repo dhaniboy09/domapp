@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
 import { searchDocuments } from '../actions/searchDocuments';
 import DocumentCard from './DocumentCard';
 
@@ -68,6 +69,24 @@ class SearchResults extends React.Component {
 		const userSearchResults = this.state.searchResults;
 		return (
 			<div>
+				{
+					(this.props.searchResults.length !== 0) ? (
+						<ReactPaginate
+							previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+							nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+							breakLabel={<a href="">...</a>}
+							breakClassName={'break-me'}
+							pageCount={this.props.pagination.pages}
+							initialPage={0}
+							marginPagesDisplayed={2}
+							pageRangeDisplayed={5}
+							onPageChange={this.handlePageChange}
+							containerClassName={'pagination'}
+							subContainerClassName={'pages pagination'}
+							activeClassName={'active'}
+						/>
+					) : ('')
+				}
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header"><span>Search Results</span></h5>
@@ -93,7 +112,12 @@ class SearchResults extends React.Component {
 }
 SearchResults.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	searchResults: propTypes.object.isRequired
+	searchResults: propTypes.shape({
+		length: propTypes.number.isRequired
+	}).isRequired,
+	pagination: propTypes.shape({
+		pages: propTypes.number.isRequired
+	}).isRequired
 };
 /**
  * @description Maps state to props
@@ -102,8 +126,8 @@ SearchResults.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		// document: state.userDocuments.document,
-		searchResults: state.userDocuments.searchResults
+		searchResults: state.userDocuments.searchResults,
+		pagination: state.userDocuments.pagination
 	};
 }
 export default withRouter(connect(mapStateToProps, { searchDocuments })(SearchResults));

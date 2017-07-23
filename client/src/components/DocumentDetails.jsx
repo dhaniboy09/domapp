@@ -26,18 +26,22 @@ class DocumentDetails extends React.Component {
 			access: '',
 			content: '',
 			edit: false,
-			errors: {}
+			errors: {},
+			documents : []
 		};
 		this.openEditor = this.openEditor.bind(this);
 		this.closeEditor = this.closeEditor.bind(this);
 		this.updateDocument = this.updateDocument.bind(this);
 		this.onChange = this.onChange.bind(this);
 	}
+	componentWillReceiveProps(nextProps) {
+		this.setState({ documents: nextProps.document });
+	}
 	/**
 	 * @description Lifcycle Method
 	 * @return {void}
 	 */
-	componentWillMount() {
+	componentDidMount() {
 		this.props.documentDetails(this.state.id).then(() => {
 			this.setState({
 				title: this.props.document.title,
@@ -57,7 +61,7 @@ class DocumentDetails extends React.Component {
 	 * @description Checks for form validity
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
@@ -69,8 +73,8 @@ class DocumentDetails extends React.Component {
 	 * @return {void}
 	 */
 	openEditor() {
-		tinymce.init(tinyMceConfig);
 		this.setState({ edit: true });
+		tinymce.init(tinyMceConfig);
 	}
 	/**
 	 * @description De-Activates TinyMCE Editor
@@ -90,7 +94,7 @@ class DocumentDetails extends React.Component {
 	 * @return {void}
 	 */
 	updateDocument() {
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			const content = tinymce.activeEditor.getContent();
 			const parsedContent = Parser(content);
@@ -105,15 +109,13 @@ class DocumentDetails extends React.Component {
 				this.setState({ edit: false });
 				Materialize.toast('Document Updated Successfully', 4000);
 				this.setState({
-					title: this.props.documents.title,
-					content: this.props.documents.content,
-					access: this.props.documents.access
+					title: this.props.document.title,
+					content: this.props.document.content,
+					access: this.props.document.access
 				});
-			},
-			(err) => {
-				this.setState({ errors: err.response.data });
-			}
-			);
+			}).catch((err) => {
+				Materialize.toast(err.response.data.message, 4000);
+			});
 		}
 	}
 	/**
@@ -126,7 +128,7 @@ class DocumentDetails extends React.Component {
 			errors = this.state.errors;
 		}
 		const userId = this.decoded.id;
-		const documentId = this.props.document.userId;
+		const documentId = this.state.documents.userId;
 		const accessName = ['Public', 'Private', 'Role'];
 		const accessOptions = accessName.map(value => (
 			<option key={value} value={value}> {value} </option>
@@ -152,7 +154,7 @@ class DocumentDetails extends React.Component {
 						<div>
 							{
 								this.state.edit ? (
-									<div>
+									<div className="edit-panel">
 										<input
 											type="text"
 											name="title"
@@ -170,10 +172,12 @@ class DocumentDetails extends React.Component {
 										</select>
 									</div>
 								) : (
-									<div>
-										<p className="editor-title">{this.state.title}</p>
-										<div>
-											Access: {this.state.access}
+									<div className="title-content-panel">
+										<div className="editor-title-header">
+											Title: <div className="editor-title">{this.state.title}</div>
+										</div>
+										<div className="access-header-title">
+											Access: <div className="editor-access">{this.state.access}</div>
 										</div>
 									</div>
 								)
@@ -185,7 +189,7 @@ class DocumentDetails extends React.Component {
 							</div>
 						</div>
 					</div>
-					{ (this.state.edit === true) ?
+					{ (this.state.edit) ?
 						(<div className="editor-buttons">
 							<button
 								onClick={this.updateDocument}
@@ -211,12 +215,6 @@ DocumentDetails.propTypes = {
 		access: propTypes.string.isRequired,
 		userId: propTypes.number.isRequired
 	}).isRequired,
-	documents: propTypes.shape({
-		title: propTypes.string.isRequired,
-		content: propTypes.string.isRequired,
-		access: propTypes.string.isRequired,
-		userId: propTypes.number.isRequired
-	}).isRequired,
 	documentDetails: propTypes.func.isRequired,
 	editDocument: propTypes.func.isRequired,
 	match: propTypes.shape({
@@ -233,7 +231,6 @@ DocumentDetails.propTypes = {
 function mapStateToProps(state) {
 	return {
 		document: state.userDocuments.document,
-		documents: state.userDocuments.documents,
 	};
 }
 export default withRouter(connect(mapStateToProps,

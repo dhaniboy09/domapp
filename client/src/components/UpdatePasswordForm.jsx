@@ -60,7 +60,7 @@ class UpdatePasswordForm extends React.Component {
 	 */
 	updatePassword(e) {
 		e.preventDefault();
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			this.props.updatePassword(this.state).then(
 				() => {
@@ -69,22 +69,26 @@ class UpdatePasswordForm extends React.Component {
 						passwordConfirm: ''
 					});
 					Materialize.toast('Password Successfully Updated', 4000);
-				},
-				(data) => { this.setState({ errors: data.response.data }); }
-			);
+				}).catch((err) => {
+				Materialize.toast(err.response.data.message, 4000);
+			});
 		}
 	}
 	/**
 	 * @description Checks that form is valid
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
 		}
 		return isValid;
 	}
+	/**
+	 * @description Handles Document Deletion
+	 * @return {void}
+	 */
 	handleAccountDelete() {
 		confirmAlert({
 			title: 'Confirm Delete',
@@ -114,6 +118,10 @@ class UpdatePasswordForm extends React.Component {
 		return (
 			<div>
 				<div className="s-form">
+					<div className="password-update-error">
+						<span className="sign-up-error">{errors.password}</span><br />
+						<span className="sign-up-error">{errors.passwordConfirm}</span><br />
+					</div>
 					<label htmlFor="password">New password</label>
 					<input
 						id="password"
@@ -122,7 +130,6 @@ class UpdatePasswordForm extends React.Component {
 						onChange={this.onChange}
 						name="password"
 					/>
-					<span className="sign-up-error">{errors.password}</span>
 					<label htmlFor="passwordConfirm">Confirm password</label>
 					<input
 						id="passwordConfirm"
@@ -131,7 +138,6 @@ class UpdatePasswordForm extends React.Component {
 						onChange={this.onChange}
 						name="passwordConfirm"
 					/>
-					<span className="sign-up-error">{errors.passwordConfirm}</span>
 					<button
 						className="button-primary button-block s-button"
 						onClick={this.updatePassword}
@@ -150,8 +156,16 @@ class UpdatePasswordForm extends React.Component {
 UpdatePasswordForm.propTypes = {
 	updatePassword: propTypes.func.isRequired,
 	deactivateAccount: propTypes.func.isRequired,
-	auth: propTypes.object.isRequired,
-	history: propTypes.object.isRequired
+	auth: propTypes.shape({
+		isAuthenticated: propTypes.func.isRequired,
+		user: propTypes.shape({
+			firstName: propTypes.string.isRequired,
+			roleId: propTypes.number.isRequired
+		})
+	}).isRequired,
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 /**
  * @description Maps State to Props

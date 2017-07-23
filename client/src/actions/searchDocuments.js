@@ -3,26 +3,26 @@ import { SEARCH_DOCUMENTS } from './actionTypes';
 
 /**
  * @param  {object} documents
+ * @param  {object} pagination
  * @return {object}
  */
-export const searchUserDocuments = (documents) => {
+export const searchUserDocuments = (documents, pagination) => {
 	return {
 		type: SEARCH_DOCUMENTS,
-		documents
+		documents,
+		pagination
 	};
 };
 
 /**
- * @param  {string} searchQuery
+ * @param  {object} [params]
  * @return {function} dispatch
  */
-export const searchDocuments = (searchQuery) => {
+export const searchDocuments = (params) => {
 	return dispatch => {
-		return axios.get(`/api/search/documents/${searchQuery}`).then((res) => {
-			console.log(res, 'from the action');
-			dispatch(searchUserDocuments(res.data.documents));
-		}).catch((err) => {
-			console.log(err, 'user documents error');
+		return axios.get(`/api/v1/search/documents?query=${params.searchQuery}&offset=${params.offset}`).then((res) => {
+			dispatch(searchUserDocuments(res.data.documents, res.data.pagination));
+			return Promise.resolve(res);
 		});
 	};
 };

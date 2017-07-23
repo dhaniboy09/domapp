@@ -11,6 +11,12 @@ const LIMIT = 6;
 const OFFSET = 0;
 
 const UserController = {
+	/**
+	 * Handles POST /auth/users/login Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	logIn: (req, res) => {
 		if (req.body.email && req.body.password) {
 			User.findOne({ where: { email: req.body.email } })
@@ -46,6 +52,12 @@ const UserController = {
 			res.status(400).json({ error: 'Bad Request' });
 		}
 	},
+	/**
+	 * Handles POST /auth/users/ Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	createUser: (req, res) => {
 		const { errors, isValid } = validateInput(req.body);
 		if (!isValid) {
@@ -87,6 +99,12 @@ const UserController = {
 				res.status(401).json({ error: err.message });
 			});
 	},
+	/**
+	 * Handles GET /api/users/:id Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	getUser: (req, res) => {
 		User.findOne({ where: { id: req.params.id } }).then((user) => {
 			res.status(200).json(user);
@@ -94,6 +112,12 @@ const UserController = {
 			res.status(404).json({ error: err.message });
 		});
 	},
+	/**
+	 * Handles GET /api/users/ Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	getAllUsers: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
@@ -101,6 +125,8 @@ const UserController = {
 		if (userRole === 1) {
 			User
 				.findAndCountAll({
+					limit,
+					offset,
 					order: [['createdAt', 'DESC']]
 				})
 				.then((users) => {
@@ -127,16 +153,21 @@ const UserController = {
 			res.status(403).json('Access Denied!');
 		}
 	},
+	/**
+	 * Handles PUT /api/users/:id Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	updateUser: (req, res) => {
 		const userId = req.decoded.id;
-		const userRole = req.decoded.roleId;
 		User.findById(req.params.id).then((user) => {
 			if (!user) {
 				return res.status(404).json({
 					message: 'User Not Found',
 				});
 			}
-			if (userRole === 1 || userId === Number(req.params.id)) {
+			if (userId === Number(req.params.id)) {
 				if (req.body.email) {
 					if (req.body.email === req.decoded.email) {
 						return user.update({
@@ -202,6 +233,12 @@ const UserController = {
 			});
 		}
 	},
+	/**
+	 * Handles DELETE /api/users/:id Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	deleteUser(req, res) {
 		const userId = req.decoded.id;
 		const userRole = req.decoded.roleId;
@@ -218,34 +255,43 @@ const UserController = {
 					id: req.params.id
 				}
 			})
-				.then((user) => {
-					res.status(204).json(user);
+				.then(() => {
+					res.status(204).json({
+						message: 'Account Deleted'
+					});
 				})
 				.catch((err) => {
 					res.status(500).json({ error: err.message });
 				});
+		} else {
+			return res.status(403).json({
+				message: 'Cannot delete user',
+			});
 		}
-		return res.status(403).json({
-			message: 'Cannot delete user',
-		});
 	},
+	/**
+	 * Handles GET /api/search/users/:searchQuery Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	searchUsers: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;
 		const userRole = req.decoded.roleId;
-		if (req.params.searchQuery) {
+		if (req.query.query) {
 			if (userRole === 1) {
 				User.findAndCountAll({
 					where: {
 						$or: [
 							{
 								firstName: {
-									$iLike: `%${req.params.searchQuery}%`
+									$iLike: `%${req.query.query}%`
 								}
 							},
 							{
 								lastName: {
-									$iLike: `%${req.params.searchQuery}%`
+									$iLike: `%${req.query.query}%`
 								}
 							},
 						]
@@ -276,6 +322,12 @@ const UserController = {
 			res.status(400).json({ error: 'Search query not found' });
 		}
 	},
+	/**
+	 * Handles POST /auth/users/ Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	getUserDocuments: (req, res) => {
 		const limit = req.query.limit || LIMIT;
 		const offset = req.query.offset || OFFSET;

@@ -1,6 +1,12 @@
 const Role = require('../models').Role;
 
 const RoleController = {
+	/**
+	 * Handles POST /api/roles Route
+	 * @param  {object} req [Incoming Request]
+	 * @param  {object} res [Outgoing Response]
+	 * @return {void}
+	 */
 	createRole: (req, res) => {
 		Role.create({
 			roleName: req.body.roleName

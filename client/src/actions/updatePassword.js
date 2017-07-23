@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { UPDATE_PASSWORD } from './actionTypes';
 
+/**
+ * @description Set Action Type to Update password
+ * @param  {string} password
+ * @return {object}
+ */
 export const setUpdatePassword = (password) => {
 	return {
 		type: UPDATE_PASSWORD,
@@ -13,10 +18,9 @@ export const setUpdatePassword = (password) => {
  */
 export const updatePassword = (userData) => {
 	return dispatch => {
-		return axios.put(`/api/users/profile/${userData.id}`, userData).then((res) => {
+		return axios.put(`/api/v1/users/password/${userData.id}`, userData).then((res) => {
 			dispatch(setUpdatePassword(res.data));
-		}).catch((err) => {
-			console.log(err, 'the error');
+			return Promise.resolve(res);
 		});
 	};
 };

@@ -22,15 +22,19 @@ class UpdateProfileForm extends React.Component {
 		super(props);
 		this.decoded = jwt(localStorage.getItem('token'));
 		this.state = {
+			userName: this.decoded.firstName,
 			firstName: '',
 			lastName: '',
 			email: '',
 			id: this.decoded.id,
 			disabled: true,
+			editable: false,
 			errors: {}
 		};
 		this.onChange = this.onChange.bind(this);
 		this.updateProfile = this.updateProfile.bind(this);
+		this.editProfile = this.editProfile.bind(this);
+		this.cancelEdit = this.cancelEdit.bind(this);
 	}
 	/**
 	 * @description Lifcycle Method
@@ -56,27 +60,43 @@ class UpdateProfileForm extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 	/**
+	 * @description Disables Text Boxes
+	 * @return {void}
+	 */
+	cancelEdit() {
+		this.setState({ editable: false });
+	}
+	/**
+	 * @description Enables Text Boxes for Interaction
+	 * @return {void}
+	 */
+	editProfile() {
+		this.setState({ editable: true });
+	}
+	/**
 	 * @description Triggers action to sign up users
 	 * @param  {object} e
 	 * @return {void}
 	 */
 	updateProfile(e) {
 		e.preventDefault();
-		if (this.isValid()) {
+		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			this.props.updateProfile(this.state).then(
 				() => {
-					
-				},
-				(data) => { this.setState({ errors: data.response.data }); }
-			);
+					this.setState({ disabled: true });
+					// jwt.refresh(this.decoded, 3600, process.env.SECRET_KEY);
+					Materialize.toast('Profile Successfully Updated', 4000);
+				}).catch((err) => {
+				Materialize.toast(err.response.data.message, 4000);
+			});
 		}
 	}
 	/**
 	 * @description Checks that form is valid
 	 * @return {Boolean}
 	 */
-	isValid() {
+	validateForm() {
 		const { errors, isValid } = validateInput(this.state);
 		if (!isValid) {
 			this.setState({ errors });
@@ -94,6 +114,11 @@ class UpdateProfileForm extends React.Component {
 		}
 		return (
 			<div className="s-form-wrapper">
+				<div className="edit-profile">
+					<a onClick={this.editProfile}>
+						<i className="fa fa-pencil-square-o fa-lg" aria-hidden="true"><span>Edit</span></i>
+					</a>
+				</div>
 				<div className="s-form">
 					<label htmlFor="firstName">First Name</label>
 					<input
@@ -102,6 +127,7 @@ class UpdateProfileForm extends React.Component {
 						value={this.state.firstName}
 						onChange={this.onChange}
 						name="firstName"
+						disabled={!this.state.editable}
 					/>
 					<span className="sign-up-error">{errors.firstName}</span>
 					<label htmlFor="lastName">Last Name</label>
@@ -111,6 +137,7 @@ class UpdateProfileForm extends React.Component {
 						value={this.state.lastName}
 						onChange={this.onChange}
 						name="lastName"
+						disabled={!this.state.editable}
 					/>
 					<span className="sign-up-error">{errors.lasttName}</span>
 					<label htmlFor="email">Email</label>
@@ -120,15 +147,23 @@ class UpdateProfileForm extends React.Component {
 						value={this.state.email}
 						onChange={this.onChange}
 						name="email"
+						disabled={!this.state.editable}
 					/>
 					<span className="sign-up-error">{errors.email}</span>
-					<button
-						className="button-primary button-block s-button"
-						onClick={this.updateProfile}
-						disabled={this.state.disabled}
-					>
-						Update
-					</button>
+					<div className="profile-update-buttons">
+						<button
+							className="button-primary button-block s-button"
+							onClick={this.updateProfile}
+							disabled={this.state.disabled}
+						>Update</button>
+						<button
+							onClick={this.cancelEdit}
+							className="button-primary button-block"
+							disabled={!this.state.editable}
+						>
+							Cancel
+						</button>
+					</div>
 				</div>
 			</div>
 		);
@@ -136,8 +171,11 @@ class UpdateProfileForm extends React.Component {
 }
 UpdateProfileForm.propTypes = {
 	updateProfile: propTypes.func.isRequired,
-	history: propTypes.object.isRequired,
-	users: propTypes.object.isRequired,
+	users: propTypes.shape({
+		firstName: propTypes.string.isRequired,
+		lastName: propTypes.string.isRequired,
+		email: propTypes.string.isRequired
+	}).isRequired,
 	fetchUser: propTypes.func.isRequired
 };
 
@@ -152,5 +190,6 @@ function mapStateToProps(state) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { updateProfile, fetchUser })(UpdateProfileForm));
+export default withRouter(connect(mapStateToProps,
+	{ updateProfile, fetchUser })(UpdateProfileForm));
 

@@ -20,7 +20,8 @@ class MyDocuments extends React.Component {
 		this.state = {
 			offset: 0,
 			limit: 6,
-			id: this.props.auth.user.id
+			id: this.props.auth.user.id,
+			documents: []
 		};
 		this.openModal = this.openModal.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
@@ -33,17 +34,25 @@ class MyDocuments extends React.Component {
 		this.props.myDocuments(this.state);
 	}
 	/**
+	 * @description Lifecycle Method
+	 * @param  {object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		this.setState({ documents: nextProps.documents });
+	}
+	/**
 	 * @description Allows user navigate pages by changing offset
 	 * @param  {object} page 
 	 * @return {void}
 	 */
 	handlePageChange(page) {
-    const selected = page.selected;
-    const offset = Math.ceil(selected * this.state.limit);
-    this.setState({ offset }, () => {
-      this.props.myDocuments(this.state);
-    });
-  }
+		const selected = page.selected;
+		const offset = Math.ceil(selected * this.state.limit);
+		this.setState({ offset }, () => {
+			this.props.myDocuments(this.state);
+		});
+	}
 	/**
 	 * @description Modal to Add a Document
 	 * @return {void}
@@ -61,8 +70,6 @@ class MyDocuments extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		const pages = this.props.pagination.pages;
-		const currentPage = this.props.pagination.currentPage;
 		const emptyDocuments = (
 			<div className="empty">
 				<h5>You have no personal documents!</h5>
@@ -74,36 +81,41 @@ class MyDocuments extends React.Component {
 					<a className="create-doc-link" onClick={this.openModal} href="#myModal">New</a>
 					<div id="myModal" className="modal">
 						<div className="modal-content">
-							<DocumentForm />
+							<DocumentForm limit={this.state.limit} offset={this.state.offset} />
 						</div>
 					</div>
 				</div>
-				<ReactPaginate
-          previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-          nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
-          pageCount={this.props.pagination.pages}
-          initialPage={0}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageChange}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
+				{this.props.documents.length === 0 ? '' : (
+					<ReactPaginate
+						previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+						nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+						breakLabel={<a href="">...</a>}
+						breakClassName={'break-me'}
+						pageCount={this.props.pagination.pages}
+						initialPage={0}
+						marginPagesDisplayed={2}
+						pageRangeDisplayed={5}
+						onPageChange={this.handlePageChange}
+						containerClassName={'pagination'}
+						subContainerClassName={'pages pagination'}
+						activeClassName={'active'}
+					/>
+				)}
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header"><span>My Documents</span></h5>
 						<div className="col s12">
 							<div className="row">
-								{this.props.documents.length === 0 ? emptyDocuments : ''}
-								{ this.props.documents.map((document) => (
-									<DocumentCard
-										document={document}
-										key={document.id}
-									/>
-								)) }
+								{(this.state.documents) && (this.state.documents.length === 0) ? emptyDocuments : (
+									this.props.documents.map(document => (
+										<DocumentCard
+											limit={this.state.limit}
+											offset={this.state.offset}
+											document={document}
+											key={document.id}
+										/>
+									))
+								)}
 							</div>
 						</div>
 					</div>
@@ -113,16 +125,33 @@ class MyDocuments extends React.Component {
 	}
 }
 MyDocuments.propTypes = {
-	document: propTypes.object.isRequired,
-	pagination: propTypes.object.isRequired,
-	documents: propTypes.object.isRequired,
+	pagination: propTypes.shape({
+		pages: propTypes.number.isRequired
+	}).isRequired,
+	documents: propTypes.shape({
+		title: propTypes.string.isRequired,
+		content: propTypes.string.isRequired,
+		access: propTypes.string.isRequired,
+		userId: propTypes.number.isRequired,
+		map: propTypes.func.isRequired,
+		length: propTypes.number.isRequired
+	}).isRequired,
 	myDocuments: propTypes.func.isRequired,
-	auth: propTypes.object.isRequired
+	auth: propTypes.shape({
+		user: propTypes.shape({
+			firstName: propTypes.string.isRequired,
+			roleId: propTypes.number.isRequired,
+			id: propTypes.number.isRequired
+		})
+	}).isRequired,
 };
-
+/**
+ * @description Maps State to Props
+ * @param  {object} state
+ * @return {void}
+ */
 function mapStateToProps(state) {
 	return {
-		// document: state.userDocuments.document,
 		auth: state.auth,
 		documents: state.userDocuments.documents,
 		pagination: state.userDocuments.pagination

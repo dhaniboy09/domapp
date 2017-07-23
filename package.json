@@ -7,7 +7,8 @@
     "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/index.js",
     "test": "npm run server-test",
     "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "client-test": "jest ./client/__tests__/**/*.test.js --coverage",
+    "coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "reset-testdb": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "seed-testdb": "NODE_ENV=test sequelize db:seed:all",
     "refill-testdb": "npm run reset-testdb && npm run seed-testdb",
@@ -29,6 +30,28 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/andela-dhaniabelega/domapp/issues"
+  },
+  "jest": {
+    "transform": {
+      ".*": "<rootDir>/node_modules/jest-css-modules"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "client/src/**/*.{js,jsx}"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/client/src/public/css/materialize/js/",
+      "<rootDir>/client/src/rootReducer.js",
+      "<rootDir>/client/src/utils/"
+    ],
+    "testPathIgnorePatterns": [
+      "/Users/dhani/dev/domapp/node_modules"
+    ],
+    "roots": [
+      "client/"
+    ],
+    "coverageDirectory": "<rootDir>/coverage"
   },
   "homepage": "https://github.com/andela-dhaniabelega/domapp#readme",
   "dependencies": {
@@ -73,6 +96,7 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
+    "react-tinymce": "^0.5.1",
     "react-wysiwyg-editor": "0.0.9",
     "redux": "^3.7.0",
     "redux-thunk": "^2.2.0",
@@ -88,19 +112,32 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "devDependencies": {
+    "babel-jest": "^20.0.3",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
+    "codecov": "^2.2.0",
     "coveralls": "^2.13.1",
+    "enzyme": "^2.9.1",
     "eslint": "^4.2.0",
     "eslint-config-airbnb": "^15.0.2",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "expect": "^1.20.2",
+    "jest": "^20.0.4",
+    "jest-css-modules": "^1.1.0",
+    "json-loader": "^0.5.4",
     "mocha": "^3.4.2",
+    "mock-local-storage": "^1.0.2",
+    "moxios": "^0.4.0",
+    "nock": "^9.0.13",
     "node-mocks-http": "^1.6.3",
     "nodemon": "^1.11.0",
     "nyc": "^11.0.3",
     "react-hot-loader": "^1.3.1",
+    "react-test-renderer": "^15.6.1",
+    "redux-mock-store": "^1.2.3",
     "url-loader": "^0.5.9"
   }
 }

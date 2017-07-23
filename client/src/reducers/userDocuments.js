@@ -1,16 +1,18 @@
 import { CREATE_NEW_DOCUMENT, VIEW_ALL_DOCUMENTS,
-	EDIT_DOCUMENT, DELETE_DOCUMENT, GET_USER_DOCUMENTS, SEARCH_DOCUMENTS, DOCUMENT_DETAILS } from '../actions/actionTypes';
+	EDIT_DOCUMENT, DELETE_DOCUMENT, GET_USER_DOCUMENTS, SEARCH_DOCUMENTS,
+	DOCUMENT_DETAILS } from '../actions/actionTypes';
 
 const initialState = {
 	documents: [],
 	searchResults: [],
 	document: {},
-	pagination: []
+	pagination: {},
 };
 export default (state = initialState, action) => {
 	switch (action.type) {
 	case CREATE_NEW_DOCUMENT: {
-		const updatedList = [action.document, ...state.documents];
+		const { documents = [] } = state;
+		const updatedList = [action.document, ...documents];
 		return Object.assign({}, state, { documents: updatedList });
 	}
 	case VIEW_ALL_DOCUMENTS:
@@ -18,14 +20,11 @@ export default (state = initialState, action) => {
 	case GET_USER_DOCUMENTS:
 		return Object.assign({}, state, { documents: action.documents, pagination: action.pagination });
 	case EDIT_DOCUMENT: {
-		const updatedDocument = state.documents.map((document) => {
-			if (document.id === action.document.id) return action.document;
-			return document;
-		});
-		return Object.assign({}, state, { documents: updatedDocument });
+		return Object.assign({}, state, { document: action.document });
 	}
 	case DELETE_DOCUMENT: {
-		const filteredDocuments = state.documents.filter(document =>
+		const { documents = [] } = state;
+		const filteredDocuments = documents.filter(document =>
 			document.id !== action.documentId);
 		return Object.assign({}, state, { documents: filteredDocuments });
 	}
@@ -33,13 +32,9 @@ export default (state = initialState, action) => {
 		return Object.assign({}, state, { document: action.document });
 	}
 	case SEARCH_DOCUMENTS: {
-		// const updatedList = [action.documents, ...state.searchResults];
-		// return Object.assign({}, state, { searchResults: updatedList });
-		// Object.assign(state.searchResults, action.documents);
-		// return Object.assign({}, state.searchResults, action.documents);
-		// return {...state, }
 		return {
-			searchResults: action.documents
+			searchResults: action.documents,
+			pagination: action.pagination
 		};
 	}
 	default: return state;

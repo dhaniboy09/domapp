@@ -1,5 +1,24 @@
 export default {
+	// SampleUser1
 	SampleUser1: {
+		firstName: 'David',
+		lastName: 'West',
+		email: 'david@yahoo.com',
+		password: '123456789',
+		createdAt: new Date(),
+		updatedAt: new Date()
+	},
+	FakeUser: {
+		id: 1,
+		firstName: 'David',
+		lastName: 'West',
+		email: 'david@yahoo.com',
+		password: '123456789',
+		createdAt: new Date(),
+		updatedAt: new Date()
+	},
+	FakeUser02: {
+		id: 1,
 		firstName: 'David',
 		lastName: 'West',
 		email: 'david@yahoo.com',
@@ -56,7 +75,7 @@ export default {
 		email: 'david@yahoo.com',
 		password: '123456789'
 	},
-	Document: {
+	FakeRoleDocument: {
 		title: 'John Doe',
 		content: 'This is a John Doe situation that i really cant handle',
 		access: 'role',
@@ -64,6 +83,102 @@ export default {
 		userId: 2,
 		createdAt: new Date(),
 		updatedAt: new Date()
+	},
+	FakePublicDocument: {
+		title: 'John Doe',
+		content: 'This is a John Doe situation that i really cant handle',
+		access: 'public',
+		userRoleId: 2,
+		userId: 2,
+		createdAt: new Date(),
+		updatedAt: new Date()
+	},
+	FakeTestDocument01: {
+		id: 1,
+		title: 'John',
+		content: 'This is a John Doe situation that i really cant handle',
+		access: 'public',
+		userRoleId: 2,
+		userId: 2,
+		createdAt: new Date(),
+		updatedAt: new Date()
+	},
+	FakeTestDocument02: {
+		id: 2,
+		title: 'John',
+		content: 'This is a John Doe situation that i really cant handle',
+		access: 'public',
+		userRoleId: 2,
+		userId: 2,
+		createdAt: new Date(),
+		updatedAt: new Date()
+	},
+	FakeDocumentList: [
+		{
+			title: 'John Doe',
+			content: 'This is a John Doe situation that i really cant handle',
+			access: 'public',
+			userRoleId: 2,
+			userId: 2,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		},
+		{
+			title: 'John Eoe',
+			content: 'This is a John Doe situation that i really cant handle',
+			access: 'public',
+			userRoleId: 2,
+			userId: 2,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		},
+		{
+			title: 'John Foe',
+			content: 'This is a John Doe situation that i really cant handle',
+			access: 'public',
+			userRoleId: 2,
+			userId: 2,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		}
+	],
+	FakeUserList: [
+		{
+			firstName: 'James',
+			lastName: 'Fisher',
+			email: 'jf@yahoo.com',
+			password: '123456789',
+			passwordConfirm: '123456789',
+			roleId: 2,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		},
+		{
+			firstName: 'Yolanda',
+			lastName: 'Adams',
+			email: 'ya@yahoo.com',
+			password: '123456789',
+			passwordConfirm: '123456789',
+			roleId: 2,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		},
+		{
+			firstName: 'Tiny',
+			lastName: 'Temper',
+			email: 'tt@yahoo.com',
+			password: '123456789',
+			passwordConfirm: '123456789',
+			roleId: 2,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		}
+	],
+	FakePagination: {
+		totalCount: 3,
+		pages: 1,
+		currentPage: 1,
+		pageSize: 4
 	}
 };
 

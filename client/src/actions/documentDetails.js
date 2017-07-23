@@ -19,10 +19,9 @@ export const getSingleDocuments = (document) => {
  */
 export const documentDetails = (documentId) => {
 	return dispatch => {
-		return axios.get(`/api/documents/${documentId}`).then((res) => {
+		return axios.get(`/api/v1/documents/${documentId}`).then((res) => {
 			dispatch(getSingleDocuments(res.data.foundDocument));
-		}).catch((err) => {
-			console.log(err, 'the error');
+			return Promise.resolve(res);
 		});
 	};
 };

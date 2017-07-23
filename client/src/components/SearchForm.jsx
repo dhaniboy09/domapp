@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { searchDocuments } from '../actions/searchDocuments';
 
+$('body').on('keypress', 'input', function(args) {
+    if (args.keyCode === 13) {
+        $('#save_post').click();
+        return false;
+    }
+});
 /**
  * @class Documents
  * @extends {React.Component}
@@ -16,7 +22,8 @@ class SearchForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchText: ''
+			searchQuery: '',
+			offset: 0
 		};
 		this.openModal = this.openModal.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
@@ -27,16 +34,17 @@ class SearchForm extends React.Component {
 	 * @return {void}
 	 */
 	onChange(e) {
-		this.setState({ searchText: e.target.value });
+		this.setState({ searchQuery: e.target.value });
 	}
 	/**
 	 * @param {object} e
 	 * @description Triggers search action
 	 * @return {void}
 	 */
-	handleSearch() {
-		if (this.state.searchText !== '') {
-			this.props.searchDocuments(this.state.searchText).then(() => {
+	handleSearch(e) {
+		e.preventDefault();
+		if (this.state.searchQuery !== '') {
+			this.props.searchDocuments(this.state).then(() => {
 				this.props.history.push('/searchresults');
 			});
 		}
@@ -60,21 +68,20 @@ class SearchForm extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="search-bar">
+				<form className="search-bar">
 					<div className="input-field">
 						<input
 							id="search"
-							type="search"
-							name="search"
+							type="text"
 							placeholder="Search by title"
-							value={this.state.searchText}
+							value={this.state.searchQuery}
 							onChange={this.onChange}
 						/>
 					</div>
-					<a role="button" className="searcher" onClick={this.handleSearch}>
+					<a role="button" id="save" className="searcher" onClick={this.handleSearch}>
 						<i className="material-icons">search</i>
 					</a>
-				</div>
+				</form>
 
 			</div>
 		);
@@ -82,7 +89,9 @@ class SearchForm extends React.Component {
 }
 SearchForm.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	history: propTypes.object.isRequired
+	history: propTypes.shape({
+		push: propTypes.func.isRequired,
+	}).isRequired
 };
 /**
  * @description Maps state to props
@@ -91,7 +100,6 @@ SearchForm.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		// document: state.userDocuments.document,
 		documents: state.userDocuments.documents
 	};
 }
