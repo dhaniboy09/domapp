@@ -21,7 +21,6 @@ export class Documents extends React.Component {
 		this.state = {
 			offset: 0,
 			limit: 6,
-			douments: []
 		};
 		this.openModal = this.openModal.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
@@ -56,7 +55,6 @@ export class Documents extends React.Component {
 	/**
 	 * @description Modal to Add a Document
 	 * @return {void}
-	 * @param  {object} e
 	 */
 	openModal() {
 		$('.modal').modal({
@@ -64,6 +62,14 @@ export class Documents extends React.Component {
 			opacity: 0.5,
 		});
 		$('#myModal').modal();
+	}
+	/**
+	 * @description Closes Modal
+	 * @return {void}
+	 * @param {string} [state]
+	 */
+	closeModal(option) {
+		$('#myModal').modal(option);
 	}
 	/**
 	 * @description Render content to the screen
@@ -86,13 +92,19 @@ export class Documents extends React.Component {
 					> New </a>
 					<div id="myModal" className="modal">
 						<div className="modal-content">
-							<DocumentForm limit={this.state.limit} offset={this.state.offset} />
+							<DocumentForm
+								limit={this.state.limit}
+								offset={this.state.offset}
+								closeModal={this.closeModal}
+							/>
 						</div>
 					</div>
 				</div>
 				{this.props.documents.length === 0 ? '' : (
 					<ReactPaginate
-						previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+						previousLabel={
+							<i className="fa fa-chevron-left fa-2x" id="btn-Next" aria-hidden="true" />
+						}
 						nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
 						breakLabel={<a href="">...</a>}
 						breakClassName={'break-me'}

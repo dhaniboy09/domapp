@@ -101,6 +101,8 @@ class AllUsers extends React.Component {
 		if (this.state.searchQuery !== '') {
 			this.props.searchUsers(this.state).then(() => {
 			});
+		} else {
+			this.props.allUsers(this.state);
 		}
 	}
 	/**
@@ -109,6 +111,7 @@ class AllUsers extends React.Component {
 	 */
 	render() {
 		// const searchString = this.state.searchString.trim().toLowerCase();
+		console.log(this.props.users, 'the results');
 		const users = _.map(this.state.users);
 		const searchList = this.state.searchResult;
 		// if (searchString.length > 0) {

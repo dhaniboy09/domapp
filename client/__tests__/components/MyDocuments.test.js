@@ -5,11 +5,9 @@ import { Provider } from 'react-redux';
 import { MemoryRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { spy } from 'sinon';
+import { MyDocuments } from '../../src/components/MyDocuments';
 
-import { Documents } from '../../src/components/Documents';
-
-
-const allDocumentsMock = jest.fn();
+const myDocumentsMock = jest.fn();
 const mockStore = configureStore();
 const store = mockStore({
 	auth: { isAuthenticated: true, user: {} },
@@ -34,56 +32,59 @@ const pagination = {
 	currentPage: 1,
 	pageSize: 6
 };
-describe('Documents Page', () => {
+describe('My Documents Page', () => {
 	it('should call ComponentDidMount()', () => {
-		const componentDidMountSpy = spy(Documents.prototype, 'componentDidMount');
+		const componentDidMountSpy = spy(MyDocuments.prototype, 'componentDidMount');
 		mount(
 			<Router >
 				<Provider store={store}>
-					<Documents
+					<MyDocuments
 						pagination={pagination}
 						documents={[]}
-						allDocuments={allDocumentsMock}
+						myDocuments={myDocumentsMock}
 						errors={[]}
+						auth={{ user: { id: 16 } }}
 					/>
 				</Provider>
 			</Router>
 		);
-		assert.ok(Documents.prototype.componentDidMount.calledOnce);
+		assert.ok(MyDocuments.prototype.componentDidMount.calledOnce);
 		componentDidMountSpy.restore();
 	});
 	it('should call componentWillReceiveProps()', () => {
-		const componentWillReceivePropsSpy = spy(Documents.prototype, 'componentWillReceiveProps');
+		const componentWillReceivePropsSpy = spy(MyDocuments.prototype, 'componentWillReceiveProps');
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>
-					<Documents
+					<MyDocuments
 						pagination={pagination}
 						documents={[]}
-						allDocuments={allDocumentsMock}
+						myDocuments={myDocumentsMock}
 						errors={[]}
+						auth={{ user: { id: 16 } }}
 					/>
 				</Provider>
 			</Router>
 		);
 		wrapper.setProps({ documents: [] });
-		assert.ok(Documents.prototype.componentWillReceiveProps.calledOnce);
+		assert.ok(MyDocuments.prototype.componentWillReceiveProps.calledOnce);
 		componentWillReceivePropsSpy.restore();
 	});
 	it('should call openModal() when modal event is triggered', () => {
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>
-					<Documents
+					<MyDocuments
 						pagination={pagination}
 						documents={[]}
-						allDocuments={allDocumentsMock}
+						myDocuments={myDocumentsMock}
 						errors={[]}
+						auth={{ user: { id: 16 } }}
 					/>
 				</Provider>
 			</Router>
 		);
-		const openModalButton = wrapper.find('#btn-newModal');
+		const openModalButton = wrapper.find('#btn-openModal');
 		const closeModalButton = wrapper.find('#btn-createdocument');
 		assert.equal(openModalButton.length, 1);
 		openModalButton.simulate('click');
@@ -94,11 +95,12 @@ describe('Documents Page', () => {
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>
-					<Documents
+					<MyDocuments
 						pagination={pagination}
 						documents={documents}
-						allDocuments={allDocumentsMock}
+						myDocuments={myDocumentsMock}
 						errors={[]}
+						auth={{ user: { id: 16 } }}
 					/>
 				</Provider>
 			</Router>
