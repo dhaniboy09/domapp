@@ -83,7 +83,7 @@ ShallowWrapper {
             </div>
             <br />
             <button
-                className="button-primary button-block modal-close"
+                className="button-primary button-block"
                 id="btn-createdocument"
                 onClick={[Function]}
             >
@@ -168,7 +168,7 @@ ShallowWrapper {
                   </div>
                   <br />
                   <button
-                        className="button-primary button-block modal-close"
+                        className="button-primary button-block"
                         id="btn-createdocument"
                         onClick={[Function]}
                   >
@@ -198,6 +198,7 @@ ShallowWrapper {
         "refs": Object {},
         "state": Object {
           "access": "",
+          "btnStatus": false,
           "content": "",
           "errors": "",
           "limit": undefined,
@@ -298,7 +299,7 @@ ShallowWrapper {
                               </div>
                               <br />
                               <button
-                                        className="button-primary button-block modal-close"
+                                        className="button-primary button-block"
                                         id="btn-createdocument"
                                         onClick={[Function]}
                               >
@@ -383,7 +384,7 @@ ShallowWrapper {
                               </div>
                               <br />
                               <button
-                                        className="button-primary button-block modal-close"
+                                        className="button-primary button-block"
                                         id="btn-createdocument"
                                         onClick={[Function]}
                               >

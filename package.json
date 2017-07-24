@@ -35,6 +35,9 @@
     "transform": {
       ".*": "<rootDir>/node_modules/jest-css-modules"
     },
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "<rootDir>/client/__mocks__/styleMock.js"
+    },
     "collectCoverage": true,
     "collectCoverageFrom": [
       "client/src/**/*.{js,jsx}"

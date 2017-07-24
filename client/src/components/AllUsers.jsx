@@ -13,7 +13,7 @@ import { searchUsers } from '../actions/searchUsers';
  * @class AllUsers
  * @extends {React.Component}
  */
-class AllUsers extends React.Component {
+export class AllUsers extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -110,24 +110,20 @@ class AllUsers extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		// const searchString = this.state.searchString.trim().toLowerCase();
-		console.log(this.props.users, 'the results');
 		const users = _.map(this.state.users);
 		const searchList = this.state.searchResult;
-		// if (searchString.length > 0) {
-		// 	users = users.filter((user) => {
-		// 		let filters = [user.firstName, user.lastName].join('|');
-		// 		filters = filters.toString().toLowerCase();
-		// 		return (filters.indexOf(searchString) !== -1);
-		// 	});
-		// }
+
 		return (
 			<div>
 				{
 					(this.state.users.length !== 0) ? (
 						<ReactPaginate
-							previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-							nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+							previousLabel={
+								<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />
+							}
+							nextLabel={
+								<i className="fa fa-chevron-right fa-2x" id="btn-Next" aria-hidden="true" />
+							}
 							breakLabel={<a href="">...</a>}
 							breakClassName={'break-me'}
 							pageCount={this.state.pagination.pages}
@@ -155,6 +151,7 @@ class AllUsers extends React.Component {
 										<form >
 											<input
 												type="text"
+												id="search"
 												value={this.state.searchQuery}
 												onChange={this.onChange}
 												onKeyUp={this.handleSearch}
@@ -210,5 +207,6 @@ function mapStateToProps(state) {
 		searchResult: state.users.userSearch
 	};
 }
-export default withRouter(connect(mapStateToProps, { allUsers, removeUser, searchUsers })(AllUsers));
+export default withRouter(connect(mapStateToProps,
+	{ allUsers, removeUser, searchUsers })(AllUsers));
 

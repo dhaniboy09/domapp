@@ -71,6 +71,7 @@ describe('Documents Page', () => {
 		componentWillReceivePropsSpy.restore();
 	});
 	it('should call openModal() when modal event is triggered', () => {
+		const openModalSpy = spy(Documents.prototype, 'openModal');
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>
@@ -84,11 +85,28 @@ describe('Documents Page', () => {
 			</Router>
 		);
 		const openModalButton = wrapper.find('#btn-newModal');
-		const closeModalButton = wrapper.find('#btn-createdocument');
 		assert.equal(openModalButton.length, 1);
-		openModalButton.simulate('click');
+		openModalButton.simulate('click', openModalSpy);
+		assert.ok(openModalSpy.calledOnce);
+	});
+	it('should call closeModal() when modal event is triggered', () => {
+		const closeModalSpy = spy(Documents.prototype, 'closeModal');
+		const wrapper = mount(
+			<Router >
+				<Provider store={store}>
+					<Documents
+						pagination={pagination}
+						documents={[]}
+						allDocuments={allDocumentsMock}
+						errors={[]}
+					/>
+				</Provider>
+			</Router>
+		);
+		const closeModalButton = wrapper.find('#btn-createdocument');
 		assert.equal(closeModalButton.length, 1);
-		closeModalButton.simulate('click');
+		closeModalButton.simulate('click', closeModalSpy('close'));
+		assert.ok(closeModalSpy.calledOnce);
 	});
 	it('Should render a ReactPaginate component', () => {
 		const wrapper = mount(

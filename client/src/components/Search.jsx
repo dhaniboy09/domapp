@@ -6,17 +6,11 @@ import ReactPaginate from 'react-paginate';
 import { searchDocuments } from '../actions/searchDocuments';
 import DocumentCard from './DocumentCard';
 
-// $('body').on('keypress', 'input', function(args) {
-//     if (args.keyCode === 13) {
-//         $('#save_post').click();
-//         return false;
-//     }
-// });
 /**
  * @class Documents
  * @extends {React.Component}
  */
-class SearchForm extends React.Component {
+export class Search extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -29,10 +23,9 @@ class SearchForm extends React.Component {
 			limit: 6,
 			searchresults: this.props.searchResults
 		};
-		this.openModal = this.openModal.bind(this);
-		this.handleSearch = this.handleSearch.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
 	}
 	/**
 	 * @description Lifecycle Method
@@ -74,23 +67,10 @@ class SearchForm extends React.Component {
 		});
 	}
 	/**
-	 * @description Modal to Add a Document
-	 * @return {void}
-	 * @param  {object} e
-	 */
-	openModal() {
-		$('.modal').modal({
-			dismissible: true, // Modal can be dismissed by clicking outside of the modal
-			opacity: 0.5, // Opacity of modal background
-		});
-		$('#myModal').modal();
-	}
-	/**
 	 * @description Render content to the screen
 	 * @return {void}
 	 */
 	render() {
-		console.log(this.state, 'state');
 		const userSearchResults = this.state.searchResults;
 		return (
 			<div>
@@ -98,7 +78,7 @@ class SearchForm extends React.Component {
 					(this.props.searchResults.length > 0) ? (
 						<ReactPaginate
 							previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-							nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+							nextLabel={<i className="fa fa-chevron-right fa-2x" id="btn-Next" aria-hidden="true" />}
 							breakLabel={<a href="">...</a>}
 							breakClassName={'break-me'}
 							pageCount={this.props.pagination.pages}
@@ -115,7 +95,7 @@ class SearchForm extends React.Component {
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header s-panel"><span>Search Panel</span></h5>
-						<form className="search-bar" onSubmit={this.handleSearch}>
+						<form className="search-bar" id="searchBar" onSubmit={this.handleSearch}>
 							<div className="input-field">
 								<input
 									id="search"
@@ -147,7 +127,7 @@ class SearchForm extends React.Component {
 		);
 	}
 }
-SearchForm.propTypes = {
+Search.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
 	history: propTypes.shape({
 		push: propTypes.func.isRequired,
@@ -171,5 +151,5 @@ function mapStateToProps(state) {
 		pagination: state.userDocuments.pagination
 	};
 }
-export default withRouter(connect(mapStateToProps, { searchDocuments })(SearchForm));
+export default withRouter(connect(mapStateToProps, { searchDocuments })(Search));
 

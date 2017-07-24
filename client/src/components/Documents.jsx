@@ -66,7 +66,7 @@ export class Documents extends React.Component {
 	/**
 	 * @description Closes Modal
 	 * @return {void}
-	 * @param {string} [state]
+	 * @param {string} [option]
 	 */
 	closeModal(option) {
 		$('#myModal').modal(option);

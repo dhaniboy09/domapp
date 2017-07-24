@@ -12,14 +12,14 @@ import validateInput from '../../../server/helpers/editDocumentValidation';
  * @class Documents
  * @extends {React.Component}
  */
-class DocumentDetails extends React.Component {
+export class DocumentDetails extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
 	 */
 	constructor(props) {
 		super(props);
-		this.decoded = jwt(localStorage.getItem('token'));
+		// this.decoded = jwt(localStorage.getItem('token'));
 		this.state = {
 			id: this.props.match.params.id,
 			title: '',
@@ -27,15 +27,13 @@ class DocumentDetails extends React.Component {
 			content: '',
 			edit: false,
 			errors: {},
-			documents : []
+			documents: [],
+			decoded: jwt(localStorage.getItem('token'))
 		};
 		this.openEditor = this.openEditor.bind(this);
 		this.closeEditor = this.closeEditor.bind(this);
 		this.updateDocument = this.updateDocument.bind(this);
 		this.onChange = this.onChange.bind(this);
-	}
-	componentWillReceiveProps(nextProps) {
-		this.setState({ documents: nextProps.document });
 	}
 	/**
 	 * @description Lifcycle Method
@@ -49,6 +47,14 @@ class DocumentDetails extends React.Component {
 				access: this.props.document.access
 			});
 		});
+	}
+	/**
+	 * @description Lifecycle Method
+	 * @param  {object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		this.setState({ documents: nextProps.document });
 	}
 	/**
 	 * @param  {object} e
@@ -127,7 +133,7 @@ class DocumentDetails extends React.Component {
 		if (this.state.errors !== null) {
 			errors = this.state.errors;
 		}
-		const userId = this.decoded.id;
+		const userId = this.state.decoded.id;
 		const documentId = this.state.documents.userId;
 		const accessName = ['Public', 'Private', 'Role'];
 		const accessOptions = accessName.map(value => (
@@ -148,7 +154,7 @@ class DocumentDetails extends React.Component {
 							{ userId === documentId ?
 								(
 									<div className="create-doc">
-										<a href="#!" className="create-doc-link" onClick={this.openEditor}>Edit</a>
+										<a href="#!" className="create-doc-link" id="btn-editDoc" onClick={this.openEditor}>Edit</a>
 									</div>) : ''}
 						</div>
 						<div>
@@ -157,6 +163,7 @@ class DocumentDetails extends React.Component {
 									<div className="edit-panel">
 										<input
 											type="text"
+											id="title"
 											name="title"
 											value={this.state.title}
 											onChange={this.onChange}
@@ -194,10 +201,12 @@ class DocumentDetails extends React.Component {
 							<button
 								onClick={this.updateDocument}
 								className="button-primary button-block"
+								id="btn-updateDocument"
 							>Save</button>
 							<button
 								onClick={this.closeEditor}
 								className="button-primary button-block"
+								id="btn-closeEditor"
 							>
 								Cancel
 							</button>
