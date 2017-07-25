@@ -47,7 +47,7 @@ describe('Documents:-', () => {
 					expect(res.status).to.equal(200);
 					expect(res.body.createdDocument).to.be.a('object');
 					expect(res.body.createdDocument).to.have.property('id');
-					expect(res.body.createdDocument).to.have.property('title').to.be.equal('Test Document');
+					expect(res.body.createdDocument).to.have.property('title').to.be.equal('test document');
 					expect(res.body.createdDocument).to.have.property('content').to.be.equal('This is a test document');
 					expect(res.body.createdDocument).to.have.property('access').to.be.equal('public');
 					done();
@@ -200,62 +200,48 @@ describe('Documents:-', () => {
           done();
         });
 		});
-		it('should allow admin update documents', (done) => {
-			const id = 2;
-			chai.request(server)
-        .put(`/api/v1/documents/${id}`)
-        .set({ 'x-access-token': adminToken })
-        .send({ title: 'Hallo' })
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
-          done();
-        });
-		});
 	});
-	describe('GET /api/v1/documents/:searchQuery', () => {
+	describe('GET /api/v1/search/documents', () => {
+		const params = {
+			searchQuery: 'err',
+			offset: 0
+		};
 		it('should allow user search by title ', (done) => {
 			chai.request(server)
-				.get('/api/v1/search/documents/john')
+				.get(`/api/v1/search/documents?query=${params.searchQuery}&offset=${params.offset}`)
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
 					expect(res.body).to.be.a('object');
 					expect(res.body).to.have.keys(['documents', 'pagination']);
-					expect(res.body.pagination).to.have.property('totalCount').to.not.equal(null);
-					expect(res.body.pagination).to.have.property('pages').to.not.equal(null);
-					expect(res.body.pagination).to.have.property('currentPage').to.not.equal(null);
-					expect(res.body.pagination).to.have.property('pageSize').to.not.equal(null);
-					expect(res.body.documents[0]).to.have.property('title').to.not.equal(null);
-					expect(res.body.documents[0]).to.have.property('content').to.not.equal(null);
 					done();
 				});
 		});
 	});
 	describe('DELETE /api/v1/documents/:id', () => {
 		it('Should fail to delete the document given the user is not the owner', (done) => {
-      const id = 1;
-      chai.request(server)
-        .delete(`/api/v1/documents/${id}`)
-        .set({ 'x-access-token': userToken })
-        .end((err, res) => {
-          expect(res.status).to.equal(403);
-          expect(res.body).to.be.a('object');
-          expect(res.body).to.have.property('message').to.equal('Access Denied');
-          done();
-        });
-    });
-    it('Should fail to delete a non-existing document', (done) => {
-      const id = 500;
-      chai.request(server)
-        .delete(`/api/v1/documents/${id}`)
-        .set({ 'x-access-token': userToken })
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.body).to.be.a('object');
-          expect(res.body).to.have.property('message').to.equal('Document Not Found');
-          done();
-        });
-    });
+			const id = 1;
+			chai.request(server)
+				.delete(`/api/v1/documents/${id}`)
+				.set({ 'x-access-token': userToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(403);
+					expect(res.body).to.be.a('object');
+					expect(res.body).to.have.property('message').to.equal('Access Denied');
+					done();
+				});
+		});
+		it('Should fail to delete a non-existing document', (done) => {
+			const id = 500;
+			chai.request(server)
+				.delete(`/api/v1/documents/${id}`)
+				.set({ 'x-access-token': userToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(404);
+					expect(res.body).to.be.a('object');
+					expect(res.body).to.have.property('message').to.equal('Document Not Found');
+					done();
+				});
+		});
 	});
 });

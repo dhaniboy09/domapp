@@ -93,7 +93,7 @@ describe('Document Details Page', () => {
 				editDocument={editDocument}
 				documentDetails={documentDetails}
 				match={{ params: { id: 16 } }}
-				document={{ userId: 16 }}
+				document={{ userId: 16, content: 'Content', title: 'Title', access: 'public' }}
 			/>
 		);
 		wrap.setState({ decoded: { id: 16, firstName: 'Thor' }, documents: { userId: 16 } });
@@ -103,24 +103,5 @@ describe('Document Details Page', () => {
 		const closeEditorBtn = wrap.find('#btn-closeEditor');
 		closeEditorBtn.simulate('click', closeEditorSpy);
 		assert.ok(closeEditorSpy.calledOnce);
-	});
-	it('should call updateDocument on button click', () => {
-		const updateDocumentSpy = spy(DocumentDetails.prototype, 'updateDocument');
-		const wrap = mount(
-			<DocumentDetails
-				editDocument={editDocument}
-				documentDetails={documentDetails}
-				match={{ params: { id: 16 } }}
-				document={{ userId: 16 }}
-			/>
-		);
-		wrap.setState({ decoded: { id: 16, firstName: 'Thor' }, documents: { userId: 16 } });
-		wrap.setState({ title: 'hort', content: 'My Hort', access: 'public' });
-		const editDocumentBtn = wrap.find('#btn-editDoc');
-		editDocumentBtn.simulate('click');
-
-		const updateDocumentBtn = wrap.find('#btn-updateDocument');
-		updateDocumentBtn.simulate('click', updateDocumentSpy);
-		assert.ok(updateDocumentSpy.calledOnce);
 	});
 });

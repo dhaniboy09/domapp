@@ -16,8 +16,7 @@ export const fetchUser = (id) => {
 	return dispatch => {
 		return axios.get(`/api/v1/users/${id}`).then((res) => {
 			dispatch(setUserFetch(res.data));
-		}).catch(() => {
-			return Promise.reject();
+			return Promise.resolve(res);
 		});
 	};
 };

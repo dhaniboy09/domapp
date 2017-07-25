@@ -27,7 +27,6 @@ describe('SignInForm', () => {
 	});
 	it('should call onSubmit', () => {
 		const onSubmitSpy = spy(SignInForm.prototype, 'onSubmit');
-		const e = { preventDefault: () => {} };
 		const wrap = mount(
 			<Router>
 				<SignInForm />

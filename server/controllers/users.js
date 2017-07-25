@@ -107,7 +107,13 @@ const UserController = {
 	 */
 	getUser: (req, res) => {
 		User.findOne({ where: { id: req.params.id } }).then((user) => {
-			res.status(200).json(user);
+			if (user) {
+				return res.status(200).json(user);
+			} else {
+				return res.status(404).json({
+					message: 'User Not Found',
+				});
+			}
 		}).catch((err) => {
 			res.status(404).json({ error: err.message });
 		});
@@ -248,21 +254,24 @@ const UserController = {
 					return res.status(404).json({
 						message: 'User Not Found',
 					});
-				}
-			});
-			User.destroy({
-				where: {
-					id: req.params.id
-				}
-			})
-				.then(() => {
-					res.status(204).json({
-						message: 'Account Deleted'
-					});
+				} else {
+				User.destroy({
+					where: {
+						id: req.params.id
+					}
 				})
-				.catch((err) => {
-					res.status(500).json({ error: err.message });
-				});
+					.then(() => {
+						res.status(204).json({
+							message: 'Account Deleted'
+						});
+					})
+					.catch((err) => {
+						res.status(500).json({ error: err.message });
+					});
+				}
+			}).catch((err) => {
+				res.status(500).json({ error: err.message });
+			});
 		} else {
 			return res.status(403).json({
 				message: 'Cannot delete user',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
@@ -47,8 +48,7 @@ export class Search extends React.Component {
 	 * @description Triggers search action
 	 * @return {void}
 	 */
-	handleSearch(e) {
-		e.preventDefault();
+	handleSearch() {
 		if (this.state.searchQuery !== '') {
 			this.props.searchDocuments(this.state).then(() => {
 			});
@@ -71,7 +71,7 @@ export class Search extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		const userSearchResults = this.state.searchResults;
+		const userSearchResults = _.map(this.state.searchResults);
 		return (
 			<div>
 				{
@@ -95,7 +95,7 @@ export class Search extends React.Component {
 				<div className="document-panel">
 					<div className="f-center">
 						<h5 className="document-panel-header s-panel"><span>Search Panel</span></h5>
-						<form className="search-bar" id="searchBar" onSubmit={this.handleSearch}>
+						<div className="search-bar">
 							<div className="input-field">
 								<input
 									id="search"
@@ -106,7 +106,10 @@ export class Search extends React.Component {
 									onChange={this.onChange}
 								/>
 							</div>
-						</form>
+							<div>
+								<button id="button-search" onClick={this.handleSearch}>Search</button>
+							</div>
+						</div>
 						{
 							(this.props.searchResults.length === 0) ? (<h3>Nothing Found</h3>) : (
 								<div className="col s12">

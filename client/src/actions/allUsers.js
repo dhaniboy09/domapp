@@ -23,8 +23,7 @@ export const allUsers = (params) => {
 	return dispatch => {
 		return axios.get(`/api/v1/users?offset=${params.offset}&limit=${params.limit}`).then((res) => {
 			dispatch(getAllUsers(res.data.users, res.data.pagination));
-		}).catch(() => {
-			return Promise.reject();
+			return Promise.resolve(res);
 		});
 	};
 };

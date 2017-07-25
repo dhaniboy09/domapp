@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { MemoryRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { spy } from 'sinon';
-
 import { Documents } from '../../src/components/Documents';
 
 

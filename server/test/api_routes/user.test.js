@@ -5,7 +5,6 @@ import models from '../../models';
 import mockData from '../mockData';
 
 const expect = chai.expect;
-const should = chai.should();
 let	userToken, adminToken;
 chai.use(chaiHttp);
 
@@ -170,10 +169,10 @@ describe('Users', () => {
 				});
 		});
 	});
-	describe('PUT /api/v1/users/profile/:id', () => {
+	describe('PUT /api/v1/users/password/:id', () => {
 		it('should allow user change password', (done) => {
 			chai.request(server)
-				.put('/api/v1/users/profile/2')
+				.put('/api/v1/users/password/2')
 				.set({ 'x-access-token': userToken })
 				.send({ password: '123456789' })
 				.end((err, res) => {
@@ -223,11 +222,11 @@ describe('Users', () => {
 	describe('DELETE /api/v1/users/:id', () => {
 		it('should not delete a non-existing user', (done) => {
 			chai.request(server)
-				.delete('/api/v1/users/100')
+				.delete('/api/v1/users/8000')
 				.set({ 'x-access-token': adminToken })
 				.end((err, res) => {
-					expect(res.status).to.equal(403);
-					expect(res.body.message).to.eql('Cannot delete user');
+					expect(res.status).to.equal(404);
+					expect(res.body.message).to.eql('User Not Found');
 					done();
 				});
 		});
@@ -242,14 +241,36 @@ describe('Users', () => {
 				});
 		});
 	});
-	describe('GET /api/v1/search/users/:searchQuery', () => {
+	describe('GET /api/v1/search/users', () => {
 		it('should not allow non-admin search for users', (done) => {
 			chai.request(server)
-				.get('/api/v1/search/users/hello')
+				.get('/api/v1/search/users?query=haroon')
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(403);
 					expect(res.body.error).to.eql('You do not have access');
+					done();
+				});
+		});
+	});
+	describe('GET /api/v1/users/:id', () => {
+		it('should fetch single existing user', (done) => {
+			chai.request(server)
+				.get('/api/v1/users/2')
+				.set({ 'x-access-token': adminToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.be.a('object');
+					done();
+				});
+		});
+		it('should not fetch a non existing user', (done) => {
+			chai.request(server)
+				.get('/api/v1/users/20000')
+				.set({ 'x-access-token': adminToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(404);
+					expect(res.body).to.be.a('object');
 					done();
 				});
 		});

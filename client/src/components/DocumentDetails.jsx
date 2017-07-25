@@ -154,7 +154,12 @@ export class DocumentDetails extends React.Component {
 							{ userId === documentId ?
 								(
 									<div className="create-doc">
-										<a href="#!" className="create-doc-link" id="btn-editDoc" onClick={this.openEditor}>Edit</a>
+										<a
+											href="#!"
+											className="create-doc-link"
+											id="btn-editDoc"
+											onClick={this.openEditor}
+										>Edit</a>
 									</div>) : ''}
 						</div>
 						<div>
