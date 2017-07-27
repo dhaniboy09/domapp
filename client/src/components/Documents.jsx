@@ -82,7 +82,7 @@ export class Documents extends React.Component {
 			</div>
 		);
 		return (
-			<div className="doc-wrapper">
+			<div className="doc-wrapper" id="d-wrap">
 				<div className="create-doc">
 					<a
 						className="create-doc-link"
@@ -118,7 +118,7 @@ export class Documents extends React.Component {
 						activeClassName={'active'}
 					/>
 				)}
-				<div className="document-panel">
+				<div className="document-panel" id="allDocuments-panel">
 					<div className="f-center" id="allDocuments-header">
 						<h5 className="document-panel-header">
 							<span id="sheader">All Documents</span>

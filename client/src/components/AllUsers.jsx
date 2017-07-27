@@ -152,6 +152,7 @@ export class AllUsers extends React.Component {
 											<input
 												type="text"
 												id="search"
+												name="search"
 												value={this.state.searchQuery}
 												onChange={this.onChange}
 												onKeyUp={this.handleSearch}
@@ -163,13 +164,17 @@ export class AllUsers extends React.Component {
 							</thead>
 							<tbody>
 								{users.map(user => (
-									<tr>
-										<td>{user.firstName}</td>
+									<tr id="users-table">
+										<td id="fname">{user.firstName}</td>
 										<td>{user.lastName}</td>
 										<td>{user.email}</td>
 										<td>{user.roleId}</td>
 										<td>
-											<a role="button" onClick={() => this.handleDeleteUser(user.id)}>
+											<a
+												role="button"
+												id="btn-userdelete"
+												onClick={() => this.handleDeleteUser(user.id)}
+											>
 												<i className="fa fa-trash" aria-hidden="true" />
 											</a>
 										</td>

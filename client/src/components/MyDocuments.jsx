@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { myDocuments } from '../actions/myDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
+
 /**
  * @class Documents
  * @extends {React.Component}

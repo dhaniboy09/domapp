@@ -217,10 +217,20 @@ i {
   color: #283c46;
 }
 .page-footer{
-  background-color: #283c46;
+  padding-top: unset !important;
+  border: 1px solid gainsboro !important;
+  background: rgba(220, 220, 220, 0.3) !important;
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  height:50px;
+  width:100%;
 }
 .page-footer .footer-copyright{
-  background-color: rgb(30,45,52);
+  color: #283c46 !important;
+}
+.container a {
+   color: #283c46 !important;;
 }
 .brand-logo{
   margin-left: 2rem;
@@ -445,17 +455,23 @@ a{
   text-transform: unset !important;
   color: rgb(229,115,115);
 }
+
+ul.dropdown-content.active {
+  width: 200px !important;
+  top: 62px !important;
+  position: absolute;
+  display: block;
+  opacity: 1;
+}
 .dropdown-content li {
   width: 200px;
 }
-ul#dropdown1.dropdown-content.active {
-  width: 200px !important;
-  top: 62px !important;
-} 
-ul#dropdown1.dropdown-content {
-  width: 200px !important;
-  top: 62px !important;
-} 
+.dropdown-content li a {
+  color: #26a69a !important
+}
+.dropdown-content li a:hover {
+  background: unset !important;
+}
 .sub-menu {
   li a {
     display: inline-block;
@@ -787,6 +803,7 @@ ul.pagination {
   position: absolute;
   top: 53rem;
   margin-left: 37rem;
+  margin-bottom: 5rem;
 }
 ul.pagination {
   li a {

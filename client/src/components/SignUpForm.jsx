@@ -48,7 +48,10 @@ export class SignUpForm extends React.Component {
 				() => {
 					this.props.history.push('/documents');
 				},
-				(err) => { this.setState({ errors: err.response.data }); }
+				(err) => {
+					this.setState({ errors: err.response.data });
+					Materialize.toast(err.response.data.message, 4000);
+				}
 			);
 		}
 	}

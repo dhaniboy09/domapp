@@ -120,7 +120,7 @@ export class DocumentForm extends React.Component {
 							<option value="role">Role</option>
 						</select>
 						<br />
-						<div>
+						<div id="tiny-edit">
 							<TinyMCE
 								config={{
 									plugins: 'link image code',

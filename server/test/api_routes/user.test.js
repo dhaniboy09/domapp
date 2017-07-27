@@ -42,7 +42,8 @@ describe('Users', () => {
 		it('should not duplicate users', (done) => {
 			chai.request(server).post('/auth/v1/users').send(mockData.SampleUser2).end((err, res) => {
 				expect(res.status).to.equal(403);
-				expect(res.body).to.eql('User already exists!');
+				expect(res.body).to.be.a('object');
+				expect(res.body.message).to.eql('User already exists!');
 				done();
 			});
 		});
@@ -249,6 +250,26 @@ describe('Users', () => {
 				.end((err, res) => {
 					expect(res.status).to.equal(403);
 					expect(res.body.error).to.eql('You do not have access');
+					done();
+				});
+		});
+		it('should not allow admin search for users', (done) => {
+			chai.request(server)
+				.get('/api/v1/search/users?query=hayley')
+				.set({ 'x-access-token': adminToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.have.keys(['users', 'pagination']);
+					done();
+				});
+		});
+		it('should throw an error for an empty search query', (done) => {
+			chai.request(server)
+				.get('/api/v1/search/users')
+				.set({ 'x-access-token': adminToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(400);
+					expect(res.body.error).to.eql('Search query not found');
 					done();
 				});
 		});

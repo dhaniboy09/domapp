@@ -93,7 +93,9 @@ const UserController = {
 						res.status(400).json({ error: err.message });
 					});
 				} else {
-					res.status(403).json('User already exists!');
+					return res.status(403).json({
+						message: 'User already exists!',
+					});
 				}
 			}).catch((err) => {
 				res.status(401).json({ error: err.message });
@@ -372,8 +374,10 @@ const UserController = {
 					pagination,
 				});
 			})
-			.catch((err) => {
-				res.status(400).send(err);
+			.catch(() => {
+				res.status(400).send({
+					message: 'Bad Request. Please Try Again',
+				});
 			});
 	}
 };

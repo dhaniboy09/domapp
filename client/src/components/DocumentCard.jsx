@@ -69,6 +69,7 @@ export class DocumentCard extends React.Component {
 								onClick={() => this.getDocument(`/document/${this.props.document.id}`)}
 								href="#!"
 								role="button"
+								id="btn-singledocument"
 							>
 								{ this.props.document.title }
 							</a>

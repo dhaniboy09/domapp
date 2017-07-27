@@ -84,6 +84,16 @@ export default {
 		createdAt: new Date(),
 		updatedAt: new Date()
 	},
+	FakeAdminDocument: {
+		id: 10,
+		title: 'John Doe',
+		content: 'This is a John Doe situation that i really cant handle',
+		access: 'private',
+		userRoleId: 2,
+		userId: 1,
+		createdAt: new Date(),
+		updatedAt: new Date()
+	},
 	FakePublicDocument: {
 		title: 'John Doe',
 		content: 'This is a John Doe situation that i really cant handle',

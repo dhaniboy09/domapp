@@ -8,19 +8,19 @@ const expect = chai.expect;
 let	userToken, adminToken;
 chai.use(chaiHttp);
 
+before((done) => {
+	chai.request(server)
+		.post('/auth/v1/users/login')
+		.send(mockData.Admin)
+		.end((err, res) => {
+			adminToken = res.body.token;
+			done();
+		});
+});
 describe('Roles', () => {
 	after((done) => {
 		models.User.destroy({ where: { id: { $notIn: [1, 2] } } });
 		done();
-	});
-	before((done) => {
-		chai.request(server)
-			.post('/auth/v1/users/login')
-			.send(mockData.Admin)
-			.end((err, res) => {
-				adminToken = res.body.token;
-				done();
-			});
 	});
 	describe('POST /api/v1/roles', () => {
 		it('should not allow unauthorized creation of roles', (done) => {
