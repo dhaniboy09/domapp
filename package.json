@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/index.js",
-    "test": "npm run server-test",
+    "test": "npm run server-test && npm run client-test",
     "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js",
-    "client-test": "jest ./client/__tests__/**/*.test.js | ./node_modules/.bin/coveralls",
+    "client-test": "jest ./client/__tests__/**/*.test.js | ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "reset-testdb": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "seed-testdb": "NODE_ENV=test sequelize db:seed:all",
