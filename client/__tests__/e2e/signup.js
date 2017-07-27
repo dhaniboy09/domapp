@@ -57,11 +57,11 @@ module.exports = {
 			.waitForElementVisible('body', 5000)
 			.setValue('input[name=firstName]', 'Eric')
 			.setValue('input[name=lastName]', 'Schimdt')
-			.setValue('input[name=email]', 'eric.schimdt@hotmail.com')
+			.setValue('input[name=email]', 'eric.schuler@hotmail.com')
 			.setValue('input[name=password]', '123456789')
 			.setValue('input[name=passwordConfirm]', '123456789')
 			.click('#btn-signup')
-			.waitForElementVisible('#allDocuments-header', 5000)
+			.waitForElementVisible('div#d-wrap', 5000)
 			.assert.containsText('#sheader', 'All Documents')
 			.end();
 	},

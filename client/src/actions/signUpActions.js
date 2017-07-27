@@ -26,6 +26,7 @@ export function userSignUpRequest(userData) {
 			localStorage.setItem('token', token);
 			setAuthorizationToken(token);
 			dispatch(createUser(jwt.decode(token)));
+			return Promise.resolve(res);
 		});
 	};
 }

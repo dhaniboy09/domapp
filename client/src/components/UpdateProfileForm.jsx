@@ -12,7 +12,7 @@ import validateInput from '../../../server/helpers/editProfileValidation';
  * @description Component to render Sign Up Form
  * @extends {React.Component}
  */
-class UpdateProfileForm extends React.Component {
+export class UpdateProfileForm extends React.Component {
 	/**
 	 * @constructor constructor
 	 * @param  {object} props
@@ -115,8 +115,14 @@ class UpdateProfileForm extends React.Component {
 		return (
 			<div className="s-form-wrapper">
 				<div className="edit-profile">
-					<a onClick={this.editProfile}>
-						<i className="fa fa-pencil-square-o fa-lg" aria-hidden="true"><span>Edit</span></i>
+					<a role="button"onClick={this.editProfile}>
+						<i
+							className="fa fa-pencil-square-o fa-lg"
+							id="btn-Edit"
+							aria-hidden="true"
+						>
+							<span>Edit</span>
+						</i>
 					</a>
 				</div>
 				<div className="s-form">
@@ -149,17 +155,19 @@ class UpdateProfileForm extends React.Component {
 						name="email"
 						disabled={!this.state.editable}
 					/>
-					<span className="sign-up-error">{errors.email}</span>
+					<span className="sign-up-error" id="email-error">{errors.email}</span>
 					<div className="profile-update-buttons">
 						<button
 							className="button-primary button-block s-button"
 							onClick={this.updateProfile}
 							disabled={this.state.disabled}
+							id="btn-Update"
 						>Update</button>
 						<button
 							onClick={this.cancelEdit}
 							className="button-primary button-block"
 							disabled={!this.state.editable}
+							id="btn-Cancel"
 						>
 							Cancel
 						</button>

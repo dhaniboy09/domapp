@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import { CREATE_NEW_DOCUMENT, VIEW_ALL_DOCUMENTS, EDIT_DOCUMENT, DELETE_DOCUMENT,
-  GET_USER_DOCUMENTS,
-  SEARCH_DOCUMENT } from '../../src/actions/actionTypes';
+import { CREATE_NEW_DOCUMENT, VIEW_ALL_DOCUMENTS, EDIT_DOCUMENT, DELETE_DOCUMENT } from '../../src/actions/actionTypes';
 import reducer from '../../src/reducers/userDocuments';
 import mockData from '../../../server/test/mockData';
 
@@ -12,7 +10,7 @@ describe('Documents reducer', () => {
 				documents: [],
 				searchResults: [],
 				document: {},
-				pagination: []
+				pagination: {},
 			}
 		);
 	});
@@ -40,24 +38,14 @@ describe('Documents reducer', () => {
 	});
 	it('should handle EDIT_DOCUMENT', () => {
 		expect(
-			reducer({ documents: [mockData.FakePublicDocument] }, {
+			reducer({ document: [mockData.FakePublicDocument] }, {
 				type: EDIT_DOCUMENT,
 				document: mockData.FakePublicDocument
 			})
 		).to.eql({
-			documents: [mockData.FakePublicDocument]
+			document: mockData.FakePublicDocument
 		});
 	});
-	// it('should handle SEARCH_DOCUMENT', () => {
-	// 	expect(
-	// 		reducer({}, {
-	// 			type: SEARCH_DOCUMENT,
-	// 			documents: mockData.FakeRoleDocument
-	// 		})
-	// 	).to.eql({
-	// 		searchResults: mockData.FakeRoleDocument
-	// 	});
-	// });
 	it('should handle DELETE_DOCUMENT', () => {
 		expect(
 			reducer({ documents: [mockData.FakeTestDocument01, mockData.FakeTestDocument02] }, {

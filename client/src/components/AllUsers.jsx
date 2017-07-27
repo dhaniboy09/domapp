@@ -13,7 +13,7 @@ import { searchUsers } from '../actions/searchUsers';
  * @class AllUsers
  * @extends {React.Component}
  */
-class AllUsers extends React.Component {
+export class AllUsers extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -101,6 +101,8 @@ class AllUsers extends React.Component {
 		if (this.state.searchQuery !== '') {
 			this.props.searchUsers(this.state).then(() => {
 			});
+		} else {
+			this.props.allUsers(this.state);
 		}
 	}
 	/**
@@ -108,23 +110,20 @@ class AllUsers extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		// const searchString = this.state.searchString.trim().toLowerCase();
 		const users = _.map(this.state.users);
 		const searchList = this.state.searchResult;
-		// if (searchString.length > 0) {
-		// 	users = users.filter((user) => {
-		// 		let filters = [user.firstName, user.lastName].join('|');
-		// 		filters = filters.toString().toLowerCase();
-		// 		return (filters.indexOf(searchString) !== -1);
-		// 	});
-		// }
+
 		return (
 			<div>
 				{
 					(this.state.users.length !== 0) ? (
 						<ReactPaginate
-							previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-							nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+							previousLabel={
+								<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />
+							}
+							nextLabel={
+								<i className="fa fa-chevron-right fa-2x" id="btn-Next" aria-hidden="true" />
+							}
 							breakLabel={<a href="">...</a>}
 							breakClassName={'break-me'}
 							pageCount={this.state.pagination.pages}
@@ -152,6 +151,8 @@ class AllUsers extends React.Component {
 										<form >
 											<input
 												type="text"
+												id="search"
+												name="search"
 												value={this.state.searchQuery}
 												onChange={this.onChange}
 												onKeyUp={this.handleSearch}
@@ -163,13 +164,17 @@ class AllUsers extends React.Component {
 							</thead>
 							<tbody>
 								{users.map(user => (
-									<tr>
-										<td>{user.firstName}</td>
+									<tr id="users-table">
+										<td id="fname">{user.firstName}</td>
 										<td>{user.lastName}</td>
 										<td>{user.email}</td>
 										<td>{user.roleId}</td>
 										<td>
-											<a role="button" onClick={() => this.handleDeleteUser(user.id)}>
+											<a
+												role="button"
+												id="btn-userdelete"
+												onClick={() => this.handleDeleteUser(user.id)}
+											>
 												<i className="fa fa-trash" aria-hidden="true" />
 											</a>
 										</td>
@@ -207,5 +212,6 @@ function mapStateToProps(state) {
 		searchResult: state.users.userSearch
 	};
 }
-export default withRouter(connect(mapStateToProps, { allUsers, removeUser, searchUsers })(AllUsers));
+export default withRouter(connect(mapStateToProps,
+	{ allUsers, removeUser, searchUsers })(AllUsers));
 

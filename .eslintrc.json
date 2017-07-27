@@ -14,7 +14,9 @@
   "globals": {
     "$": true,
     "Materialize": true,
-    "tinymce": true
+    "tinymce": true,
+    "jest": true,
+    "expect": true
     },
   "rules": {
     "one-var": 0,

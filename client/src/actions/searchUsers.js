@@ -22,8 +22,7 @@ export const searchUsers = (params) => {
 	return dispatch => {
 		return axios.get(`/api/v1/search/users?query=${params.searchQuery}&offset=${params.offset}&limit=${params.limit}`).then((res) => {
 			dispatch(setSearchUsers(res.data.users, res.data.pagination));
-		}).catch(() => {
-			return Promise.reject();
+			return Promise.resolve(res);
 		});
 	};
 };

@@ -8,7 +8,7 @@ import validateInput from '../../../server/helpers/signUpValidation';
  * @description Component to render Sign Up Form
  * @extends {React.Component}
  */
-class SignUpForm extends React.Component {
+export class SignUpForm extends React.Component {
 	/**
 	 * @constructor constructor
 	 * @param  {object} props
@@ -41,15 +41,17 @@ class SignUpForm extends React.Component {
 	 * @param  {object} e
 	 * @return {void}
 	 */
-	onSubmit(e) {
-		e.preventDefault();
+	onSubmit() {
 		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			this.props.userSignUpRequest(this.state).then(
 				() => {
 					this.props.history.push('/documents');
 				},
-				(err) => { this.setState({ errors: err.response.data }); }
+				(err) => {
+					this.setState({ errors: err.response.data });
+					Materialize.toast(err.response.data.message, 4000);
+				}
 			);
 		}
 	}
@@ -82,7 +84,7 @@ class SignUpForm extends React.Component {
 							<strong id="sign-up-banner">Move on to Domapp</strong>
 						</span>
 					</p>
-					<form onSubmit={this.onSubmit} className="f-center">
+					<div className="f-center">
 						<input
 							type="text"
 							name="firstName"
@@ -138,8 +140,8 @@ class SignUpForm extends React.Component {
 						/>
 						<span className="sign-up-error">{errors.passwordConfirm}</span>
 						<br />
-						<button className="button-primary button-block" id="btn-signup">Sign Up</button>
-					</form>
+						<button className="button-primary button-block" onClick={this.onSubmit} id="btn-signup">Sign Up</button>
+					</div>
 				</div>
 			</div>
 		);

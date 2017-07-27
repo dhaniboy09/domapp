@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
 import TinyMCE from 'react-tinymce';
+import classnames from 'classnames';
 import { newDocument } from '../actions/newDocument';
 import { allDocuments } from '../actions/allDocuments';
 import validateInput from '../../../server/helpers/createDocumentValidation';
@@ -20,6 +21,7 @@ export class DocumentForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			btnStatus: false,
 			title: '',
 			content: '',
 			access: '',
@@ -59,10 +61,13 @@ export class DocumentForm extends React.Component {
 				access: '' });
 			this.props.newDocument(this.state).then(() => {
 				this.props.allDocuments(this.state);
+				this.props.closeModal('close');
 				Materialize.toast('Document Created', 4000);
 			}).catch((err) => {
 				Materialize.toast(err.response.data.message, 4000);
 			});
+		} else {
+			this.setState({ btnStatus: false });
 		}
 	}
 	/**
@@ -85,6 +90,11 @@ export class DocumentForm extends React.Component {
 		if (this.state.errors !== null) {
 			errors = this.state.errors;
 		}
+		const modalBtn = classnames({
+			'button-primary': true,
+			'button-block': true,
+			'modal-close': this.state.btnStatus
+		});
 		return (
 			<div>
 				<div className="form">
@@ -110,7 +120,7 @@ export class DocumentForm extends React.Component {
 							<option value="role">Role</option>
 						</select>
 						<br />
-						<div>
+						<div id="tiny-edit">
 							<TinyMCE
 								config={{
 									plugins: 'link image code',
@@ -122,7 +132,7 @@ export class DocumentForm extends React.Component {
 						</div>
 						<br />
 						<button
-							className="button-primary button-block modal-close"
+							className={modalBtn}
 							id="btn-createdocument"
 							onClick={this.createDocument}
 						>
@@ -136,7 +146,8 @@ export class DocumentForm extends React.Component {
 }
 DocumentForm.propTypes = {
 	newDocument: propTypes.func.isRequired,
-	allDocuments: propTypes.func.isRequired
+	allDocuments: propTypes.func.isRequired,
+	closeModal: propTypes.func.isRequired
 };
 
 /**

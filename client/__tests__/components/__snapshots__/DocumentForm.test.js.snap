@@ -1,0 +1,409 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Document Form renders a snapshot 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div>
+    <div
+        className="form"
+    >
+        <div
+            className="f-center"
+        >
+            <h5>
+                New Document
+            </h5>
+             
+            <br />
+            <span
+                className="sign-up-error"
+            />
+            <br />
+            <span
+                className="sign-up-error"
+            />
+            <br />
+            <label
+                htmlFor="title"
+            >
+                Title
+            </label>
+            <input
+                className="browser-defaults"
+                id="title"
+                name="title"
+                onChange={[Function]}
+                placeholder="Title"
+                type="text"
+                value=""
+            />
+            <br />
+            <label
+                htmlFor="selectbox"
+            >
+                Access
+            </label>
+            <select
+                name="access"
+                onChange={[Function]}
+            >
+                <option
+                    value="public"
+                >
+                    Public
+                </option>
+                <option
+                    value="private"
+                >
+                    Private
+                </option>
+                <option
+                    value="role"
+                >
+                    Role
+                </option>
+            </select>
+            <br />
+            <div>
+                <TinyMCE
+                    config={
+                        Object {
+                            "plugins": "link image code",
+                            "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
+                          }
+                    }
+                    content=""
+                    onChange={[Function]}
+                />
+            </div>
+            <br />
+            <button
+                className="button-primary button-block"
+                id="btn-createdocument"
+                onClick={[Function]}
+            >
+                Create
+            </button>
+        </div>
+    </div>
+</div>,
+  "nodes": Array [
+    <div>
+      <div
+            className="form"
+      >
+            <div
+                  className="f-center"
+            >
+                  <h5>
+                        New Document
+                  </h5>
+                   
+                  <br />
+                  <span
+                        className="sign-up-error"
+                  />
+                  <br />
+                  <span
+                        className="sign-up-error"
+                  />
+                  <br />
+                  <label
+                        htmlFor="title"
+                  >
+                        Title
+                  </label>
+                  <input
+                        className="browser-defaults"
+                        id="title"
+                        name="title"
+                        onChange={[Function]}
+                        placeholder="Title"
+                        type="text"
+                        value=""
+                  />
+                  <br />
+                  <label
+                        htmlFor="selectbox"
+                  >
+                        Access
+                  </label>
+                  <select
+                        name="access"
+                        onChange={[Function]}
+                  >
+                        <option
+                              value="public"
+                        >
+                              Public
+                        </option>
+                        <option
+                              value="private"
+                        >
+                              Private
+                        </option>
+                        <option
+                              value="role"
+                        >
+                              Role
+                        </option>
+                  </select>
+                  <br />
+                  <div>
+                        <TinyMCE
+                              config={
+                                    Object {
+                                          "plugins": "link image code",
+                                          "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
+                                        }
+                              }
+                              content=""
+                              onChange={[Function]}
+                        />
+                  </div>
+                  <br />
+                  <button
+                        className="button-primary button-block"
+                        id="btn-createdocument"
+                        onClick={[Function]}
+                  >
+                        Create
+                  </button>
+            </div>
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <DocumentForm />,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": DocumentForm {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "createDocument": [Function],
+        "onChange": [Function],
+        "onEditorChange": [Function],
+        "props": Object {},
+        "refs": Object {},
+        "state": Object {
+          "access": "",
+          "btnStatus": false,
+          "content": "",
+          "errors": "",
+          "limit": undefined,
+          "offset": undefined,
+          "success": Object {},
+          "title": "",
+        },
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div>
+          <div
+                    className="form"
+          >
+                    <div
+                              className="f-center"
+                    >
+                              <h5>
+                                        New Document
+                              </h5>
+                               
+                              <br />
+                              <span
+                                        className="sign-up-error"
+                              />
+                              <br />
+                              <span
+                                        className="sign-up-error"
+                              />
+                              <br />
+                              <label
+                                        htmlFor="title"
+                              >
+                                        Title
+                              </label>
+                              <input
+                                        className="browser-defaults"
+                                        id="title"
+                                        name="title"
+                                        onChange={[Function]}
+                                        placeholder="Title"
+                                        type="text"
+                                        value=""
+                              />
+                              <br />
+                              <label
+                                        htmlFor="selectbox"
+                              >
+                                        Access
+                              </label>
+                              <select
+                                        name="access"
+                                        onChange={[Function]}
+                              >
+                                        <option
+                                                  value="public"
+                                        >
+                                                  Public
+                                        </option>
+                                        <option
+                                                  value="private"
+                                        >
+                                                  Private
+                                        </option>
+                                        <option
+                                                  value="role"
+                                        >
+                                                  Role
+                                        </option>
+                              </select>
+                              <br />
+                              <div>
+                                        <TinyMCE
+                                                  config={
+                                                            Object {
+                                                                      "plugins": "link image code",
+                                                                      "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
+                                                                    }
+                                                  }
+                                                  content=""
+                                                  onChange={[Function]}
+                                        />
+                              </div>
+                              <br />
+                              <button
+                                        className="button-primary button-block"
+                                        id="btn-createdocument"
+                                        onClick={[Function]}
+                              >
+                                        Create
+                              </button>
+                    </div>
+          </div>
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div>
+          <div
+                    className="form"
+          >
+                    <div
+                              className="f-center"
+                    >
+                              <h5>
+                                        New Document
+                              </h5>
+                               
+                              <br />
+                              <span
+                                        className="sign-up-error"
+                              />
+                              <br />
+                              <span
+                                        className="sign-up-error"
+                              />
+                              <br />
+                              <label
+                                        htmlFor="title"
+                              >
+                                        Title
+                              </label>
+                              <input
+                                        className="browser-defaults"
+                                        id="title"
+                                        name="title"
+                                        onChange={[Function]}
+                                        placeholder="Title"
+                                        type="text"
+                                        value=""
+                              />
+                              <br />
+                              <label
+                                        htmlFor="selectbox"
+                              >
+                                        Access
+                              </label>
+                              <select
+                                        name="access"
+                                        onChange={[Function]}
+                              >
+                                        <option
+                                                  value="public"
+                                        >
+                                                  Public
+                                        </option>
+                                        <option
+                                                  value="private"
+                                        >
+                                                  Private
+                                        </option>
+                                        <option
+                                                  value="role"
+                                        >
+                                                  Role
+                                        </option>
+                              </select>
+                              <br />
+                              <div>
+                                        <TinyMCE
+                                                  config={
+                                                            Object {
+                                                                      "plugins": "link image code",
+                                                                      "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
+                                                                    }
+                                                  }
+                                                  content=""
+                                                  onChange={[Function]}
+                                        />
+                              </div>
+                              <br />
+                              <button
+                                        className="button-primary button-block"
+                                        id="btn-createdocument"
+                                        onClick={[Function]}
+                              >
+                                        Create
+                              </button>
+                    </div>
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <DocumentForm />,
+}
+`;

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="3">
+
+  <testsuite name="documentCreate"
+    errors="0" failures="0" hostname="" id="" package="documentCreate" skipped="0"
+    tests="3" time="8.470" timestamp="Wed, 26 Jul 2017 12:52:55 GMT">
+  
+    <testcase name="User sign in with correct credentials" classname="documentCreate" time="5.774" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User creates a document with empty title and content" classname="documentCreate" time="1.554" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User creates a document" classname="documentCreate" time="1.142" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

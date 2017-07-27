@@ -117,7 +117,7 @@ const DocumentController = {
 						})
 						.catch(() => {
 							res.status(400).send({
-								message: 'Bad Request1. Please Try Later'
+								message: 'Bad Request. Please Try Later'
 							});
 						});
 				} else {
@@ -154,13 +154,13 @@ const DocumentController = {
 						});
 					}).catch(() => {
 						res.status(400).send({
-							message: 'Bad Request2. Please Try Later'
+							message: 'Bad Request. Please Try Later'
 						});
 					});
 				}
 			}).catch(() => {
 				res.status(400).send({
-					message: 'Bad Request3. No user Role'
+					message: 'Bad Request. No user Role'
 				});
 			});
 	},
@@ -228,7 +228,7 @@ const DocumentController = {
 					})
 						.then(() => {
 							return res.status(200).json({
-								foundDocument
+								message: 'Document Deleted',
 							});
 						})
 						.catch(() => {

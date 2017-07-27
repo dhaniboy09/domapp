@@ -13,7 +13,6 @@ import SignInPage from './src/components/SignInPage';
 import Documents from './src/components/Documents';
 import Search from './src/components/Search';
 import MyDocuments from './src/components/MyDocuments';
-import SearchResults from './src/components/SearchResults';
 import Settings from './src/components/Settings';
 import AllUsers from './src/components/AllUsers';
 import DocumentDetails from './src/components/DocumentDetails';
@@ -75,13 +74,6 @@ render(
 						path="/search"
 						render={() => (
 							isAuthenticated() ? (<Search />) : (<Redirect to="/" />)
-						)}
-					/>
-					<Route
-						exact
-						path="/searchresults"
-						render={() => (
-							isAuthenticated() ? (<SearchResults />) : (<Redirect to="/" />)
 						)}
 					/>
 					<Route

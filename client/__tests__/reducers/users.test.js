@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import { CREATE_USER, SET_CURRENT_USER, FETCH_USER, UPDATE_PASSWORD,
-	GET_USER_DOCUMENTS, DELETE_USER, DEACTIVATE_ACCOUNT, UPDATE_PROFILE,
-	VIEW_ALL_USERS } from '../../src/actions/actionTypes';
+import { FETCH_USER, UPDATE_PROFILE, VIEW_ALL_USERS } from '../../src/actions/actionTypes';
 import reducer from '../../src/reducers/users';
 import mockData from '../../../server/test/mockData';
 
@@ -11,7 +9,9 @@ describe('User reducer', () => {
 			{
 				isAuthenticated: false,
 				users: {},
-				allUsers: {}
+				allUsers: {},
+				userSearch: {},
+				pagination: []
 			}
 		);
 	});

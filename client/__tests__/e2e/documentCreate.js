@@ -9,24 +9,27 @@ module.exports = {
 			.waitForElementVisible('#allDocuments-header', 5000)
 			.assert.containsText('#sheader', 'All Documents');
 	},
+	'User creates a document with empty title and content': (browser) => {
+		browser
+			.waitForElementVisible('body', 2000)
+			.click('#btn-newModal')
+			.setValue('input[name=title]', '')
+			.setValue('select[name=access]', 'public')
+			.setValue('#tiny-edit', '')
+			.click('#btn-createdocument')
+			.waitForElementVisible('.f-center', 5000)
+			.assert.containsText('h5', 'New Document');
+	},
 	'User creates a document': (browser) => {
 		browser
 			.waitForElementVisible('body', 2000)
 			.click('#btn-newModal')
 			.setValue('input[name=title]', 'Night Watch Tins')
 			.setValue('select[name=access]', 'public')
-			.setValue('textarea[name=content]', 'This Night Watch at work')
+			.setValue('#tiny-edit', 'This Night Watch at work')
 			.click('#btn-createdocument')
-			.waitForElementVisible('#allDocuments-header', 5000)
-			.assert.containsText('#sheader', 'All Documents');
-	},
-	'User deletes a document': (browser) => {
-		browser
-			.waitForElementVisible('body', 2000)
-			.click('#btn-deletedocument')
-			.waitForElementVisible('.react-confirm-alert', 5000)
-			.click('#btn-confirm')
-			.waitForElementVisible('.toast', 5000)
+			.waitForElementVisible('#allDocuments-panel', 5000)
+			.assert.containsText('#sheader', 'All Documents')
 			.end();
 	},
 };

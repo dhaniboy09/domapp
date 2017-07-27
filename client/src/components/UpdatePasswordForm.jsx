@@ -14,7 +14,7 @@ import validateInput from '../../../server/helpers/updatePasswordValidation';
  * @description Component to render Sign Up Form
  * @extends {React.Component}
  */
-class UpdatePasswordForm extends React.Component {
+export class UpdatePasswordForm extends React.Component {
 	/**
 	 * @constructor constructor
 	 * @param  {object} props
@@ -141,6 +141,7 @@ class UpdatePasswordForm extends React.Component {
 					<button
 						className="button-primary button-block s-button"
 						onClick={this.updatePassword}
+						id="btn-updatePassword"
 					>
 					Update
 					</button>

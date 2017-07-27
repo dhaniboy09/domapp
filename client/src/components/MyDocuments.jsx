@@ -6,11 +6,12 @@ import ReactPaginate from 'react-paginate';
 import { myDocuments } from '../actions/myDocuments';
 import DocumentForm from './DocumentForm';
 import DocumentCard from './DocumentCard';
+
 /**
  * @class Documents
  * @extends {React.Component}
  */
-class MyDocuments extends React.Component {
+export class MyDocuments extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -20,8 +21,7 @@ class MyDocuments extends React.Component {
 		this.state = {
 			offset: 0,
 			limit: 6,
-			id: this.props.auth.user.id,
-			documents: []
+			id: this.props.auth.user.id
 		};
 		this.openModal = this.openModal.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
@@ -66,6 +66,14 @@ class MyDocuments extends React.Component {
 		$('#myModal').modal();
 	}
 	/**
+	 * @description Closes Modal
+	 * @return {void}
+	 * @param {string} [state]
+	 */
+	closeModal(state) {
+		$('#myModal').modal(state);
+	}
+	/**
 	 * @description Render content to the screen
 	 * @return {void}
 	 */
@@ -78,16 +86,27 @@ class MyDocuments extends React.Component {
 		return (
 			<div className="doc-wrapper">
 				<div className="create-doc">
-					<a className="create-doc-link" onClick={this.openModal} href="#myModal">New</a>
+					<a
+						className="create-doc-link"
+						id="btn-openModal"
+						onClick={this.openModal}
+						href="#myModal"
+					>New</a>
 					<div id="myModal" className="modal">
 						<div className="modal-content">
-							<DocumentForm limit={this.state.limit} offset={this.state.offset} />
+							<DocumentForm
+								limit={this.state.limit}
+								offset={this.state.offset}
+								closeModal={this.closeModal}
+							/>
 						</div>
 					</div>
 				</div>
 				{this.props.documents.length === 0 ? '' : (
 					<ReactPaginate
-						previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+						previousLabel={
+							<i className="fa fa-chevron-left fa-2x" id="btn-Next" aria-hidden="true" />
+						}
 						nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
 						breakLabel={<a href="">...</a>}
 						breakClassName={'break-me'}

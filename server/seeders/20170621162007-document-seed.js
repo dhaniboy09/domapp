@@ -3,7 +3,7 @@ module.exports = {
       return queryInterface.bulkInsert('Documents', [{
         title: 'John Doe',
         content: 'This is a John Doe situation that i really cant head',
-        access: 'public',
+        access: 'private',
         userRoleId: 1,
         userId: 1,
         createdAt: new Date(),

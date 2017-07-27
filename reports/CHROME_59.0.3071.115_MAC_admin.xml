@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="2">
+
+  <testsuite name="admin"
+    errors="0" failures="0" hostname="" id="" package="admin" skipped="0"
+    tests="2" time="9.478" timestamp="Wed, 26 Jul 2017 12:52:36 GMT">
+  
+    <testcase name="Admin User sign in with correct credentials" classname="admin" time="6.237" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Admin User searches for users" classname="admin" time="3.241" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

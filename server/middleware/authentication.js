@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 
+const User = require('../models').User;
 
 module.exports = {
 	isAuthenticated: (req, res, next) => {
@@ -9,8 +10,17 @@ module.exports = {
 			if (err) {
 				res.status(401).json({ success: false, message: 'Failed to authenticate token.' });
 			} else {
-				req.decoded = decoded;
-				next();
+				const userId = decoded.id;
+				User.findById(userId)
+					.then((user) => {
+						if (!user) {
+							return res.status(404).send({
+								message: 'User not found'
+							});
+						}
+						req.decoded = decoded;
+						next();
+					});
 			}
 		});
 	},

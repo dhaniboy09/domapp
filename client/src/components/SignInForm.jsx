@@ -9,7 +9,7 @@ import validateInput from '../../../server/helpers/signInValidation';
  * @class SignInForm
  * @extends {React.Component}
  */
-class SignInForm extends React.Component {
+export class SignInForm extends React.Component {
 	/**
 	 * @param  {object} props
 	 * @return {void}
@@ -36,8 +36,7 @@ class SignInForm extends React.Component {
 	 * @param  {object} e
 	 * @return {void}
 	 */
-	onSubmit(e) {
-		e.preventDefault();
+	onSubmit() {
 		if (this.validateForm()) {
 			this.setState({ errors: {}, isLoading: true });
 			this.props.signin(this.state).then(
@@ -51,7 +50,7 @@ class SignInForm extends React.Component {
 		}
 	}
 	/**
-	 * @description Checks validity
+	 * @description Checks Form Validity
 	 * @return {Boolean}
 	 */
 	validateForm() {
@@ -71,7 +70,7 @@ class SignInForm extends React.Component {
 			<div>
 				{ errors.error && <div className="sign-in-error">{ errors.error }</div>}
 				<div className="sign-in-form">
-					<form onSubmit={this.onSubmit} className="f-center">
+					<div className="f-center">
 						<input
 							type="email"
 							name="email"
@@ -94,8 +93,8 @@ class SignInForm extends React.Component {
 						/>
 						<span className="sign-up-error">{errors.password}</span>
 						<br />
-						<button className="button-primary button-block" id="button-signin" disabled={isLoading}>Sign In</button>
-					</form>
+						<button className="button-primary button-block" id="button-signin" onClick={this.onSubmit} disabled={isLoading}>Sign In</button>
+					</div>
 				</div>
 			</div>
 		);
