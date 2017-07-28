@@ -13,6 +13,7 @@ import { allDocuments } from '../actions/allDocuments';
  */
 export class DocumentCard extends React.Component {
 	/**
+	 * @description cerates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -33,7 +34,7 @@ export class DocumentCard extends React.Component {
 		this.props.history.push(link);
 	}
 	/**
-	 * @description handles document deletion
+	 * @description Handles document deletion
 	 * @param  {integer} documentId
 	 * @return {void}
 	 */
@@ -53,6 +54,7 @@ export class DocumentCard extends React.Component {
 		});
 	}
 	/**
+	 * @description Render content to the screen
 	 * @return {void}
 	 */
 	render() {
@@ -81,11 +83,7 @@ export class DocumentCard extends React.Component {
 						{
 							(this.props.auth.user.id === this.props.document.userId) ?
 								(
-									<div>
-										<a
-											href="#!"
-											onClick={() => this.getDocument(`/document/${this.props.document.id}`)}
-										>More</a>
+									<div className="document-actions">
 										<a
 											href="#!"
 											id="btn-deletedocument"

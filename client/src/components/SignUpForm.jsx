@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
-import validateInput from '../../../server/helpers/signUpValidation';
+import signUpValidation from '../../../server/helpers/signUpValidation';
 
 /**
  * @class SignUpForm
@@ -10,7 +10,7 @@ import validateInput from '../../../server/helpers/signUpValidation';
  */
 export class SignUpForm extends React.Component {
 	/**
-	 * @constructor constructor
+	 * @description Creates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -28,8 +28,7 @@ export class SignUpForm extends React.Component {
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 	/**
-	 * @description Allows user Interact with form fileds
-	 * by setting state of form fields.
+	 * @description Allows user Interact with Input boxes
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -60,7 +59,7 @@ export class SignUpForm extends React.Component {
 	 * @return {Boolean}
 	 */
 	validateForm() {
-		const { errors, isValid } = validateInput(this.state);
+		const { errors, isValid } = signUpValidation(this.state);
 		if (!isValid) {
 			this.setState({ errors });
 		}
@@ -140,7 +139,13 @@ export class SignUpForm extends React.Component {
 						/>
 						<span className="sign-up-error">{errors.passwordConfirm}</span>
 						<br />
-						<button className="button-primary button-block" onClick={this.onSubmit} id="btn-signup">Sign Up</button>
+						<button
+							className="button-primary button-block"
+							onClick={this.onSubmit}
+							id="btn-signup"
+						>
+							Sign Up
+						</button>
 					</div>
 				</div>
 			</div>

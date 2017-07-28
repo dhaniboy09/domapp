@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 import SignInForm from './SignInForm';
 import { signin } from '../actions/signInAction';
 
-
+/**
+ * @description Markup for SignIn Page
+ * @return {[type]} [description]
+ */
 const SignInPage = () => ({
 	render() {
-		const { signin } = this.props;
 		return (
 			<div className="sign-in">
 				<div className="welcome-text">
 					<h5>Welcome, Sign In to Continue</h5>
 				</div>
-				<SignInForm signin={signin} />
+				<SignInForm signin={this.props.signin} />
 			</div>
 		);
 	}

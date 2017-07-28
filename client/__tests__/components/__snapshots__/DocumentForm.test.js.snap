@@ -69,7 +69,9 @@ ShallowWrapper {
                 </option>
             </select>
             <br />
-            <div>
+            <div
+                id="tiny-edit"
+            >
                 <TinyMCE
                     config={
                         Object {
@@ -154,7 +156,9 @@ ShallowWrapper {
                         </option>
                   </select>
                   <br />
-                  <div>
+                  <div
+                        id="tiny-edit"
+                  >
                         <TinyMCE
                               config={
                                     Object {
@@ -285,7 +289,9 @@ ShallowWrapper {
                                         </option>
                               </select>
                               <br />
-                              <div>
+                              <div
+                                        id="tiny-edit"
+                              >
                                         <TinyMCE
                                                   config={
                                                             Object {
@@ -370,7 +376,9 @@ ShallowWrapper {
                                         </option>
                               </select>
                               <br />
-                              <div>
+                              <div
+                                        id="tiny-edit"
+                              >
                                         <TinyMCE
                                                   config={
                                                             Object {

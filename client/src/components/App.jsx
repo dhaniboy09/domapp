@@ -1,22 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header';
-import Footer from './Footer';
-// import {connect} from 'react-redux';
 
-// const mapStateToProps = state => ({appName: state.appName});
-
-class App extends React.Component {
+/**
+ * @description Container for all components
+ * @return {void}
+ */
+const App = () => ({
 	render() {
 		return (
 			<div className="main">
 				<Header />
 				{this.props.children}
-				<div className="clear"></div>
+				<div className="clear" />
 			</div>
 		);
 	}
-}
-export default App;
+});
 
-// export default connect(mapStateToProps, () => ({}))(App);
+App.propTypes = {
+	children: PropTypes.element.isRequired
+};
+export default App;
 

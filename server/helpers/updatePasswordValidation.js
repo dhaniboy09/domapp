@@ -1,15 +1,20 @@
 import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
-export default function validateInput(data) {
-	let errors = {};
-	if (Validator.isEmpty(data.password)) {
+/**
+ * @description Validates Password Update form
+ * @param  {object} formData
+ * @return {object}
+ */
+export default function updatePasswordValidation(formData) {
+	const errors = {};
+	if (Validator.isEmpty(formData.password)) {
 		errors.password = 'Password is Required';
 	}
-	if (Validator.isEmpty(data.passwordConfirm)) {
+	if (Validator.isEmpty(formData.passwordConfirm)) {
 		errors.passwordConfirm = 'Password Confirmation is Required';
 	}
-	if (!Validator.equals(data.password, data.passwordConfirm)) {
+	if (!Validator.equals(formData.password, formData.passwordConfirm)) {
 		errors.passwordConfirm = 'Passwords must match';
 	}
 	return {

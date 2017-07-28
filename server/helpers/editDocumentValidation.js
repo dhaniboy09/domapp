@@ -2,16 +2,16 @@ import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
 /**
- * @description Performs Client Side Validation
- * @param  {object} data Data to be Validated
+ * @description Validates Document Update Form
+ * @param  {object} formData
  * @return {object}
  */
-export default function validateInput(data) {
-	let errors = {};
-	if (Validator.isEmpty(data.title)) {
+export default function editDocumentValidation(formData) {
+	const errors = {};
+	if (Validator.isEmpty(formData.title)) {
 		errors.title = 'Title is required';
 	}
-	if (Validator.isEmpty(data.content)) {
+	if (Validator.isEmpty(formData.content)) {
 		errors.content = 'Content is required';
 	}
 	return {

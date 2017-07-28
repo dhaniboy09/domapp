@@ -36,11 +36,12 @@ ShallowWrapper {
       "_debugID": 1,
       "_hostContainerInfo": null,
       "_hostParent": null,
-      "_instance": App {
+      "_instance": Object {
         "_reactInternalInstance": [Circular],
         "context": Object {},
         "props": Object {},
         "refs": Object {},
+        "render": [Function],
         "state": null,
         "updater": Object {
           "enqueueCallback": [Function],

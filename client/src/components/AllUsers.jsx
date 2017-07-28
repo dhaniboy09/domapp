@@ -15,6 +15,7 @@ import { searchUsers } from '../actions/searchUsers';
  */
 export class AllUsers extends React.Component {
 	/**
+	 * @description Creates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -34,22 +35,25 @@ export class AllUsers extends React.Component {
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 	/**
-	 * @description Lifcycle Method
+	 * @description Lifecycle Method
+	 * Called when an instance of the component
+	 * is created or inserted into the DOM
 	 * @return {void}
 	 */
 	componentWillMount() {
 		this.props.allUsers(this.state);
 	}
 	/**
-	 * @description Lifcycle Method
+	 * @description Lifecycle Method 
+	 * Called before a mounted component receives props
 	 * @param {object} [nextProps]
 	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			users: nextProps.users,
-			pagination: nextProps.pagination,
-			searchResult: nextProps.searchResult
+			pagination: nextProps.pagination
+			// searchResult: nextProps.searchResult
 		});
 	}
 	/**
@@ -92,8 +96,8 @@ export class AllUsers extends React.Component {
 		});
 	}
 	/**
-	 * @param {object} e
 	 * @description Triggers search action
+	 * @param {object} e
 	 * @return {void}
 	 */
 	handleSearch(e) {
@@ -111,7 +115,6 @@ export class AllUsers extends React.Component {
 	 */
 	render() {
 		const users = _.map(this.state.users);
-		const searchList = this.state.searchResult;
 
 		return (
 			<div>
@@ -171,6 +174,7 @@ export class AllUsers extends React.Component {
 										<td>{user.roleId}</td>
 										<td>
 											<a
+												tabIndex="0"
 												role="button"
 												id="btn-userdelete"
 												onClick={() => this.handleDeleteUser(user.id)}
@@ -195,10 +199,10 @@ AllUsers.propTypes = {
 	searchUsers: propTypes.func.isRequired,
 	pagination: propTypes.shape({
 		pages: propTypes.number.isRequired
-	}).isRequired,
-	searchResults: propTypes.shape({
-		length: propTypes.number.isRequired
 	}).isRequired
+	// searchResults: propTypes.shape({
+	// 	length: propTypes.number.isRequired
+	// }).isRequired
 };
 /**
  * @description Maps State to Props

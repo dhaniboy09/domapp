@@ -6,7 +6,7 @@ import TinyMCE from 'react-tinymce';
 import classnames from 'classnames';
 import { newDocument } from '../actions/newDocument';
 import { allDocuments } from '../actions/allDocuments';
-import validateInput from '../../../server/helpers/createDocumentValidation';
+import createDocumentValidation from '../../../server/helpers/createDocumentValidation';
 
 /**
  * 
@@ -15,6 +15,7 @@ import validateInput from '../../../server/helpers/createDocumentValidation';
  */
 export class DocumentForm extends React.Component {
 	/**
+	 * @description cerates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -43,6 +44,7 @@ export class DocumentForm extends React.Component {
 		this.setState({ content: e.target.getContent() });
 	}
 	/**
+	 * @description Allows user Interact with Input boxes
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -50,6 +52,7 @@ export class DocumentForm extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 	/**
+	 * @description Handles Document Creation
 	 * @return {void}
 	 */
 	createDocument() {
@@ -75,7 +78,7 @@ export class DocumentForm extends React.Component {
 	 * @return {Boolean}
 	 */
 	validateForm() {
-		const { errors, isValid } = validateInput(this.state);
+		const { errors, isValid } = createDocumentValidation(this.state);
 		if (!isValid) {
 			this.setState({ errors });
 		}
@@ -147,7 +150,9 @@ export class DocumentForm extends React.Component {
 DocumentForm.propTypes = {
 	newDocument: propTypes.func.isRequired,
 	allDocuments: propTypes.func.isRequired,
-	closeModal: propTypes.func.isRequired
+	closeModal: propTypes.func.isRequired,
+	limit: propTypes.number.isRequired,
+	offset: propTypes.number.isRequired
 };
 
 /**
@@ -157,7 +162,7 @@ DocumentForm.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		userDocuments: state.userDocuments,
+		userDocuments: state.documents,
 	};
 }
 

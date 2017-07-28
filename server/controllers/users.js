@@ -87,7 +87,8 @@ const UserController = {
 							process.env.SECRET_KEY,
 							{ expiresIn: '23h' });
 						res.send(200, {
-							token
+							token,
+							message: 'User Created Successfully'
 						});
 					}).catch((err) => {
 						res.status(400).json({ error: err.message });
@@ -183,7 +184,8 @@ const UserController = {
 							lastName: req.body.lastName || user.lastName,
 							email: req.body.email || user.email,
 							password: user.password,
-							roleId: req.body.roleId || user.roleId
+							roleId: req.body.roleId || user.roleId,
+							message: 'User updated Successfully'
 						})
 							.then(() => res.status(200).send(user))
 							.catch(error => res.status(400).send(error));
@@ -200,7 +202,8 @@ const UserController = {
 							lastName: req.body.lastName || user.lastName,
 							email: req.body.email || user.email,
 							password: user.password,
-							roleId: req.body.roleId || user.roleId
+							roleId: req.body.roleId || user.roleId,
+							message: 'User updated Successfully'
 						})
 							.then(() => res.status(200).send(user))
 							.catch(error => res.status(400).send(error));
@@ -211,7 +214,8 @@ const UserController = {
 						lastName: req.body.lastName || user.lastName,
 						email: req.body.email || user.email,
 						password: user.password,
-						roleId: req.body.roleId || user.roleId
+						roleId: req.body.roleId || user.roleId,
+						message: 'User updated Successfully'
 					})
 						.then(() => res.status(200).send(user))
 						.catch(error => res.status(400).send(error));
@@ -257,19 +261,19 @@ const UserController = {
 						message: 'User Not Found',
 					});
 				} else {
-				User.destroy({
-					where: {
-						id: req.params.id
-					}
-				})
-					.then(() => {
-						res.status(204).json({
-							message: 'Account Deleted'
-						});
+					User.destroy({
+						where: {
+							id: req.params.id
+						}
 					})
-					.catch((err) => {
-						res.status(500).json({ error: err.message });
-					});
+						.then(() => {
+							res.status(204).json({
+								message: 'Account Deleted'
+							});
+						})
+						.catch((err) => {
+							res.status(500).json({ error: err.message });
+						});
 				}
 			}).catch((err) => {
 				res.status(500).json({ error: err.message });

@@ -1,15 +1,20 @@
 import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
-export default function validateInput(data) {
-	let errors = {};
-	if (Validator.isEmpty(data.email)) {
+/**
+ * @description Validates Sign In form
+ * @param  {object} formData
+ * @return {object}
+ */
+export default function signInValidation(formData) {
+	const errors = {};
+	if (Validator.isEmpty(formData.email)) {
 		errors.email = 'Email is required';
 	}
-	if (!Validator.isEmail(data.email)) {
+	if (!Validator.isEmail(formData.email)) {
 		errors.email = 'Email is invalid';
 	}
-	if (Validator.isEmpty(data.password)) {
+	if (Validator.isEmpty(formData.password)) {
 		errors.password = 'Password is required';
 	}
 	return {

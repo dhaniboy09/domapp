@@ -1,5 +1,8 @@
 import React from 'react';
-
+/**
+ * @description Markup for the Footer
+ * @return {void} 
+ */
 const Footer = () => ({
 	render() {
 		return (
