@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
-import { signin } from '../actions/signInAction';
-import validateInput from '../../../server/helpers/signInValidation';
+import signInValidation from '../../../server/helpers/signInValidation';
 
 /**
  * @class SignInForm
@@ -11,6 +9,7 @@ import validateInput from '../../../server/helpers/signInValidation';
  */
 export class SignInForm extends React.Component {
 	/**
+	 * @description cerates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -26,6 +25,7 @@ export class SignInForm extends React.Component {
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 	/**
+	 * @description Allows user Interact with Input boxes
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -33,6 +33,7 @@ export class SignInForm extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 	/**
+	 * @description Handles user sign in
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -54,7 +55,7 @@ export class SignInForm extends React.Component {
 	 * @return {Boolean}
 	 */
 	validateForm() {
-		const { errors, isValid } = validateInput(this.state);
+		const { errors, isValid } = signInValidation(this.state);
 		if (!isValid) {
 			this.setState({ errors });
 		}
@@ -65,7 +66,7 @@ export class SignInForm extends React.Component {
 	 * @return {void}
 	 */
 	render() {
-		const { errors, email, password, isLoading } = this.state;
+		const { errors } = this.state;
 		return (
 			<div>
 				{ errors.error && <div className="sign-in-error">{ errors.error }</div>}
@@ -93,7 +94,13 @@ export class SignInForm extends React.Component {
 						/>
 						<span className="sign-up-error">{errors.password}</span>
 						<br />
-						<button className="button-primary button-block" id="button-signin" onClick={this.onSubmit} disabled={isLoading}>Sign In</button>
+						<button
+							className="button-primary button-block"
+							id="button-signin"
+							onClick={this.onSubmit}
+						>
+							Sign In
+						</button>
 					</div>
 				</div>
 			</div>

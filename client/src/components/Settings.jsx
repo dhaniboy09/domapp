@@ -3,8 +3,8 @@ import UpdateProfileForm from './UpdateProfileForm';
 import UpdatePasswordForm from './UpdatePasswordForm';
 
 /**
- * @class Documents
- * @extends {React.Component}
+ * @description Markup up for Settings Page
+ * @return {void}
  */
 const Settings = () => ({
 	/**

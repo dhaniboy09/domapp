@@ -13,6 +13,7 @@ import DocumentCard from './DocumentCard';
  */
 export class MyDocuments extends React.Component {
 	/**
+	 * @description cerates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -27,15 +28,18 @@ export class MyDocuments extends React.Component {
 		this.handlePageChange = this.handlePageChange.bind(this);
 	}
 	/**
-	 * @description Lifcycle Method
+	 * @description Lifecycle Method
+	 * Called when an instance of the component
+	 * is created or inserted into the DOM
 	 * @return {void}
 	 */
 	componentDidMount() {
 		this.props.myDocuments(this.state);
 	}
 	/**
-	 * @description Lifecycle Method
-	 * @param  {object} nextProps
+	 * @description Lifecycle Method 
+	 * Called before a mounted component receives props
+	 * @param {object} [nextProps]
 	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
@@ -54,7 +58,7 @@ export class MyDocuments extends React.Component {
 		});
 	}
 	/**
-	 * @description Modal to Add a Document
+	 * @description Opens modal to add a new document
 	 * @return {void}
 	 * @param  {object} e
 	 */
@@ -172,8 +176,8 @@ MyDocuments.propTypes = {
 function mapStateToProps(state) {
 	return {
 		auth: state.auth,
-		documents: state.userDocuments.documents,
-		pagination: state.userDocuments.pagination
+		documents: state.documents.documents,
+		pagination: state.documents.pagination
 	};
 }
 export default withRouter(connect(mapStateToProps, { myDocuments })(MyDocuments));

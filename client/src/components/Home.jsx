@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import SignUpForm from './SignUpForm';
-import Footer from './Footer';
 import { userSignUpRequest } from '../actions/signUpActions';
-
+/**
+ * @description Markup for Home Page
+ * @return {void}
+ */
 const Home = () => ({
 	render() {
 		return (
@@ -56,7 +58,6 @@ const Home = () => ({
 						</div>
 					</div>
 				</div>
-			
 			</div>
 		);
 	}

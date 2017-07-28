@@ -11,6 +11,7 @@ import { signout } from '../actions/signInAction';
  */
 class Header extends React.Component {
 	/**
+	 * @description cerates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -91,7 +92,8 @@ Header.propTypes = {
 		user: propTypes.shape({
 			firstName: propTypes.string.isRequired,
 			roleId: propTypes.number.isRequired
-		})
+		}),
+		isAuthenticated: propTypes.bool.isRequired
 	}).isRequired,
 	signout: propTypes.func.isRequired,
 	history: propTypes.shape({

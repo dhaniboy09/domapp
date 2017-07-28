@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { CREATE_NEW_DOCUMENT, VIEW_ALL_DOCUMENTS, EDIT_DOCUMENT, DELETE_DOCUMENT } from '../../src/actions/actionTypes';
-import reducer from '../../src/reducers/userDocuments';
+import reducer from '../../src/reducers/documents';
 import mockData from '../../../server/test/mockData';
 
 describe('Documents reducer', () => {

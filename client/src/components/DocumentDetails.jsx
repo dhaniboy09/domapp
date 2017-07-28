@@ -7,19 +7,19 @@ import jwt from 'jwt-decode';
 import tinyMceConfig from '../utils/tinyMceConfig.json';
 import { documentDetails } from '../actions/documentDetails';
 import { editDocument } from '../actions/editDocument';
-import validateInput from '../../../server/helpers/editDocumentValidation';
+import editDocumentValidation from '../../../server/helpers/editDocumentValidation';
 /**
  * @class Documents
  * @extends {React.Component}
  */
 export class DocumentDetails extends React.Component {
 	/**
+	 * @description cerates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
 	constructor(props) {
 		super(props);
-		// this.decoded = jwt(localStorage.getItem('token'));
 		this.state = {
 			id: this.props.match.params.id,
 			title: '',
@@ -36,7 +36,9 @@ export class DocumentDetails extends React.Component {
 		this.onChange = this.onChange.bind(this);
 	}
 	/**
-	 * @description Lifcycle Method
+	 * @description Lifecycle Method
+	 * Called when an instance of the component
+	 * is created or inserted into the DOM
 	 * @return {void}
 	 */
 	componentDidMount() {
@@ -49,14 +51,16 @@ export class DocumentDetails extends React.Component {
 		});
 	}
 	/**
-	 * @description Lifecycle Method
-	 * @param  {object} nextProps
+	 * @description Lifecycle Method 
+	 * Called before a mounted component receives props
+	 * @param {object} [nextProps]
 	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
 		this.setState({ documents: nextProps.document });
 	}
 	/**
+	 * @description Allows user Interact with Input boxes
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -68,7 +72,7 @@ export class DocumentDetails extends React.Component {
 	 * @return {Boolean}
 	 */
 	validateForm() {
-		const { errors, isValid } = validateInput(this.state);
+		const { errors, isValid } = editDocumentValidation(this.state);
 		if (!isValid) {
 			this.setState({ errors });
 		}
@@ -244,7 +248,7 @@ DocumentDetails.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		document: state.userDocuments.document,
+		document: state.documents.document,
 	};
 }
 export default withRouter(connect(mapStateToProps,

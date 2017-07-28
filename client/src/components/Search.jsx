@@ -13,6 +13,7 @@ import DocumentCard from './DocumentCard';
  */
 export class Search extends React.Component {
 	/**
+	 * @description cerates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -29,14 +30,16 @@ export class Search extends React.Component {
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 	/**
-	 * @description Lifecycle Method
-	 * @param  {object} nextProps
+	 * @description Lifecycle Method 
+	 * Called before a mounted component receives props
+	 * @param {object} [nextProps]
 	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
 		this.setState({ searchResults: nextProps.searchResults });
 	}
 	/**
+	 * @description Allows user Interact with Input boxes
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -44,8 +47,8 @@ export class Search extends React.Component {
 		this.setState({ searchQuery: e.target.value });
 	}
 	/**
-	 * @param {object} e
 	 * @description Triggers search action
+	 * @param {object} e
 	 * @return {void}
 	 */
 	handleSearch() {
@@ -78,7 +81,9 @@ export class Search extends React.Component {
 					(this.props.searchResults.length > 0) ? (
 						<ReactPaginate
 							previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
-							nextLabel={<i className="fa fa-chevron-right fa-2x" id="btn-Next" aria-hidden="true" />}
+							nextLabel={
+								<i className="fa fa-chevron-right fa-2x" id="btn-Next" aria-hidden="true" />
+							}
 							breakLabel={<a href="">...</a>}
 							breakClassName={'break-me'}
 							pageCount={this.props.pagination.pages}
@@ -132,9 +137,6 @@ export class Search extends React.Component {
 }
 Search.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	history: propTypes.shape({
-		push: propTypes.func.isRequired,
-	}).isRequired,
 	searchResults: propTypes.shape({
 		length: propTypes.number.isRequired
 	}).isRequired,
@@ -149,9 +151,9 @@ Search.propTypes = {
  */
 function mapStateToProps(state) {
 	return {
-		documents: state.userDocuments.documents,
-		searchResults: state.userDocuments.searchResults,
-		pagination: state.userDocuments.pagination
+		documents: state.documents.documents,
+		searchResults: state.documents.searchResults,
+		pagination: state.documents.pagination
 	};
 }
 export default withRouter(connect(mapStateToProps, { searchDocuments })(Search));

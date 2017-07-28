@@ -5,7 +5,7 @@ import propTypes from 'prop-types';
 import jwt from 'jwt-decode';
 import { updateProfile } from '../actions/updateProfile';
 import { fetchUser } from '../actions/fetchUser';
-import validateInput from '../../../server/helpers/editProfileValidation';
+import editProfileValidation from '../../../server/helpers/editProfileValidation';
 
 /**
  * @class SignUpForm
@@ -37,7 +37,9 @@ export class UpdateProfileForm extends React.Component {
 		this.cancelEdit = this.cancelEdit.bind(this);
 	}
 	/**
-	 * @description Lifcycle Method
+	 * @description Lifecycle Method
+	 * Called when an instance of the component
+	 * is created or inserted into the DOM
 	 * @return {void}
 	 */
 	componentWillMount() {
@@ -50,9 +52,8 @@ export class UpdateProfileForm extends React.Component {
 		});
 	}
 	/**
-	 * @description Allows user Interact with form fileds
-	 * by setting state of form fields.
-	 * @param  {object} e [description]
+	 * @description Allows user Interact with Input boxes
+	 * @param  {object} e
 	 * @return {void}
 	 */
 	onChange(e) {
@@ -85,7 +86,6 @@ export class UpdateProfileForm extends React.Component {
 			this.props.updateProfile(this.state).then(
 				() => {
 					this.setState({ disabled: true });
-					// jwt.refresh(this.decoded, 3600, process.env.SECRET_KEY);
 					Materialize.toast('Profile Successfully Updated', 4000);
 				}).catch((err) => {
 				Materialize.toast(err.response.data.message, 4000);
@@ -97,7 +97,7 @@ export class UpdateProfileForm extends React.Component {
 	 * @return {Boolean}
 	 */
 	validateForm() {
-		const { errors, isValid } = validateInput(this.state);
+		const { errors, isValid } = editProfileValidation(this.state);
 		if (!isValid) {
 			this.setState({ errors });
 		}
@@ -115,7 +115,7 @@ export class UpdateProfileForm extends React.Component {
 		return (
 			<div className="s-form-wrapper">
 				<div className="edit-profile">
-					<a role="button"onClick={this.editProfile}>
+					<a tabIndex="0" role="button" onClick={this.editProfile}>
 						<i
 							className="fa fa-pencil-square-o fa-lg"
 							id="btn-Edit"
@@ -171,6 +171,9 @@ export class UpdateProfileForm extends React.Component {
 						>
 							Cancel
 						</button>
+					</div>
+					<div className="profile-update-info">
+						<span>**Profile Update takes effect on next sign in</span>
 					</div>
 				</div>
 			</div>

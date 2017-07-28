@@ -293,13 +293,16 @@ a{
 	background: transparent;
 	text-decoration: none;
 }
-.document-panel{
+.document-panel {
 	position: relative;
 	display: block;
 	top:2rem;
   width: 80%;
   margin: 0 auto;
   margin-bottom: 5rem;
+}
+.document-actions {
+  text-align: center;
 }
 .user-panel{
   position: relative;
@@ -782,6 +785,17 @@ td {
   display: flex;
   width: 380px;
   margin-left: -5rem;
+}
+.profile-update-info span {
+  width: 100%;
+  position: absolute;
+  margin-left: -9rem;
+  margin-top: 2.5rem;
+  font-family: 'Titillium Web', sans-serif;
+}
+.password-update-info {
+  margin-top: 1.2rem;
+  font-family: 'Titillium Web', sans-serif;
 }
 .password-update-error {
   margin-top: -3rem;

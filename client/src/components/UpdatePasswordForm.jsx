@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { updatePassword } from '../actions/updatePassword';
 import { deactivateAccount } from '../actions/deactivateAccount';
-import validateInput from '../../../server/helpers/updatePasswordValidation';
+import updatePasswordValidation from '../../../server/helpers/updatePasswordValidation';
 
 /**
  * @class SignUpForm
@@ -16,7 +16,7 @@ import validateInput from '../../../server/helpers/updatePasswordValidation';
  */
 export class UpdatePasswordForm extends React.Component {
 	/**
-	 * @constructor constructor
+	 * @description Creates and intializes objects
 	 * @param  {object} props
 	 * @return {void}
 	 */
@@ -35,7 +35,9 @@ export class UpdatePasswordForm extends React.Component {
 		this.handleAccountDelete = this.handleAccountDelete.bind(this);
 	}
 	/**
-	 * @description Lifcycle Method
+	 * @description Lifecycle Method
+	 * Called when an instance of the component
+	 * is created or inserted into the DOM
 	 * @return {void}
 	 */
 	componentWillMount() {
@@ -54,7 +56,7 @@ export class UpdatePasswordForm extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 	/**
-	 * @description Triggers action to sign up users
+	 * @description Allows user Interact with Input boxes
 	 * @param  {object} e
 	 * @return {void}
 	 */
@@ -79,14 +81,14 @@ export class UpdatePasswordForm extends React.Component {
 	 * @return {Boolean}
 	 */
 	validateForm() {
-		const { errors, isValid } = validateInput(this.state);
+		const { errors, isValid } = updatePasswordValidation(this.state);
 		if (!isValid) {
 			this.setState({ errors });
 		}
 		return isValid;
 	}
 	/**
-	 * @description Handles Document Deletion
+	 * @description Handles Account Deletion
 	 * @return {void}
 	 */
 	handleAccountDelete() {
@@ -148,6 +150,9 @@ export class UpdatePasswordForm extends React.Component {
 					<div className="danger-zone">
 						<p>DANGER ZONE!!!</p>
 						<button onClick={() => this.handleAccountDelete()}>Deactivate Account</button>
+					</div>
+					<div className="password-update-info">
+						<span>**Password Update takes effect on next sign in</span>
 					</div>
 				</div>
 			</div>

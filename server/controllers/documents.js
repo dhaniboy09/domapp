@@ -31,7 +31,8 @@ const DocumentController = {
 				Document.create(document)
 					.then((createdDocument) => {
 						res.status(200).send({
-							createdDocument
+							createdDocument,
+							message: 'Document Created Successfully'
 						});
 					})
 					.catch(() => {
@@ -172,16 +173,6 @@ const DocumentController = {
 	 */
 	updateDocument: (req, res) => {
 		const userId = req.decoded.id;
-		// Document.find({ where: { title: req.body.title, userId: req.decoded.id } })
-		// 	.then((existingDocument) => {
-		// 		if (existingDocument) {
-		// 			return res.status(403).send({
-		// 				message: 'Oops!. You already have a document with this title.',
-		// 			});
-		// 		}
-		// 	}).catch((err) => {
-		// 		res.status(400).send(err);
-		// 	});
 		Document.findById(req.params.id).then((foundDocument) => {
 			if (foundDocument) {
 				if (userId === foundDocument.userId) {
@@ -190,7 +181,8 @@ const DocumentController = {
 						content: req.body.content || foundDocument.content,
 						access: req.body.access || foundDocument.access,
 						userRoleId: foundDocument.userRoleId,
-						userId: foundDocument.userId
+						userId: foundDocument.userId,
+						message: 'Document Updated Successfully'
 					})
 						.then(() => res.status(200).send(foundDocument))
 						.catch(error => res.status(400).send(error));

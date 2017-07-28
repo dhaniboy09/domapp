@@ -1,18 +1,23 @@
 import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
-export default function validateInput(data) {
-	let errors = {};
-	if (Validator.isEmpty(data.firstName)) {
+/**
+ * @description Validates Profile Update form
+ * @param  {object} formData
+ * @return {object}
+ */
+export default function editProfileValidation(formData) {
+	const errors = {};
+	if (Validator.isEmpty(formData.firstName)) {
 		errors.firstName = 'First Name is Required';
 	}
-	if (Validator.isEmpty(data.lastName)) {
+	if (Validator.isEmpty(formData.lastName)) {
 		errors.lastName = 'Last Name is Required';
 	}
-	if (Validator.isEmpty(data.email)) {
+	if (Validator.isEmpty(formData.email)) {
 		errors.email = 'Email is Required';
 	}
-	if (!Validator.isEmail(data.email)) {
+	if (!Validator.isEmail(formData.email)) {
 		errors.email = 'Email is invalid';
 	}
 	return {
