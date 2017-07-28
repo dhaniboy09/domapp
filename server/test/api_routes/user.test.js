@@ -35,7 +35,7 @@ describe('Users', () => {
 		it('should create a new user', (done) => {
 			chai.request(server).post('/auth/v1/users').send(mockData.SampleUser2).end((err, res) => {
 				expect(res.status).to.equal(200);
-				expect(res.body).to.have.keys(['token']);
+				expect(res.body).to.have.keys(['token', 'message']);
 				done();
 			});
 		});
