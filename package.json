@@ -8,7 +8,7 @@
     "test": "npm run client-test",
     "server-test": "npm run refill-testdb && NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --timeout 15000 --compilers js:babel-core/register server/test/**/*.test.js && codecov=e8580fac-25f2-4c40-b522-919ebdd1fc98",
     "client-test": "jest ./client/__tests__/**/*.test.js --coverage",
-    "coverage": "nyc report --reporter=lcov | coveralls",
+    "coverage": "nyc report --reporter=lcov | ./node_modules/.bin/coveralls",
     "reset-testdb": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "seed-testdb": "NODE_ENV=test sequelize db:seed:all",
     "refill-testdb": "npm run reset-testdb && npm run seed-testdb",
