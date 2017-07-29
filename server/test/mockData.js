@@ -1,4 +1,5 @@
 export default {
+	// nyc --reporter=html --reporter=text
 	SampleUser1: {
 		firstName: 'David',
 		lastName: 'West',
