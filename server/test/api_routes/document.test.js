@@ -53,7 +53,7 @@ describe('Documents:-', () => {
 					done();
 				});
 		});
-		it('should not ensure document titles are unique', (done) => {
+		it('should ensure document titles are unique', (done) => {
 			const newDocument = {
 				title: 'Test Document',
 				content: 'This is a test document',
@@ -129,6 +129,16 @@ describe('Documents:-', () => {
 					expect(res.status).to.equal(403);
 					expect(res.body).to.be.a('object');
 					expect(res.body).to.have.property('message').to.equal('Access Denied');
+					done();
+				});
+		});
+		it('should allow user retrieve their private documents', (done) => {
+			chai.request(server)
+				.get('/api/v1/documents/1')
+				.set({ 'x-access-token': adminToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.be.a('object');
 					done();
 				});
 		});
