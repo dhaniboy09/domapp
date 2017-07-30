@@ -19,6 +19,9 @@ app.use((req, res, next) => {
 		next();
 	}
 });
+app.get('/api-dcumentation', (req, res) => {
+	res.sendFile(path.join(__dirname, '../public/documentation/index.html'));
+});
 
 // Serve routes before the default catch all
 // require('./server/routes')(app);

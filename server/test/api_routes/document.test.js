@@ -132,6 +132,16 @@ describe('Documents:-', () => {
 					done();
 				});
 		});
+		it('should allow user retrieve their private documents', (done) => {
+			chai.request(server)
+				.get('/api/v1/documents/1')
+				.set({ 'x-access-token': adminToken })
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.be.a('object');
+					done();
+				});
+		});
 		it('should fail to retrieve a non-existing document', (done) => {
 			chai.request(server)
 				.get('/api/v1/documents/60')

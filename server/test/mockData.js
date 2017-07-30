@@ -1,5 +1,4 @@
 export default {
-	// SampleUser1
 	SampleUser1: {
 		firstName: 'David',
 		lastName: 'West',

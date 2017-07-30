@@ -112,7 +112,7 @@ describe('Users', () => {
 		});
 	});
 	describe('GET /api/v1/users', () => {
-		it('should return an object with keys and values', (done) => {
+		it('should return list of all users as an object with keys and values', (done) => {
 			chai.request(server)
 				.get('/api/v1/users')
 				.set({ 'x-access-token': adminToken })
@@ -209,7 +209,7 @@ describe('Users', () => {
 					done();
 				});
 		});
-		it('should throw an error is id is invalid', (done) => {
+		it('should throw an error if id is invalid', (done) => {
 			chai.request(server)
 				.put('/api/v1/users/100')
 				.set({ 'x-access-token': userToken })
@@ -253,7 +253,7 @@ describe('Users', () => {
 					done();
 				});
 		});
-		it('should not allow admin search for users', (done) => {
+		it('should allow admin search for users', (done) => {
 			chai.request(server)
 				.get('/api/v1/search/users?query=hayley')
 				.set({ 'x-access-token': adminToken })
