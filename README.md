@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/andela-dhaniabelega/domapp.svg?branch=staging)  [![codecov](https://codecov.io/gh/andela-dhaniabelega/domapp/branch/staging/graph/badge.svg)](https://codecov.io/gh/andela-dhaniabelega/domapp)  <a href="https://codeclimate.com/github/codeclimate/codeclimate"><img src="https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg" /></a>  [![Coverage Status](https://coveralls.io/repos/github/andela-dhaniabelega/domapp/badge.svg)](https://coveralls.io/github/andela-dhaniabelega/domapp)
+![Build Status](https://travis-ci.org/andela-dhaniabelega/domapp.svg?branch=staging)  [![codecov](https://codecov.io/gh/andela-dhaniabelega/domapp/branch/staging/graph/badge.svg)](https://codecov.io/gh/andela-dhaniabelega/domapp)  <a href="https://codeclimate.com/github/codeclimate/codeclimate"><img src="https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg" /></a>  [![Coverage Status](https://coveralls.io/repos/github/andela-dhaniabelega/domapp/badge.svg?branch=staging)](https://coveralls.io/github/andela-dhaniabelega/domapp?branch=staging)
 # Domapp
 
 Document Management App

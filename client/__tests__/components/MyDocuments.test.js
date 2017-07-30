@@ -6,6 +6,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { spy } from 'sinon';
 import { MyDocuments } from '../../src/components/MyDocuments';
+import dummyData from '../../__mocks__/dummyData';
 
 const myDocumentsMock = jest.fn();
 const mockStore = configureStore();
@@ -14,24 +15,7 @@ const store = mockStore({
 	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
 	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
 });
-const documents = [
-	{
-		id: 114,
-		title: 'true colors',
-		content: '<p>I see your true colors</p>',
-		access: 'public',
-		userId: 16,
-		userRoleId: 2,
-		createdAt: '2017-07-21T14:53:12.916Z',
-		updatedAt: '2017-07-21T14:53:12.916Z'
-	}
-];
-const pagination = {
-	totalCount: 55,
-	pages: 10,
-	currentPage: 1,
-	pageSize: 6
-};
+
 describe('My Documents Page', () => {
 	it('should call ComponentDidMount()', () => {
 		const componentDidMountSpy = spy(MyDocuments.prototype, 'componentDidMount');
@@ -39,7 +23,7 @@ describe('My Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<MyDocuments
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						documents={[]}
 						myDocuments={myDocumentsMock}
 						errors={[]}
@@ -57,7 +41,7 @@ describe('My Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<MyDocuments
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						documents={[]}
 						myDocuments={myDocumentsMock}
 						errors={[]}
@@ -75,7 +59,7 @@ describe('My Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<MyDocuments
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						documents={[]}
 						myDocuments={myDocumentsMock}
 						errors={[]}
@@ -96,8 +80,8 @@ describe('My Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<MyDocuments
-						pagination={pagination}
-						documents={documents}
+						pagination={dummyData.pagination}
+						documents={dummyData.documents}
 						myDocuments={myDocumentsMock}
 						errors={[]}
 						auth={{ user: { id: 16 } }}

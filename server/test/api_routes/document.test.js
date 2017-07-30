@@ -53,7 +53,7 @@ describe('Documents:-', () => {
 					done();
 				});
 		});
-		it('should not ensure document titles are unique', (done) => {
+		it('should ensure document titles are unique', (done) => {
 			const newDocument = {
 				title: 'Test Document',
 				content: 'This is a test document',
@@ -106,7 +106,7 @@ describe('Documents:-', () => {
 		});
 	});
 	describe('GET /api/v1/documents/:id', () => {
-		it('should allow user retrieve a single document', (done) => {
+		it('should allow a user retrieve a single document', (done) => {
 			chai.request(server)
 				.get('/api/v1/documents/2')
 				.set({ 'x-access-token': userToken })
@@ -194,28 +194,8 @@ describe('Documents:-', () => {
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
 					expect(res.body).to.be.a('object');
-					done();
-				});
-		});
-		it('Should get all documents with correct offset as a query', (done) => {
-			const offset = 0;
-			chai.request(server)
-				.get(`/api/v1/documents?limit=${offset}`)
-				.set({ 'x-access-token': userToken })
-				.end((err, res) => {
-					expect(res.status).to.equal(200);
-					expect(res.body).to.be.a('object');
-					done();
-				});
-		});
-		it('Should not allow a user with a non-exisiting role access documents', (done) => {
-			const offset = 0;
-			chai.request(server)
-				.get(`/api/v1/documents?limit=${offset}`)
-				.set({ 'x-access-token': userToken })
-				.end((err, res) => {
-					expect(res.status).to.equal(200);
-					expect(res.body).to.be.a('object');
+					expect(res.body).to.have.keys(['documents', 'pagination']);
+					expect(res.body.documents).to.have.length(1);
 					done();
 				});
 		});
@@ -224,14 +204,14 @@ describe('Documents:-', () => {
 		it('should update a user document', (done) => {
 			const id = 2;
 			chai.request(server)
-        .put(`/api/v1/documents/${id}`)
-        .set({ 'x-access-token': userToken })
-        .send({ title: 'Hallo' })
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
-          done();
-        });
+				.put(`/api/v1/documents/${id}`)
+				.set({ 'x-access-token': userToken })
+				.send({ title: 'Hallo' })
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.be.a('object');
+					done();
+				});
 		});
 	});
 	describe('GET /api/v1/search/documents', () => {

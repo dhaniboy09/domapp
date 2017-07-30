@@ -6,6 +6,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { spy } from 'sinon';
 import { Documents } from '../../src/components/Documents';
+import dummyData from '../../__mocks__/dummyData';
 
 
 const allDocumentsMock = jest.fn();
@@ -15,24 +16,7 @@ const store = mockStore({
 	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
 	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
 });
-const documents = [
-	{
-		id: 114,
-		title: 'true colors',
-		content: '<p>I see your true colors</p>',
-		access: 'public',
-		userId: 16,
-		userRoleId: 2,
-		createdAt: '2017-07-21T14:53:12.916Z',
-		updatedAt: '2017-07-21T14:53:12.916Z'
-	}
-];
-const pagination = {
-	totalCount: 55,
-	pages: 10,
-	currentPage: 1,
-	pageSize: 6
-};
+
 describe('Documents Page', () => {
 	it('should call ComponentDidMount()', () => {
 		const componentDidMountSpy = spy(Documents.prototype, 'componentDidMount');
@@ -40,7 +24,7 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<Documents
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						documents={[]}
 						allDocuments={allDocumentsMock}
 						errors={[]}
@@ -57,7 +41,7 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<Documents
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						documents={[]}
 						allDocuments={allDocumentsMock}
 						errors={[]}
@@ -75,7 +59,7 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<Documents
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						documents={[]}
 						allDocuments={allDocumentsMock}
 						errors={[]}
@@ -94,7 +78,7 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<Documents
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						documents={[]}
 						allDocuments={allDocumentsMock}
 						errors={[]}
@@ -112,8 +96,8 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<Documents
-						pagination={pagination}
-						documents={documents}
+						pagination={dummyData.pagination}
+						documents={dummyData.documents}
 						allDocuments={allDocumentsMock}
 						errors={[]}
 					/>

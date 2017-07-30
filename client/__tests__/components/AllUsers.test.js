@@ -6,6 +6,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { spy } from 'sinon';
 import { AllUsers } from '../../src/components/AllUsers';
+import dummyData from '../../__mocks__/dummyData';
 
 
 const allUsersMock = jest.fn();
@@ -17,24 +18,7 @@ const store = mockStore({
 	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
 	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
 });
-const users = [
-	{
-		id: 53,
-		firstName: 'Haroun',
-		lastName: 'Popoola',
-		email: 'hp@yahoo.com',
-		password: '$2a$10$jI9sn2FOeRYuKrnnF7ujgeJHAyjBskZT5AGM6MHb3brQ6/xZMhZEy',
-		roleId: 2,
-		createdAt: '2017-07-17T15:11:51.002Z',
-		updatedAt: '2017-07-17T15:11:51.002Z'
-	}
-];
-const pagination = {
-	totalCount: 55,
-	pages: 10,
-	currentPage: 1,
-	pageSize: 6
-};
+
 describe('Documents Page', () => {
 	it('should call ComponentDidMount()', () => {
 		const componentWillMountSpy = spy(AllUsers.prototype, 'componentWillMount');
@@ -42,7 +26,7 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<AllUsers
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						allUsers={allUsersMock}
 						removeUser={removeUserMock}
 						searchUsers={searchUsersMock}
@@ -59,7 +43,7 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<AllUsers
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						allUsers={allUsersMock}
 						removeUser={removeUserMock}
 						searchUsers={searchUsersMock}
@@ -77,16 +61,16 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<AllUsers
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						allUsers={allUsersMock}
 						removeUser={removeUserMock}
 						searchUsers={searchUsersMock}
-						users={users}
+						users={dummyData.users}
 					/>
 				</Provider>
 			</Router>
 		);
-		wrapper.setState({ users });
+		wrapper.setState({ users: dummyData.users });
 		const nextButton = wrapper.find('#btn-Next');
 		assert.equal(nextButton.length, 1);
 	});
@@ -96,16 +80,16 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<AllUsers
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						allUsers={allUsersMock}
 						removeUser={removeUserMock}
 						searchUsers={searchUsersMock}
-						users={users}
+						users={dummyData.users}
 					/>
 				</Provider>
 			</Router>
 		);
-		wrapper.setState({ users });
+		wrapper.setState({ users: dummyData.users });
 		wrapper.setState({ searchQuery: 'Test' });
 		wrapper.find('input#search').simulate('keyUp', handleSearchSpy);
 		assert.ok(handleSearchSpy.calledOnce);
@@ -117,11 +101,11 @@ describe('Documents Page', () => {
 			<Router >
 				<Provider store={store}>
 					<AllUsers
-						pagination={pagination}
+						pagination={dummyData.pagination}
 						allUsers={allUsersMock}
 						removeUser={removeUserMock}
 						searchUsers={searchUsersMock}
-						users={users}
+						users={dummyData.users}
 					/>
 				</Provider>
 			</Router>
