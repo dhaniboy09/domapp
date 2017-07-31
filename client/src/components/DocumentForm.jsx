@@ -74,6 +74,7 @@ export class DocumentForm extends React.Component {
 		if (this.validateForm()) {
 			const newContent = tinymce.activeEditor.getContent();
 			if (newContent === '') {
+				this.setState({ errors: '' });
 				return this.setState({ message: 'Content is Required' });
 			}
 			const document = {
