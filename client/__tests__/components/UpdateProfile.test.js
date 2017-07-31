@@ -9,7 +9,6 @@ import { UpdateProfileForm } from '../../src/components/UpdateProfileForm';
 
 const updateProfileMock = spy(() => new Promise(() => {}));
 const fetchUserMock = spy(() => new Promise(() => {}));
-const isAuthenticated = true;
 const mockStore = configureStore();
 const store = mockStore({
 	auth: { isAuthenticated: true, user: {} },

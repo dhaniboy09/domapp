@@ -106,7 +106,7 @@ describe('Documents:-', () => {
 		});
 	});
 	describe('GET /api/v1/documents/:id', () => {
-		it('should allow user retrieve a single document', (done) => {
+		it('should allow a user retrieve a single document', (done) => {
 			chai.request(server)
 				.get('/api/v1/documents/2')
 				.set({ 'x-access-token': userToken })
@@ -204,28 +204,8 @@ describe('Documents:-', () => {
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
 					expect(res.body).to.be.a('object');
-					done();
-				});
-		});
-		it('Should get all documents with correct offset as a query', (done) => {
-			const offset = 0;
-			chai.request(server)
-				.get(`/api/v1/documents?limit=${offset}`)
-				.set({ 'x-access-token': userToken })
-				.end((err, res) => {
-					expect(res.status).to.equal(200);
-					expect(res.body).to.be.a('object');
-					done();
-				});
-		});
-		it('Should not allow a user with a non-exisiting role access documents', (done) => {
-			const offset = 0;
-			chai.request(server)
-				.get(`/api/v1/documents?limit=${offset}`)
-				.set({ 'x-access-token': userToken })
-				.end((err, res) => {
-					expect(res.status).to.equal(200);
-					expect(res.body).to.be.a('object');
+					expect(res.body).to.have.keys(['documents', 'pagination']);
+					expect(res.body.documents).to.have.length(1);
 					done();
 				});
 		});
@@ -234,14 +214,14 @@ describe('Documents:-', () => {
 		it('should update a user document', (done) => {
 			const id = 2;
 			chai.request(server)
-        .put(`/api/v1/documents/${id}`)
-        .set({ 'x-access-token': userToken })
-        .send({ title: 'Hallo' })
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
-          done();
-        });
+				.put(`/api/v1/documents/${id}`)
+				.set({ 'x-access-token': userToken })
+				.send({ title: 'Hallo' })
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.be.a('object');
+					done();
+				});
 		});
 	});
 	describe('GET /api/v1/search/documents', () => {
@@ -262,7 +242,7 @@ describe('Documents:-', () => {
 		});
 	});
 	describe('DELETE /api/v1/documents/:id', () => {
-		it('Should fail to delete the document given the user is not the owner', (done) => {
+		it('Should fail to delete a document given the user is not the owner', (done) => {
 			const id = 1;
 			chai.request(server)
 				.delete(`/api/v1/documents/${id}`)
@@ -271,18 +251,6 @@ describe('Documents:-', () => {
 					expect(res.status).to.equal(403);
 					expect(res.body).to.be.a('object');
 					expect(res.body).to.have.property('message').to.equal('Access Denied');
-					done();
-				});
-		});
-		it('Should fail to delete a non-existing document', (done) => {
-			const id = 500;
-			chai.request(server)
-				.delete(`/api/v1/documents/${id}`)
-				.set({ 'x-access-token': userToken })
-				.end((err, res) => {
-					expect(res.status).to.equal(404);
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message').to.equal('Document Not Found');
 					done();
 				});
 		});
