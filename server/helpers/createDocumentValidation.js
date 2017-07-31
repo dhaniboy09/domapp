@@ -11,9 +11,6 @@ export default function createDocumentValidation(formData) {
 	if (Validator.isEmpty(formData.title)) {
 		errors.title = 'Title is required';
 	}
-	if (Validator.isEmpty(formData.content)) {
-		errors.content = 'Content is required';
-	}
 	return {
 		errors,
 		isValid: isEmpty(errors)
