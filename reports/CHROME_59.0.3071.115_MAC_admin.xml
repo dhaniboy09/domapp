@@ -5,9 +5,9 @@
 
   <testsuite name="admin"
     errors="0" failures="0" hostname="" id="" package="admin" skipped="0"
-    tests="2" time="9.478" timestamp="Wed, 26 Jul 2017 12:52:36 GMT">
+    tests="2" time="12.54" timestamp="Mon, 31 Jul 2017 15:41:37 GMT">
   
-    <testcase name="Admin User sign in with correct credentials" classname="admin" time="6.237" assertions="3">
+    <testcase name="Admin User sign in with correct credentials" classname="admin" time="9.350" assertions="3">
 
     
 
@@ -16,7 +16,7 @@
     
     </testcase>
   
-    <testcase name="Admin User searches for users" classname="admin" time="3.241" assertions="4">
+    <testcase name="Admin User searches for users" classname="admin" time="3.191" assertions="4">
 
     
 

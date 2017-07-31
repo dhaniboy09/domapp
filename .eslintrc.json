@@ -32,6 +32,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [ ".js", ".jsx"] }],
     "react/jsx-indent-props": [2, "tab"],
     "no-tabs": 0,
+    "prefer-template": 0,
     "class-methods-use-this": "off",
     "comma-dangle": 0,
     "curly": ["error", "multi-line"],

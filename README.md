@@ -4,6 +4,8 @@
 Document Management App
 Domapp is a free, web-based, open source document management system (DMS) written in Javascript designed to comply with world standards for document management. It features web based access, fine grained control of access to files as well as users. Please have a look around and if you have any questions, contact us!
 
+You can access our documentation [Here](http://domapp-dms.herokuapp.com/documentation)
+
 ## Functionalities
 
 * Document Management: Create, Read, Update and Delete Documents
@@ -23,7 +25,7 @@ The following instructions will get Domapp up and running on your local machine 
 
 ### Prerequisites
 
-To install Domapp on your local machine you need to be running at least node v7.9.0. 
+To install Domapp on your local machine you need to be running Postgresql and Node >= v7.9.0. 
 
 ### Installation
 
@@ -92,7 +94,7 @@ We recommend that pull requests follow this convention:
 
 ## Credits
 
-All Andela Fellows
+Andela Cohort 26.
 
 ## License
 

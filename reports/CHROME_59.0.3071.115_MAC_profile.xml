@@ -5,9 +5,9 @@
 
   <testsuite name="profile"
     errors="0" failures="0" hostname="" id="" package="profile" skipped="0"
-    tests="5" time="11.01" timestamp="Wed, 26 Jul 2017 12:53:12 GMT">
+    tests="5" time="16.01" timestamp="Mon, 31 Jul 2017 15:42:28 GMT">
   
-    <testcase name="User sign in with correct credentials" classname="profile" time="4.975" assertions="3">
+    <testcase name="User sign in with correct credentials" classname="profile" time="6.247" assertions="3">
 
     
 
@@ -16,28 +16,28 @@
     
     </testcase>
   
-    <testcase name="User edits profile with blank email" classname="profile" time="2.113" assertions="2">
+    <testcase name="User edits profile with blank email" classname="profile" time="2.577" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="User edits profile" classname="profile" time="1.203" assertions="2">
+    <testcase name="User edits profile" classname="profile" time="2.153" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="User does not enter password" classname="profile" time="0.8650" assertions="2">
+    <testcase name="User does not enter password" classname="profile" time="1.557" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="User changes password" classname="profile" time="1.852" assertions="2">
+    <testcase name="User changes password" classname="profile" time="3.473" assertions="2">
 
     
 
