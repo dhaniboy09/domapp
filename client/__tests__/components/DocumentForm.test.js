@@ -22,15 +22,6 @@ describe('Document Form', () => {
 		wrap.find('input#title').simulate('change', onChangeSpy, event);
 		assert.ok(onChangeSpy.calledOnce);
 	});
-	it('should have an onEditorChange() function', () => {
-		const wrapper = shallow(<DocumentForm />);
-		const onEditorChange = jest.fn();
-		const event = { target: { content: 'john', getContent: () => {} } };
-		const tinymceWrapper = wrapper.find('TinyMCE');
-		wrapper.update();
-		tinymceWrapper.simulate('change', event);
-		expect(onEditorChange).not.toBeCalledWith('Hoyt');
-	});
 	it('should have a createDocument() function', () => {
 		const wrapper = mount(
 			<DocumentForm

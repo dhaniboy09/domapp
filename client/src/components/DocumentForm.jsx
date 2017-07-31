@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
-import TinyMCE from 'react-tinymce';
 import classnames from 'classnames';
 import { newDocument } from '../actions/newDocument';
 import { allDocuments } from '../actions/allDocuments';
@@ -29,19 +28,35 @@ export class DocumentForm extends React.Component {
 			errors: '',
 			limit: this.props.limit,
 			offset: this.props.offset,
-			success: {}
+			message: ''
 		};
 		this.onChange = this.onChange.bind(this);
 		this.createDocument = this.createDocument.bind(this);
-		this.onEditorChange = this.onEditorChange.bind(this);
 	}
 	/**
-	 * @description Gets content from TinyMCE ediotr
-	 * @param  {object} e
+	 * @description Lifecycle Method
+	 * Called when an instance of the component
+	 * is created or inserted into the DOM
 	 * @return {void}
 	 */
-	onEditorChange(e) {
-		this.setState({ content: e.target.getContent() });
+	componentDidMount() {
+		tinymce.init({
+			selector: '#content',
+			plugins: 'autolink link image lists' +
+								' print preview textcolor table emoticons codesample',
+			toolbar: 'undo redo | bold italic | ' +
+			'fontsizeselect fontselect | ' +
+			'alignleft aligncenter alignright | forecolor backcolor' +
+			'| table | numlist bullist | emoticons | codesample | code',
+			table_toolbar: 'tableprops tabledelete ' +
+			'| tableinsertrowbefore ' +
+			'tableinsertrowafter tabledeleterow | tableinsertcolbefore ' +
+			'tableinsertcolafter tabledeletecol',
+			fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+			height: 300,
+			width: '100%',
+			browser_spellcheck: true
+		});
 	}
 	/**
 	 * @description Allows user Interact with Input boxes
@@ -57,13 +72,23 @@ export class DocumentForm extends React.Component {
 	 */
 	createDocument() {
 		if (this.validateForm()) {
-			this.setState({
-				errors: {},
-				title: '',
-				content: tinymce.activeEditor.setContent(''),
-				access: '' });
-			this.props.newDocument(this.state).then(() => {
+			const newContent = tinymce.activeEditor.getContent();
+			if (newContent === '') {
+				return this.setState({ message: 'Content is Required' });
+			}
+			const document = {
+				title: this.state.title,
+				access: this.state.access,
+				content: newContent
+			};
+			this.props.newDocument(document).then(() => {
 				this.props.allDocuments(this.state);
+				this.setState({
+					errors: {},
+					title: '',
+					content: tinymce.activeEditor.setContent(''),
+					access: ''
+				});
 				this.props.closeModal('close');
 				Materialize.toast('Document Created', 4000);
 			}).catch((err) => {
@@ -94,7 +119,6 @@ export class DocumentForm extends React.Component {
 		if (this.state.errors !== null) {
 			errors = this.state.errors;
 		}
-		console.log(errors, 'the errors');
 		const modalBtn = classnames({
 			'button-primary': true,
 			'button-block': true,
@@ -106,7 +130,7 @@ export class DocumentForm extends React.Component {
 					<div className="f-center">
 						<h5>New Document</h5> <br />
 						<span className="sign-up-error">{errors.title}</span><br />
-						<span className="sign-up-error">{errors.content}</span><br />
+						<span className="sign-up-error">{this.state.message}</span><br />
 						<label htmlFor="title">Title</label>
 						<input
 							className="browser-defaults"
@@ -126,14 +150,9 @@ export class DocumentForm extends React.Component {
 						</select>
 						<br />
 						<div id="tiny-edit">
-							<TinyMCE
-								config={{
-									plugins: 'link image code',
-									toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-								}}
-								content={this.state.content}
-								onChange={this.onEditorChange}
-							/>
+							<div id="content">
+								{ this.state.content }
+							</div>
 						</div>
 						<br />
 						<button

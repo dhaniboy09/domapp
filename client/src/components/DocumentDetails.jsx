@@ -28,6 +28,7 @@ export class DocumentDetails extends React.Component {
 			edit: false,
 			errors: {},
 			documents: [],
+			message: '',
 			decoded: jwt(localStorage.getItem('token'))
 		};
 		this.openEditor = this.openEditor.bind(this);
@@ -107,6 +108,9 @@ export class DocumentDetails extends React.Component {
 		if (this.validateForm()) {
 			this.setState({ errors: {} });
 			const content = tinymce.activeEditor.getContent();
+			if (content === '') {
+				return this.setState({ message: 'Content is Required' });
+			}
 			const parsedContent = Parser(content);
 			const newDocument = {
 				id: this.state.id,
@@ -151,7 +155,7 @@ export class DocumentDetails extends React.Component {
 						{this.state.edit ? (
 							<div>
 								<span className="edit-doc-error">{errors.title}</span><br />
-								<span className="edit-doc-error">{errors.content}</span><br />
+								<span className="edit-doc-error">{this.state.message}</span><br />
 							</div>
 						) : ''}
 						<div>
