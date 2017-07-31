@@ -60,7 +60,7 @@ export class DocumentForm extends React.Component {
 			this.setState({
 				errors: {},
 				title: '',
-				content: '',
+				content: tinymce.activeEditor.setContent(''),
 				access: '' });
 			this.props.newDocument(this.state).then(() => {
 				this.props.allDocuments(this.state);
@@ -68,6 +68,7 @@ export class DocumentForm extends React.Component {
 				Materialize.toast('Document Created', 4000);
 			}).catch((err) => {
 				Materialize.toast(err.response.data.message, 4000);
+				this.props.closeModal('close');
 			});
 		} else {
 			this.setState({ btnStatus: false });
@@ -93,6 +94,7 @@ export class DocumentForm extends React.Component {
 		if (this.state.errors !== null) {
 			errors = this.state.errors;
 		}
+		console.log(errors, 'the errors');
 		const modalBtn = classnames({
 			'button-primary': true,
 			'button-block': true,

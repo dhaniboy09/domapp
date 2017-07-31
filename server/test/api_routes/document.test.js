@@ -242,7 +242,7 @@ describe('Documents:-', () => {
 		});
 	});
 	describe('DELETE /api/v1/documents/:id', () => {
-		it('Should fail to delete the document given the user is not the owner', (done) => {
+		it('Should fail to delete a document given the user is not the owner', (done) => {
 			const id = 1;
 			chai.request(server)
 				.delete(`/api/v1/documents/${id}`)
@@ -251,18 +251,6 @@ describe('Documents:-', () => {
 					expect(res.status).to.equal(403);
 					expect(res.body).to.be.a('object');
 					expect(res.body).to.have.property('message').to.equal('Access Denied');
-					done();
-				});
-		});
-		it('Should fail to delete a non-existing document', (done) => {
-			const id = 500;
-			chai.request(server)
-				.delete(`/api/v1/documents/${id}`)
-				.set({ 'x-access-token': userToken })
-				.end((err, res) => {
-					expect(res.status).to.equal(404);
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message').to.equal('Document Not Found');
 					done();
 				});
 		});
