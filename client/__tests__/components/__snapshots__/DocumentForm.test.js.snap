@@ -72,15 +72,8 @@ ShallowWrapper {
             <div
                 id="tiny-edit"
             >
-                <TinyMCE
-                    config={
-                        Object {
-                            "plugins": "link image code",
-                            "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
-                          }
-                    }
-                    content=""
-                    onChange={[Function]}
+                <div
+                    id="content"
                 />
             </div>
             <br />
@@ -159,15 +152,8 @@ ShallowWrapper {
                   <div
                         id="tiny-edit"
                   >
-                        <TinyMCE
-                              config={
-                                    Object {
-                                          "plugins": "link image code",
-                                          "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
-                                        }
-                              }
-                              content=""
-                              onChange={[Function]}
+                        <div
+                              id="content"
                         />
                   </div>
                   <br />
@@ -197,7 +183,6 @@ ShallowWrapper {
         "context": Object {},
         "createDocument": [Function],
         "onChange": [Function],
-        "onEditorChange": [Function],
         "props": Object {},
         "refs": Object {},
         "state": Object {
@@ -206,8 +191,8 @@ ShallowWrapper {
           "content": "",
           "errors": "",
           "limit": undefined,
+          "message": "",
           "offset": undefined,
-          "success": Object {},
           "title": "",
         },
         "updater": Object {
@@ -292,15 +277,8 @@ ShallowWrapper {
                               <div
                                         id="tiny-edit"
                               >
-                                        <TinyMCE
-                                                  config={
-                                                            Object {
-                                                                      "plugins": "link image code",
-                                                                      "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
-                                                                    }
-                                                  }
-                                                  content=""
-                                                  onChange={[Function]}
+                                        <div
+                                                  id="content"
                                         />
                               </div>
                               <br />
@@ -379,15 +357,8 @@ ShallowWrapper {
                               <div
                                         id="tiny-edit"
                               >
-                                        <TinyMCE
-                                                  config={
-                                                            Object {
-                                                                      "plugins": "link image code",
-                                                                      "toolbar": "undo redo | bold italic | alignleft aligncenter alignright | code",
-                                                                    }
-                                                  }
-                                                  content=""
-                                                  onChange={[Function]}
+                                        <div
+                                                  id="content"
                                         />
                               </div>
                               <br />
