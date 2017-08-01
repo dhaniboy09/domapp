@@ -163,9 +163,9 @@ UpdatePasswordForm.propTypes = {
 	updatePassword: propTypes.func.isRequired,
 	deactivateAccount: propTypes.func.isRequired,
 	auth: propTypes.shape({
-		isAuthenticated: propTypes.func.isRequired,
+		isAuthenticated: propTypes.bool.isRequired,
 		user: propTypes.shape({
-			firstName: propTypes.string.isRequired,
+			firstName: propTypes.string,
 			roleId: propTypes.number.isRequired
 		})
 	}).isRequired,

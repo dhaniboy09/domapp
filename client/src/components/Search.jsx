@@ -137,11 +137,13 @@ export class Search extends React.Component {
 }
 Search.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	searchResults: propTypes.shape({
-		length: propTypes.number.isRequired
-	}).isRequired,
+	searchResults: propTypes.arrayOf(
+		propTypes.shape({
+			length: propTypes.number.isRequired
+		}).isRequired
+	).isRequired,
 	pagination: propTypes.shape({
-		pages: propTypes.number.isRequired
+		pages: propTypes.number
 	}).isRequired
 };
 /**

@@ -149,16 +149,18 @@ export class MyDocuments extends React.Component {
 }
 MyDocuments.propTypes = {
 	pagination: propTypes.shape({
-		pages: propTypes.number.isRequired
+		pages: propTypes.number
 	}).isRequired,
-	documents: propTypes.shape({
-		title: propTypes.string.isRequired,
-		content: propTypes.string.isRequired,
-		access: propTypes.string.isRequired,
-		userId: propTypes.number.isRequired,
-		map: propTypes.func.isRequired,
-		length: propTypes.number.isRequired
-	}).isRequired,
+	documents: propTypes.arrayOf(
+		propTypes.shape({
+			title: propTypes.string.isRequired,
+			content: propTypes.string.isRequired,
+			access: propTypes.string.isRequired,
+			userId: propTypes.number.isRequired,
+			map: propTypes.func,
+			length: propTypes.number
+		}).isRequired
+	).isRequired,
 	myDocuments: propTypes.func.isRequired,
 	auth: propTypes.shape({
 		user: propTypes.shape({

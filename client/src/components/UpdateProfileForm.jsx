@@ -183,9 +183,9 @@ export class UpdateProfileForm extends React.Component {
 UpdateProfileForm.propTypes = {
 	updateProfile: propTypes.func.isRequired,
 	users: propTypes.shape({
-		firstName: propTypes.string.isRequired,
-		lastName: propTypes.string.isRequired,
-		email: propTypes.string.isRequired
+		firstName: propTypes.string,
+		lastName: propTypes.string,
+		email: propTypes.string
 	}).isRequired,
 	fetchUser: propTypes.func.isRequired
 };

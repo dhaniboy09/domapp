@@ -50,13 +50,13 @@ class Header extends React.Component {
 						</a>
 					}
 					>
-						<NavItem><a href="/mydocuments">My Documents</a></NavItem>
+						<NavItem href="/mydocuments">My Documents</NavItem>
 						<NavItem divider />
-						<NavItem><a href="/documents">All Documents</a></NavItem>
+						<NavItem href="/documents">All Documents</NavItem>
 						<NavItem divider />
-						<NavItem><a href="/search">Search</a></NavItem>
+						<NavItem href="/search">Search</NavItem>
 						<NavItem divider />
-						<NavItem><a href="/settings">Settings</a></NavItem>
+						<NavItem href="/settings">Settings</NavItem>
 						<NavItem divider />
 						{currentUserRole === 1 ?
 							<NavItem>
@@ -64,7 +64,7 @@ class Header extends React.Component {
 							</NavItem>
 							: ''}
 						<NavItem divider />
-						<NavItem><a href="" onClick={this.signout}>Log out</a></NavItem>
+						<NavItem href="" onClick={this.signout}>Log out</NavItem>
 					</Dropdown>
 				</ul>
 			</div>
