@@ -20,8 +20,12 @@ export const searchUserDocuments = (documents, pagination) => {
  */
 export const searchDocuments = (params) => {
 	return dispatch => {
-		return axios.get(`/api/v1/search/documents?query=${params.searchQuery}&offset=${params.offset}`).then((res) => {
-			dispatch(searchUserDocuments(res.data.documents, res.data.pagination));
+		return axios.get(
+			`/api/v1/search/documents?query=
+			${params.searchQuery}&offset=${params.offset}`
+		).then((res) => {
+			dispatch(
+				searchUserDocuments(res.data.documents, res.data.pagination));
 			return Promise.resolve(res);
 		});
 	};

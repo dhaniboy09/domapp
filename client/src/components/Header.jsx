@@ -46,17 +46,21 @@ class Header extends React.Component {
 				<ul id="nav-mobile" className="right hide-on-med-and-down">
 					<Dropdown trigger={
 						<a>
-							{currentUser && currentUser} <i className="fa fa-caret-down" aria-hidden="true" />
+							{currentUser && currentUser}
+							<i
+								className="fa fa-caret-down"
+								aria-hidden="true"
+							/>
 						</a>
 					}
 					>
-						<NavItem><a href="/mydocuments">My Documents</a></NavItem>
+						<NavItem href="/mydocuments">My Documents</NavItem>
 						<NavItem divider />
-						<NavItem><a href="/documents">All Documents</a></NavItem>
+						<NavItem href="/documents">All Documents</NavItem>
 						<NavItem divider />
-						<NavItem><a href="/search">Search</a></NavItem>
+						<NavItem href="/search">Search</NavItem>
 						<NavItem divider />
-						<NavItem><a href="/settings">Settings</a></NavItem>
+						<NavItem href="/settings">Settings</NavItem>
 						<NavItem divider />
 						{currentUserRole === 1 ?
 							<NavItem>
@@ -64,7 +68,10 @@ class Header extends React.Component {
 							</NavItem>
 							: ''}
 						<NavItem divider />
-						<NavItem><a href="" onClick={this.signout}>Log out</a></NavItem>
+						<NavItem
+							href=""
+							onClick={this.signout}
+						>Log out</NavItem>
 					</Dropdown>
 				</ul>
 			</div>

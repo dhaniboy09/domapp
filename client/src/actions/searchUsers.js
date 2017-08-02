@@ -20,7 +20,10 @@ export const setSearchUsers = (users, pagination) => {
  */
 export const searchUsers = (params) => {
 	return dispatch => {
-		return axios.get(`/api/v1/search/users?query=${params.searchQuery}&offset=${params.offset}&limit=${params.limit}`).then((res) => {
+		return axios.get(
+			`/api/v1/search/users?query=
+			${params.searchQuery}&offset=${params.offset}&limit=${params.limit}`
+		).then((res) => {
 			dispatch(setSearchUsers(res.data.users, res.data.pagination));
 			return Promise.resolve(res);
 		});

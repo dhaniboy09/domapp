@@ -80,7 +80,9 @@ export class SignUpForm extends React.Component {
 				<div id="sign-up-form">
 					<p className="f-center f-bottom banner">
 						<span className="banner-label">
-							<strong id="sign-up-banner">Move on to Domapp</strong>
+							<strong id="sign-up-banner">
+								Move on to Domapp
+							</strong>
 						</span>
 					</p>
 					<div className="f-center">
@@ -93,7 +95,9 @@ export class SignUpForm extends React.Component {
 							placeholder="First Name"
 							className="input-def"
 						/>
-						<span className="sign-up-error">{errors.firstName}</span>
+						<span className="sign-up-error">
+							{errors.firstName}
+						</span>
 						<br />
 						<input
 							type="text"
@@ -137,7 +141,9 @@ export class SignUpForm extends React.Component {
 							placeholder="Re-enter Password"
 							className="input-def"
 						/>
-						<span className="sign-up-error">{errors.passwordConfirm}</span>
+						<span className="sign-up-error">
+							{errors.passwordConfirm}
+						</span>
 						<br />
 						<button
 							className="button-primary button-block"

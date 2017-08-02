@@ -121,8 +121,12 @@ export class UpdatePasswordForm extends React.Component {
 			<div>
 				<div className="s-form">
 					<div className="password-update-error">
-						<span className="sign-up-error">{errors.password}</span><br />
-						<span className="sign-up-error">{errors.passwordConfirm}</span><br />
+						<span
+							className="sign-up-error"
+						>{errors.password}</span><br />
+						<span
+							className="sign-up-error"
+						>{errors.passwordConfirm}</span><br />
 					</div>
 					<label htmlFor="password">New password</label>
 					<input
@@ -149,10 +153,14 @@ export class UpdatePasswordForm extends React.Component {
 					</button>
 					<div className="danger-zone">
 						<p>DANGER ZONE!!!</p>
-						<button onClick={() => this.handleAccountDelete()}>Deactivate Account</button>
+						<button
+							onClick={() => this.handleAccountDelete()}
+						>Deactivate Account</button>
 					</div>
 					<div className="password-update-info">
-						<span>**Password Update takes effect on next sign in</span>
+						<span>
+							**Password Update takes effect on next sign in
+						</span>
 					</div>
 				</div>
 			</div>
@@ -163,9 +171,9 @@ UpdatePasswordForm.propTypes = {
 	updatePassword: propTypes.func.isRequired,
 	deactivateAccount: propTypes.func.isRequired,
 	auth: propTypes.shape({
-		isAuthenticated: propTypes.func.isRequired,
+		isAuthenticated: propTypes.bool.isRequired,
 		user: propTypes.shape({
-			firstName: propTypes.string.isRequired,
+			firstName: propTypes.string,
 			roleId: propTypes.number.isRequired
 		})
 	}).isRequired,

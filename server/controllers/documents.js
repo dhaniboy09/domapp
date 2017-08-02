@@ -14,11 +14,16 @@ const DocumentController = {
  	* @return {void}    returns a response object
  	*/
 	createDocument: (req, res) => {
-		Document.find({ where: { title: (req.body.title).toLowerCase(), userId: req.decoded.id } })
+		Document.find(
+			{ where:
+				{ title: (req.body.title).toLowerCase(),
+					userId: req.decoded.id
+				}
+			})
 			.then((existingDocument) => {
 				if (existingDocument) {
 					return res.status(403).send({
-						message: 'Oops!. You already have a document with this title.',
+						message: 'You already have a document with this title.',
 					});
 				}
 				const document = {
@@ -55,11 +60,14 @@ const DocumentController = {
 		Document.findById(docId)
 			.then((foundDocument) => {
 				if (foundDocument) {
-					if ((foundDocument.access === 'public' || (userRole === foundDocument.userRoleId)) && foundDocument.access !== 'private') {
+					if ((foundDocument.access === 'public'
+						|| (userRole === foundDocument.userRoleId))
+						&& foundDocument.access !== 'private') {
 						res.status(200).send({
 							foundDocument,
 						});
-					} else if (foundDocument.userId === userId || Auth.isAdmin(userRole)) {
+					} else if (foundDocument.userId === userId
+						|| Auth.isAdmin(userRole)) {
 						res.status(200).send({
 							foundDocument,
 						});

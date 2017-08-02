@@ -47,9 +47,15 @@ describe('Documents:-', () => {
 					expect(res.status).to.equal(200);
 					expect(res.body.createdDocument).to.be.a('object');
 					expect(res.body.createdDocument).to.have.property('id');
-					expect(res.body.createdDocument).to.have.property('title').to.be.equal('test document');
-					expect(res.body.createdDocument).to.have.property('content').to.be.equal('This is a test document');
-					expect(res.body.createdDocument).to.have.property('access').to.be.equal('public');
+					expect(res.body.createdDocument)
+						.to.have.property('title')
+						.to.be.equal('test document');
+					expect(res.body.createdDocument)
+						.to.have.property('content')
+						.to.be.equal('This is a test document');
+					expect(res.body.createdDocument)
+						.to.have.property('access')
+						.to.be.equal('public');
 					done();
 				});
 		});
@@ -66,7 +72,10 @@ describe('Documents:-', () => {
 				.set({ 'x-access-token': userToken })
 				.end((err, res) => {
 					expect(res.status).to.equal(403);
-					expect(res.body.message).to.eql('Oops!. You already have a document with this title.');
+					expect(res.body.message)
+						.to.eql(
+							'You already have a document with this title.'
+						);
 					done();
 				});
 		});

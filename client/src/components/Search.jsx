@@ -80,9 +80,18 @@ export class Search extends React.Component {
 				{
 					(this.props.searchResults.length > 0) ? (
 						<ReactPaginate
-							previousLabel={<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />}
+							previousLabel={
+								<i
+									className="fa fa-chevron-left fa-2x"
+									aria-hidden="true"
+								/>
+							}
 							nextLabel={
-								<i className="fa fa-chevron-right fa-2x" id="btn-Next" aria-hidden="true" />
+								<i
+									className="fa fa-chevron-right fa-2x"
+									id="btn-Next"
+									aria-hidden="true"
+								/>
 							}
 							breakLabel={<a href="">...</a>}
 							breakClassName={'break-me'}
@@ -99,7 +108,9 @@ export class Search extends React.Component {
 				}
 				<div className="document-panel">
 					<div className="f-center">
-						<h5 className="document-panel-header s-panel"><span>Search Panel</span></h5>
+						<h5 className="document-panel-header s-panel">
+							<span>Search Panel</span>
+						</h5>
 						<div className="search-bar">
 							<div className="input-field">
 								<input
@@ -112,22 +123,29 @@ export class Search extends React.Component {
 								/>
 							</div>
 							<div>
-								<button id="button-search" onClick={this.handleSearch}>Search</button>
+								<button
+									id="button-search"
+									onClick={this.handleSearch}
+								>
+									Search</button>
 							</div>
 						</div>
 						{
-							(this.props.searchResults.length === 0) ? (<h3>Nothing Found</h3>) : (
-								<div className="col s12">
-									<div className="row">
-										{ userSearchResults.map(documents => (
-											<DocumentCard
-												document={documents}
-												key={document.id}
-											/>
-										)) }
+							(this.props.searchResults.length === 0) ?
+								(<h3>Nothing Found</h3>) : (
+									<div className="col s12">
+										<div className="row">
+											{
+												userSearchResults.map(
+													documents => (
+														<DocumentCard
+															document={documents}
+															key={document.id}
+														/>
+													)) }
+										</div>
 									</div>
-								</div>
-							)
+								)
 						}
 					</div>
 				</div>
@@ -137,11 +155,13 @@ export class Search extends React.Component {
 }
 Search.propTypes = {
 	searchDocuments: propTypes.func.isRequired,
-	searchResults: propTypes.shape({
-		length: propTypes.number.isRequired
-	}).isRequired,
+	searchResults: propTypes.arrayOf(
+		propTypes.shape({
+			length: propTypes.number.isRequired
+		}).isRequired
+	).isRequired,
 	pagination: propTypes.shape({
-		pages: propTypes.number.isRequired
+		pages: propTypes.number
 	}).isRequired
 };
 /**
@@ -156,5 +176,6 @@ function mapStateToProps(state) {
 		pagination: state.documents.pagination
 	};
 }
-export default withRouter(connect(mapStateToProps, { searchDocuments })(Search));
+export default withRouter(
+	connect(mapStateToProps, { searchDocuments })(Search));
 

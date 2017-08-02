@@ -30,7 +30,8 @@ export default {
 		firstName: 'Haroun',
 		lastName: 'Popoola',
 		email: 'hp@yahoo.com',
-		password: '$2a$10$jI9sn2FOeRYuKrnnF7ujgeJHAyjBskZT5AGM6MHb3brQ6/xZMhZEy',
+		password: '$2a$10$jI9sn2FOeRYuKrnnF7ujg' +
+		'eJHAyjBskZT5AGM6MHb3brQ6/xZMhZEy',
 		roleId: 2,
 		createdAt: '2017-07-17T15:11:51.002Z',
 		updatedAt: '2017-07-17T15:11:51.002Z'

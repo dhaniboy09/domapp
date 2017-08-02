@@ -21,7 +21,7 @@ export default {
 		}),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new ExtractTextPlugin('public/css/styles.css'),
-		new webpack.HotModuleReplacementPlugin(),
+		// new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
 			inject: true,
 			template: path.join(__dirname, 'server/index.html'),

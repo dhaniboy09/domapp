@@ -14,7 +14,9 @@ export const setEditDocument = (document) => {
  */
 export const editDocument = (documentData) => {
 	return dispatch => {
-		return axios.put(`/api/v1/documents/${documentData.id}`, documentData).then((res) => {
+		return axios.put(
+			`/api/v1/documents/${documentData.id}`, documentData
+		).then((res) => {
 			dispatch(setEditDocument(res.data));
 			return Promise.resolve(res);
 		});

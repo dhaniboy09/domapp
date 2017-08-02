@@ -109,9 +109,18 @@ export class MyDocuments extends React.Component {
 				{this.props.documents.length === 0 ? '' : (
 					<ReactPaginate
 						previousLabel={
-							<i className="fa fa-chevron-left fa-2x" id="btn-Next" aria-hidden="true" />
+							<i
+								className="fa fa-chevron-left fa-2x"
+								id="btn-Next"
+								aria-hidden="true"
+							/>
 						}
-						nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+						nextLabel={
+							<i
+								className="fa fa-chevron-right fa-2x"
+								aria-hidden="true"
+							/>
+						}
 						breakLabel={<a href="">...</a>}
 						breakClassName={'break-me'}
 						pageCount={this.props.pagination.pages}
@@ -126,19 +135,23 @@ export class MyDocuments extends React.Component {
 				)}
 				<div className="document-panel">
 					<div className="f-center">
-						<h5 className="document-panel-header"><span>My Documents</span></h5>
+						<h5 className="document-panel-header">
+							<span>My Documents</span>
+						</h5>
 						<div className="col s12">
 							<div className="row">
-								{(this.state.documents) && (this.state.documents.length === 0) ? emptyDocuments : (
-									this.props.documents.map(document => (
-										<DocumentCard
-											limit={this.state.limit}
-											offset={this.state.offset}
-											document={document}
-											key={document.id}
-										/>
-									))
-								)}
+								{(this.state.documents)
+									&& (this.state.documents.length === 0)
+									? emptyDocuments : (
+										this.props.documents.map(document => (
+											<DocumentCard
+												limit={this.state.limit}
+												offset={this.state.offset}
+												document={document}
+												key={document.id}
+											/>
+										))
+									)}
 							</div>
 						</div>
 					</div>
@@ -149,16 +162,18 @@ export class MyDocuments extends React.Component {
 }
 MyDocuments.propTypes = {
 	pagination: propTypes.shape({
-		pages: propTypes.number.isRequired
+		pages: propTypes.number
 	}).isRequired,
-	documents: propTypes.shape({
-		title: propTypes.string.isRequired,
-		content: propTypes.string.isRequired,
-		access: propTypes.string.isRequired,
-		userId: propTypes.number.isRequired,
-		map: propTypes.func.isRequired,
-		length: propTypes.number.isRequired
-	}).isRequired,
+	documents: propTypes.arrayOf(
+		propTypes.shape({
+			title: propTypes.string.isRequired,
+			content: propTypes.string.isRequired,
+			access: propTypes.string.isRequired,
+			userId: propTypes.number.isRequired,
+			map: propTypes.func,
+			length: propTypes.number
+		}).isRequired
+	).isRequired,
 	myDocuments: propTypes.func.isRequired,
 	auth: propTypes.shape({
 		user: propTypes.shape({

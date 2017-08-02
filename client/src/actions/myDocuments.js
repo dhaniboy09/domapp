@@ -20,7 +20,9 @@ export const UserDocuments = (documents, pagination) => {
  */
 export const myDocuments = (params) => {
 	return dispatch => {
-		return axios.get(`/api/v1/users/${params.id}/documents?offset=${params.offset}`).then((res) => {
+		return axios.get(
+			`/api/v1/users/${params.id}/documents?offset=${params.offset}`
+		).then((res) => {
 			dispatch(UserDocuments(res.data.documents, res.data.pagination));
 			return Promise.resolve(res);
 		});

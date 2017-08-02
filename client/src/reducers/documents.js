@@ -16,9 +16,17 @@ export default (state = initialState, action) => {
 		return Object.assign({}, state, { documents: updatedList });
 	}
 	case VIEW_ALL_DOCUMENTS:
-		return Object.assign({}, state, { documents: action.documents, pagination: action.pagination });
+		return Object.assign(
+			{},
+			state,
+			{ documents: action.documents, pagination: action.pagination }
+		);
 	case GET_USER_DOCUMENTS:
-		return Object.assign({}, state, { documents: action.documents, pagination: action.pagination });
+		return Object.assign(
+			{},
+			state,
+			{ documents: action.documents, pagination: action.pagination }
+		);
 	case EDIT_DOCUMENT: {
 		return Object.assign({}, state, { document: action.document });
 	}

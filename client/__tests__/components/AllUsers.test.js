@@ -15,13 +15,25 @@ const searchUsersMock = spy(() => new Promise(() => {}));
 const mockStore = configureStore();
 const store = mockStore({
 	auth: { isAuthenticated: true, user: {} },
-	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
-	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
+	users: {
+		isAuthenticated: false,
+		users: {},
+		allUsers: {},
+		userSearch: {},
+		pagination: []
+	},
+	userDocuments: {
+		documents: [{}],
+		searchResults: [],
+		document: {},
+		pagination: {},
+		errors: {} }
 });
 
 describe('Documents Page', () => {
 	it('should call ComponentDidMount()', () => {
-		const componentWillMountSpy = spy(AllUsers.prototype, 'componentWillMount');
+		const componentWillMountSpy = spy(
+			AllUsers.prototype, 'componentWillMount');
 		mount(
 			<Router >
 				<Provider store={store}>
@@ -38,7 +50,8 @@ describe('Documents Page', () => {
 		componentWillMountSpy.restore();
 	});
 	it('should call componentWillReceiveProps()', () => {
-		const componentWillReceivePropsSpy = spy(AllUsers.prototype, 'componentWillReceiveProps');
+		const componentWillReceivePropsSpy = spy(
+			AllUsers.prototype, 'componentWillReceiveProps');
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>
