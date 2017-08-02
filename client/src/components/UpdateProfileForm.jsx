@@ -155,7 +155,10 @@ export class UpdateProfileForm extends React.Component {
 						name="email"
 						disabled={!this.state.editable}
 					/>
-					<span className="sign-up-error" id="email-error">{errors.email}</span>
+					<span
+						className="sign-up-error"
+						id="email-error"
+					>{errors.email}</span>
 					<div className="profile-update-buttons">
 						<button
 							className="button-primary button-block s-button"
@@ -173,7 +176,9 @@ export class UpdateProfileForm extends React.Component {
 						</button>
 					</div>
 					<div className="profile-update-info">
-						<span>**Profile Update takes effect on next sign in</span>
+						<span>
+							**Profile Update takes effect on next sign in
+						</span>
 					</div>
 				</div>
 			</div>

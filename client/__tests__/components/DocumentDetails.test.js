@@ -22,16 +22,31 @@ const store = mockStore({
 			iat: 1500803878,
 			exp: 1500886678
 		} },
-	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
-	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
+	users: {
+		isAuthenticated: false,
+		users: {},
+		allUsers: {},
+		userSearch: {},
+		pagination: [] },
+	userDocuments: {
+		documents: [{}],
+		searchResults: [],
+		document: {},
+		pagination: {},
+		errors: {} }
 });
 
 describe('Document Details Page', () => {
-	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImZpcnN0TmFtZSI6IlRob3JzYSIsImxhc3ROYW1lIjoiQXNnYXJkIiwiZW1haWwiOiJ0Y0B5YWhvby5jb20iLCJyb2xlSWQiOjIsImlhdCI6MTUwMDgwMzg3OCwiZXhwIjoxNTAwODg2Njc4fQ.43gtNWWNsI5KitrFaj2YjFAD3M2nmPWcRkq8vaoZOfQ';
+	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+	'eyJpZCI6MTYsImZpcnN0TmFtZSI6IlRob3JzYSIsImxhc3ROYW1lI' +
+	'joiQXNnYXJkIiwiZW1haWwiOiJ0Y0B5YWhvby5jb20iLCJyb2xlSWQiOj' +
+	'IsImlhdCI6MTUwMDgwMzg3OCwiZXhwIjoxNTAwODg2Njc4fQ.' +
+	'43gtNWWNsI5KitrFaj2YjFAD3M2nmPWcRkq8vaoZOfQ';
 	localStorage.setItem('token', token);
 	localStorage.getItem(token);
 	it('should call ComponentDidMount()', () => {
-		const componentDidMountSpy = spy(DocumentDetails.prototype, 'componentDidMount');
+		const componentDidMountSpy = spy(
+			DocumentDetails.prototype, 'componentDidMount');
 		mount(
 			<Router >
 				<Provider store={store}>
@@ -47,7 +62,8 @@ describe('Document Details Page', () => {
 		componentDidMountSpy.restore();
 	});
 	it('should call componentWillReceiveProps()', () => {
-		const componentWillReceivePropsSpy = spy(DocumentDetails.prototype, 'componentWillReceiveProps');
+		const componentWillReceivePropsSpy = spy(
+			DocumentDetails.prototype, 'componentWillReceiveProps');
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>
@@ -61,10 +77,11 @@ describe('Document Details Page', () => {
 			</Router>
 		);
 		wrapper.setProps({ document: [] });
-		assert.ok(DocumentDetails.prototype.componentWillReceiveProps.calledOnce);
+		assert.ok(
+			DocumentDetails.prototype.componentWillReceiveProps.calledOnce);
 		componentWillReceivePropsSpy.restore();
 	});
-	it('should have call onChange and openEditor functions on button click', () => {
+	it('should call onChange and openEditor functions on button click', () => {
 		const onChangeSpy = spy(DocumentDetails.prototype, 'onChange');
 		const openEditorSpy = spy(DocumentDetails.prototype, 'openEditor');
 		const event = { target: { name: 'title', value: 'hoyt' } };
@@ -76,7 +93,10 @@ describe('Document Details Page', () => {
 				document={{ userId: 16 }}
 			/>
 		);
-		wrap.setState({ decoded: { id: 16, firstName: 'Thor' }, documents: { userId: 16 } });
+		wrap.setState({ decoded: {
+			id: 16,
+			firstName: 'Thor' },
+		documents: { userId: 16 } });
 		const editDocumentBtn = wrap.find('#btn-editDoc');
 		assert.equal(editDocumentBtn.length, 1);
 		editDocumentBtn.simulate('click', openEditorSpy);
@@ -93,10 +113,17 @@ describe('Document Details Page', () => {
 				editDocument={editDocument}
 				documentDetails={documentDetails}
 				match={{ params: { id: 16 } }}
-				document={{ userId: 16, content: 'Content', title: 'Title', access: 'public' }}
+				document={{
+					userId: 16,
+					content: 'Content',
+					title: 'Title',
+					access: 'public'
+				}}
 			/>
 		);
-		wrap.setState({ decoded: { id: 16, firstName: 'Thor' }, documents: { userId: 16 } });
+		wrap.setState({ decoded: {
+			id: 16, firstName: 'Thor' },
+		documents: { userId: 16 } });
 		const editDocumentBtn = wrap.find('#btn-editDoc');
 		editDocumentBtn.simulate('click');
 

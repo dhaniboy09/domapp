@@ -33,59 +33,83 @@ describe('Users', () => {
 	});
 	describe('POST /auth/v1/users', () => {
 		it('should create a new user', (done) => {
-			chai.request(server).post('/auth/v1/users').send(mockData.SampleUser2).end((err, res) => {
-				expect(res.status).to.equal(200);
-				expect(res.body).to.have.keys(['token', 'message']);
-				done();
-			});
+			chai.request(server)
+				.post('/auth/v1/users')
+				.send(mockData.SampleUser2)
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.have.keys(['token', 'message']);
+					done();
+				});
 		});
 		it('should not duplicate users', (done) => {
-			chai.request(server).post('/auth/v1/users').send(mockData.SampleUser2).end((err, res) => {
-				expect(res.status).to.equal(403);
-				expect(res.body).to.be.a('object');
-				expect(res.body.message).to.eql('User already exists!');
-				done();
-			});
+			chai.request(server)
+				.post('/auth/v1/users')
+				.send(mockData.SampleUser2)
+				.end((err, res) => {
+					expect(res.status).to.equal(403);
+					expect(res.body).to.be.a('object');
+					expect(res.body.message).to.eql('User already exists!');
+					done();
+				});
 		});
 		it('should not create an admin user', (done) => {
-			chai.request(server).post('/auth/v1/users').send(mockData.SampleAdmin).end((err, res) => {
-				expect(res.status).to.equal(403);
-				expect(res.body).to.eql('Role cannot be directly assigned!');
-				done();
-			});
+			chai.request(server)
+				.post('/auth/v1/users')
+				.send(mockData.SampleAdmin)
+				.end((err, res) => {
+					expect(res.status).to.equal(403);
+					expect(res.body)
+						.to.eql('Role cannot be directly assigned!');
+					done();
+				});
 		});
 		it('should validate credentials', (done) => {
-			chai.request(server).post('/auth/v1/users').send(mockData.SampleInvalidUser).end((err, res) => {
-				expect(res.status).to.equal(400);
-				expect(res.body.email).to.eql('Email is invalid');
-				expect(res.body.firstName).to.eql('First Name is Required');
-				expect(res.body.lastName).to.eql('Last Name is Required');
-				expect(res.body.password).to.eql('Password must be minimum of 6 characters');
-				expect(res.body.passwordConfirm).to.eql('Password Confirmation is Required');
-				done();
-			});
+			chai.request(server)
+				.post('/auth/v1/users')
+				.send(mockData.SampleInvalidUser)
+				.end((err, res) => {
+					expect(res.status).to.equal(400);
+					expect(res.body.email).to.eql('Email is invalid');
+					expect(res.body.firstName).to.eql('First Name is Required');
+					expect(res.body.lastName).to.eql('Last Name is Required');
+					expect(res.body.password)
+						.to.eql('Password must be minimum of 6 characters');
+					expect(res.body.passwordConfirm)
+						.to.eql('Password Confirmation is Required');
+					done();
+				});
 		});
 	});
 	describe('POST /auth/v1/users/login', () => {
 		it('should log in an existing user', (done) => {
-			chai.request(server).post('/auth/v1/users/login').send(mockData.SampleUser2LogIn).end((err, res) => {
-				expect(res.status).to.equal(200);
-				expect(res.body).to.have.keys(['token']);
-				done();
-			});
+			chai.request(server)
+				.post('/auth/v1/users/login')
+				.send(mockData.SampleUser2LogIn)
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.have.keys(['token']);
+					done();
+				});
 		});
 		it('should not log in a non-existing user', (done) => {
-			chai.request(server).post('/auth/v1/users/login').send(mockData.SampleUser3LogIn).end((err, res) => {
-				expect(res.status).to.equal(401);
-				expect(res.body).to.be.a('object');
-				expect(res.body.error).to.eql('User not found');
-				done();
-			});
+			chai.request(server)
+				.post('/auth/v1/users/login')
+				.send(mockData.SampleUser3LogIn)
+				.end((err, res) => {
+					expect(res.status).to.equal(401);
+					expect(res.body).to.be.a('object');
+					expect(res.body.error).to.eql('User not found');
+					done();
+				});
 		});
 		it('should not log in a user with wrong credentials', (done) => {
 			chai.request(server)
 				.post('/auth/v1/users/login')
-				.send({ email: mockData.SampleUser2LogIn.email, password: '12345' })
+				.send({
+					email: mockData.SampleUser2LogIn.email,
+					password: '12345'
+				})
 				.end((err, res) => {
 					expect(res.status).to.equal(401);
 					expect(res.body).to.be.a('object');
@@ -112,7 +136,7 @@ describe('Users', () => {
 		});
 	});
 	describe('GET /api/v1/users', () => {
-		it('should return list of all users as an object with keys and values', (done) => {
+		it('should get all users as an object with keys and values', (done) => {
 			chai.request(server)
 				.get('/api/v1/users')
 				.set({ 'x-access-token': adminToken })
@@ -138,7 +162,8 @@ describe('Users', () => {
 				.get('/api/v1/users')
 				.end((err, res) => {
 					expect(res.status).to.equal(401);
-					expect(res.body.message).to.eql('Failed to authenticate token.');
+					expect(res.body.message)
+						.to.eql('Failed to authenticate token.');
 					done();
 				});
 		});
@@ -188,11 +213,16 @@ describe('Users', () => {
 			chai.request(server)
 				.put(`/api/v1/users/${id}`)
 				.set({ 'x-access-token': userToken })
-				.send({ firstName: 'Gimli', lastName: 'Dexter', email: 'gdex@yahoo.com' })
+				.send({
+					firstName: 'Gimli',
+					lastName: 'Dexter',
+					email: 'gdex@yahoo.com'
+				})
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
 					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('firstName').to.equal('Gimli');
+					expect(res.body)
+						.to.have.property('firstName').to.equal('Gimli');
 					done();
 				});
 		});
@@ -201,7 +231,11 @@ describe('Users', () => {
 			chai.request(server)
 				.put(`/api/v1/users/${id}`)
 				.set({ 'x-access-token': userToken })
-				.send({ firstName: 'Gimli', lastName: 'Dexter', email: 'david@yahoo.com' })
+				.send({
+					firstName: 'Gimli',
+					lastName: 'Dexter',
+					email: 'david@yahoo.com'
+				})
 				.end((err, res) => {
 					expect(res.status).to.equal(403);
 					expect(res.body).to.be.a('object');
@@ -314,12 +348,24 @@ describe('Users', () => {
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
 					expect(res.body).to.have.keys(['documents', 'pagination']);
-					expect(res.body.pagination).to.have.property('totalCount').to.not.equal(null);
-					expect(res.body.pagination).to.have.property('pages').to.not.equal(null);
-					expect(res.body.pagination).to.have.property('currentPage').to.not.equal(null);
-					expect(res.body.pagination).to.have.property('pageSize').to.not.equal(null);
-					expect(res.body.documents[0]).to.have.property('title').to.not.equal(null);
-					expect(res.body.documents[0]).to.have.property('content').to.not.equal(null);
+					expect(res.body.pagination)
+						.to.have.property('totalCount')
+						.to.not.equal(null);
+					expect(res.body.pagination)
+						.to.have.property('pages')
+						.to.not.equal(null);
+					expect(res.body.pagination)
+						.to.have.property('currentPage')
+						.to.not.equal(null);
+					expect(res.body.pagination)
+						.to.have.property('pageSize')
+						.to.not.equal(null);
+					expect(res.body.documents[0])
+						.to.have.property('title')
+						.to.not.equal(null);
+					expect(res.body.documents[0])
+						.to.have.property('content')
+						.to.not.equal(null);
 					done();
 				});
 		});

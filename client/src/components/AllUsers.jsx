@@ -122,10 +122,17 @@ export class AllUsers extends React.Component {
 					(this.state.users.length !== 0) ? (
 						<ReactPaginate
 							previousLabel={
-								<i className="fa fa-chevron-left fa-2x" aria-hidden="true" />
+								<i
+									className="fa fa-chevron-left fa-2x"
+									aria-hidden="true"
+								/>
 							}
 							nextLabel={
-								<i className="fa fa-chevron-right fa-2x" id="btn-Next" aria-hidden="true" />
+								<i
+									className="fa fa-chevron-right fa-2x"
+									id="btn-Next"
+									aria-hidden="true"
+								/>
 							}
 							breakLabel={<a href="">...</a>}
 							breakClassName={'break-me'}
@@ -142,7 +149,9 @@ export class AllUsers extends React.Component {
 				}
 				<div className="user-panel">
 					<div className="f-center scroll">
-						<h5 className="user-panel-header"><span>All Users</span></h5>
+						<h5 className="user-panel-header">
+							<span>All Users</span>
+						</h5>
 						<table className="striped centered">
 							<thead>
 								<tr>
@@ -177,9 +186,16 @@ export class AllUsers extends React.Component {
 												tabIndex="0"
 												role="button"
 												id="btn-userdelete"
-												onClick={() => this.handleDeleteUser(user.id)}
+												onClick={
+													() => this.handleDeleteUser(
+														user.id
+													)
+												}
 											>
-												<i className="fa fa-trash" aria-hidden="true" />
+												<i
+													className="fa fa-trash"
+													aria-hidden="true"
+												/>
 											</a>
 										</td>
 									</tr>

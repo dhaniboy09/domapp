@@ -13,12 +13,26 @@ const isAuthenticated = true;
 const mockStore = configureStore();
 const store = mockStore({
 	auth: { isAuthenticated: true, user: {} },
-	users: { isAuthenticated: true, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
-	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
+	users: {
+		isAuthenticated: true,
+		users: {},
+		allUsers: {},
+		userSearch: {},
+		pagination: [] },
+	userDocuments: {
+		documents: [{}],
+		searchResults: [],
+		document: {},
+		pagination: {},
+		errors: {} }
 });
 
 describe('UpdatePasswordForm', () => {
-	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImZpcnN0TmFtZSI6IlRob3JzYSIsImxhc3ROYW1lIjoiQXNnYXJkIiwiZW1haWwiOiJ0Y0B5YWhvby5jb20iLCJyb2xlSWQiOjIsImlhdCI6MTUwMDgwMzg3OCwiZXhwIjoxNTAwODg2Njc4fQ.43gtNWWNsI5KitrFaj2YjFAD3M2nmPWcRkq8vaoZOfQ';
+	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+	'eyJpZCI6MTYsImZpcnN0TmFtZSI6IlRob3JzYSIsImxhc3ROYW1lI' +
+	'joiQXNnYXJkIiwiZW1haWwiOiJ0Y0B5YWhvby5jb20iLCJyb2xlSWQiOj' +
+	'IsImlhdCI6MTUwMDgwMzg3OCwiZXhwIjoxNTAwODg2Njc4fQ.' +
+	'43gtNWWNsI5KitrFaj2YjFAD3M2nmPWcRkq8vaoZOfQ';
 	localStorage.setItem('token', token);
 	localStorage.getItem(token);
 	it('should call onChange function when onChange event is triggered', () => {
@@ -39,7 +53,8 @@ describe('UpdatePasswordForm', () => {
 		assert.ok(onChangeSpy.calledOnce);
 	});
 	it('should call ComponentWillMount()', () => {
-		const componentWillMountSpy = spy(UpdatePasswordForm.prototype, 'componentWillMount');
+		const componentWillMountSpy = spy(
+			UpdatePasswordForm.prototype, 'componentWillMount');
 		mount(
 			<Router >
 				<Provider store={store}>
@@ -55,7 +70,8 @@ describe('UpdatePasswordForm', () => {
 		componentWillMountSpy.restore();
 	});
 	it('should call updatePassword on button click', () => {
-		const updatePasswordSpy = spy(UpdatePasswordForm.prototype, 'updatePassword');
+		const updatePasswordSpy = spy(
+			UpdatePasswordForm.prototype, 'updatePassword');
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>

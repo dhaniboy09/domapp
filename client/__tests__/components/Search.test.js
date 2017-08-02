@@ -12,12 +12,32 @@ const searchDocumentsMock = jest.fn();
 const mockStore = configureStore();
 const store = mockStore({
 	auth: { isAuthenticated: true,
-		user: { id: 16, firstName: 'Thorsa', lastName: 'Asgard', email: 'tc@yahoo.com', roleId: 2, iat: 1500893664, exp: 1500976464 }
+		user: {
+			id: 16,
+			firstName: 'Thorsa',
+			lastName: 'Asgard',
+			email: 'tc@yahoo.com',
+			roleId: 2,
+			iat: 1500893664,
+			exp: 1500976464 }
 	},
-	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
+	users: {
+		isAuthenticated: false,
+		users: {},
+		allUsers: {},
+		userSearch: {},
+		pagination: [] },
 	userDocuments: {
 		searchResults: [
-			{ id: 83, title: 'E101', content: 'E101', access: 'public', userId: 16, userRoleId: 2, createdAt: '2017-07-17', updatedAt: '2017-07-17' }
+			{
+				id: 83,
+				title: 'E101',
+				content: 'E101',
+				access: 'public',
+				userId: 16,
+				userRoleId: 2,
+				createdAt: '2017-07-17',
+				updatedAt: '2017-07-17' }
 		],
 		pagination: { totalCount: 6, pages: 1, currentPage: 1, pageSize: 6 }
 	}
@@ -25,7 +45,8 @@ const store = mockStore({
 
 describe('Search Page', () => {
 	it('should call componentWillReceiveProps()', () => {
-		const componentWillReceivePropsSpy = spy(Search.prototype, 'componentWillReceiveProps');
+		const componentWillReceivePropsSpy = spy(
+			Search.prototype, 'componentWillReceiveProps');
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>

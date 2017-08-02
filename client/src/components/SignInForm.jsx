@@ -45,7 +45,9 @@ export class SignInForm extends React.Component {
 					this.props.history.push('/documents');
 				},
 				(err) => {
-					this.setState({ errors: err.response.data, isLoading: false });
+					this.setState({
+						errors: err.response.data, isLoading: false
+					});
 				}
 			);
 		}

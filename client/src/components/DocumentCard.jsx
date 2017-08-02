@@ -61,14 +61,19 @@ export class DocumentCard extends React.Component {
 		const createdAt = this.props.document.createdAt;
 		let content = Parser(this.props.document.content);
 		const createdDate = createdAt.split('T')[0];
-		content = content.length > 167 ? content.substring(0, 167) + '...' : content;
+		content = content.length > 167 ?
+			content.substring(0, 167) + '...' : content;
 		const documentList = (
 			<div className="col s4 m4 darken-1">
 				<div className="card">
 					<div className="card-content">
 						<span className="card-title truncate">
 							<a
-								onClick={() => this.getDocument(`/document/${this.props.document.id}`)}
+								onClick={
+									() => this.getDocument(
+										`/document/${this.props.document.id}`
+									)
+								}
 								href="#!"
 								role="button"
 								id="btn-singledocument"
@@ -81,16 +86,28 @@ export class DocumentCard extends React.Component {
 					</div>
 					<div className="card-action form-card-action">
 						{
-							(this.props.auth.user.id === this.props.document.userId) ?
+							(this.props.auth.user.id ===
+								this.props.document.userId) ?
 								(
 									<div className="document-actions">
 										<a
 											href="#!"
 											id="btn-deletedocument"
-											onClick={() => this.handleDocumentDelete(this.props.document.id)}
+											onClick={
+												() => this.handleDocumentDelete(
+													this.props.document.id
+												)
+											}
 										>Delete</a>
 									</div>
-								) : (<div><i className="fa fa-lock" aria-hidden="true" /></div>)
+								) : (
+									<div>
+										<i
+											className="fa fa-lock"
+											aria-hidden="true"
+										/>
+									</div>
+								)
 						}
 					</div>
 				</div>
@@ -98,7 +115,8 @@ export class DocumentCard extends React.Component {
 		);
 		return (
 			<div>
-				{this.props.document.length === 0 ? <div><p>No new docs</p></div> : documentList}
+				{this.props.document.length === 0
+					? <div><p>No new docs</p></div> : documentList}
 			</div>
 		);
 	}
@@ -137,4 +155,5 @@ function mapStateToProps(state) {
 		auth: state.auth
 	};
 }
-export default withRouter(connect(mapStateToProps, { removeDocument, allDocuments })(DocumentCard));
+export default withRouter(
+	connect(mapStateToProps, { removeDocument, allDocuments })(DocumentCard));

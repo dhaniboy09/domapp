@@ -7,8 +7,18 @@ import Home from '../../src/components/Home';
 const mockStore = configureStore();
 const store = mockStore({
 	auth: { isAuthenticated: true, user: {} },
-	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
-	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
+	users: {
+		isAuthenticated: false,
+		users: {},
+		allUsers: {},
+		userSearch: {},
+		pagination: [] },
+	userDocuments: {
+		documents: [{}],
+		searchResults: [],
+		document: {},
+		pagination: {},
+		errors: {} }
 });
 describe('Home', () => {
 	it('renders a snapshot', () => {

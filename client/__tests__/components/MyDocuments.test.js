@@ -12,13 +12,24 @@ const myDocumentsMock = jest.fn();
 const mockStore = configureStore();
 const store = mockStore({
 	auth: { isAuthenticated: true, user: {} },
-	users: { isAuthenticated: false, users: {}, allUsers: {}, userSearch: {}, pagination: [] },
-	userDocuments: { documents: [{}], searchResults: [], document: {}, pagination: {}, errors: {} }
+	users: {
+		isAuthenticated: false,
+		users: {},
+		allUsers: {},
+		userSearch: {},
+		pagination: [] },
+	userDocuments: {
+		documents: [{}],
+		searchResults: [],
+		document: {},
+		pagination: {},
+		errors: {} }
 });
 
 describe('My Documents Page', () => {
 	it('should call ComponentDidMount()', () => {
-		const componentDidMountSpy = spy(MyDocuments.prototype, 'componentDidMount');
+		const componentDidMountSpy = spy(
+			MyDocuments.prototype, 'componentDidMount');
 		mount(
 			<Router >
 				<Provider store={store}>
@@ -36,7 +47,8 @@ describe('My Documents Page', () => {
 		componentDidMountSpy.restore();
 	});
 	it('should call componentWillReceiveProps()', () => {
-		const componentWillReceivePropsSpy = spy(MyDocuments.prototype, 'componentWillReceiveProps');
+		const componentWillReceivePropsSpy = spy(
+			MyDocuments.prototype, 'componentWillReceiveProps');
 		const wrapper = mount(
 			<Router >
 				<Provider store={store}>

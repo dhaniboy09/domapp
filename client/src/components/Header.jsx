@@ -46,7 +46,11 @@ class Header extends React.Component {
 				<ul id="nav-mobile" className="right hide-on-med-and-down">
 					<Dropdown trigger={
 						<a>
-							{currentUser && currentUser} <i className="fa fa-caret-down" aria-hidden="true" />
+							{currentUser && currentUser}
+							<i
+								className="fa fa-caret-down"
+								aria-hidden="true"
+							/>
 						</a>
 					}
 					>
@@ -64,7 +68,10 @@ class Header extends React.Component {
 							</NavItem>
 							: ''}
 						<NavItem divider />
-						<NavItem href="" onClick={this.signout}>Log out</NavItem>
+						<NavItem
+							href=""
+							onClick={this.signout}
+						>Log out</NavItem>
 					</Dropdown>
 				</ul>
 			</div>

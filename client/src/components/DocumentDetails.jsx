@@ -7,7 +7,8 @@ import jwt from 'jwt-decode';
 import tinyMceConfig from '../utils/tinyMceConfig.json';
 import { documentDetails } from '../actions/documentDetails';
 import { editDocument } from '../actions/editDocument';
-import editDocumentValidation from '../../../server/helpers/editDocumentValidation';
+import editDocumentValidation
+	from '../../../server/helpers/editDocumentValidation';
 /**
  * @class Documents
  * @extends {React.Component}
@@ -151,11 +152,17 @@ export class DocumentDetails extends React.Component {
 			<div className="doc-wrapper">
 				<div className="document-panel">
 					<div className="f-center">
-						<h5 className="document-panel-header"><span>Document Details</span></h5><br /><br />
+						<h5 className="document-panel-header">
+							<span>Document Details</span>
+						</h5><br /><br />
 						{this.state.edit ? (
 							<div>
-								<span className="edit-doc-error">{errors.title}</span><br />
-								<span className="edit-doc-error">{this.state.message}</span><br />
+								<span className="edit-doc-error">
+									{errors.title}
+								</span><br />
+								<span className="edit-doc-error">
+									{this.state.message}
+								</span><br />
 							</div>
 						) : ''}
 						<div>
@@ -194,10 +201,15 @@ export class DocumentDetails extends React.Component {
 								) : (
 									<div className="title-content-panel">
 										<div className="editor-title-header">
-											Title: <div className="editor-title">{this.state.title}</div>
+											Title: <div
+												className="editor-title"
+											>
+												{this.state.title}</div>
 										</div>
 										<div className="access-header-title">
-											Access: <div className="editor-access">{this.state.access}</div>
+											Access: <div
+												className="editor-access"
+											>{this.state.access}</div>
 										</div>
 									</div>
 								)

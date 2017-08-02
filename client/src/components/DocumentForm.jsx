@@ -5,7 +5,8 @@ import propTypes from 'prop-types';
 import classnames from 'classnames';
 import { newDocument } from '../actions/newDocument';
 import { allDocuments } from '../actions/allDocuments';
-import createDocumentValidation from '../../../server/helpers/createDocumentValidation';
+import createDocumentValidation
+	from '../../../server/helpers/createDocumentValidation';
 
 /**
  * 
@@ -43,7 +44,8 @@ export class DocumentForm extends React.Component {
 		tinymce.init({
 			selector: '#content',
 			plugins: 'autolink link image lists' +
-								' print preview textcolor table emoticons codesample',
+								' print preview textcolor' +
+								'table emoticons codesample',
 			toolbar: 'undo redo | bold italic | ' +
 			'fontsizeselect fontselect | ' +
 			'alignleft aligncenter alignright | forecolor backcolor' +
@@ -130,8 +132,16 @@ export class DocumentForm extends React.Component {
 				<div className="form">
 					<div className="f-center">
 						<h5>New Document</h5> <br />
-						<span className="sign-up-error">{errors.title}</span><br />
-						<span className="sign-up-error">{this.state.message}</span><br />
+						<span
+							className="sign-up-error"
+						>
+							{errors.title}
+						</span><br />
+						<span
+							className="sign-up-error"
+						>
+							{this.state.message}
+						</span><br />
 						<label htmlFor="title">Title</label>
 						<input
 							className="browser-defaults"
@@ -188,4 +198,5 @@ function mapStateToProps(state) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { newDocument, allDocuments })(DocumentForm));
+export default withRouter(
+	connect(mapStateToProps, { newDocument, allDocuments })(DocumentForm));

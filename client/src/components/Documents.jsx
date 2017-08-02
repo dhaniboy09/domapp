@@ -107,9 +107,18 @@ export class Documents extends React.Component {
 				{this.props.documents.length === 0 ? '' : (
 					<ReactPaginate
 						previousLabel={
-							<i className="fa fa-chevron-left fa-2x" id="btn-Next" aria-hidden="true" />
+							<i
+								className="fa fa-chevron-left fa-2x"
+								id="btn-Next"
+								aria-hidden="true"
+							/>
 						}
-						nextLabel={<i className="fa fa-chevron-right fa-2x" aria-hidden="true" />}
+						nextLabel={
+							<i
+								className="fa fa-chevron-right fa-2x"
+								aria-hidden="true"
+							/>
+						}
 						breakLabel={<a href="">...</a>}
 						breakClassName={'break-me'}
 						pageCount={this.props.pagination.pages}
@@ -129,16 +138,18 @@ export class Documents extends React.Component {
 						</h5>
 						<div className="col s12">
 							<div className="row">
-								{(this.state.documents) && (this.state.documents.length === 0) ? emptyDocuments : (
-									this.props.documents.map(document => (
-										<DocumentCard
-											document={document}
-											limit={this.state.limit}
-											offset={this.state.offset}
-											key={document.id}
-										/>
-									))
-								)}
+								{(this.state.documents)
+									&& (this.state.documents.length === 0)
+									? emptyDocuments : (
+										this.props.documents.map(document => (
+											<DocumentCard
+												document={document}
+												limit={this.state.limit}
+												offset={this.state.offset}
+												key={document.id}
+											/>
+										))
+									)}
 							</div>
 						</div>
 					</div>
@@ -174,5 +185,6 @@ function mapStateToProps(state) {
 		pagination: state.documents.pagination
 	};
 }
-export default withRouter(connect(mapStateToProps, { allDocuments })(Documents));
+export default withRouter(
+	connect(mapStateToProps, { allDocuments })(Documents));
 

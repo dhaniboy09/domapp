@@ -21,7 +21,8 @@ export const getAllDocuments = (documents, pagination) => {
  */
 export const allDocuments = (params) => {
 	return dispatch => {
-		return axios.get(`/api/v1/documents/?offset=${params.offset}`).then((res) => {
+		return axios.get(
+			`/api/v1/documents/?offset=${params.offset}`).then((res) => {
 			dispatch(getAllDocuments(res.data.documents, res.data.pagination));
 			return Promise.resolve(res);
 		});
